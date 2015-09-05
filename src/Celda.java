@@ -1,0 +1,3 @@
+class Celda{
+	char valor;
+}

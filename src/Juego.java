@@ -1,57 +1,7 @@
 import java.io.IOException;
 import java.util.*;
 
-class InterpreteComandos{
-	public void interpretar(String comando){
-		
-	}
-}
-class Renderizador{
-	Mapa mapaActual;
-	public void dibujarMapa(){
-		
-	}
-	public Renderizador(Mapa mapa){
-		mapaActual = mapa;
-	}
-	
-}
-class Mapa{
-	int ancho;
-	int altura;
-	List<List<Celda> > map;
-	public void modificarCelda(int x,int y){
-		
-	}
-	
-}
-class GestorMapas{
-	List<Mapa> mapas;
-	int cant;
-	public GestorMapas(){
-		mapas = new ArrayList<Mapa>();
-		cant = 0;
-	}
-	public Mapa getMapa(int index){
-		return mapas.get(index);
-	}
-	public void addMapa(Mapa mapa){
-		cant++;
-		mapas.add(mapa);
-	}
-}
-class Celda{
-	char valor;
-}
-class Personaje{
-	String nombre;
-	
-}
-class Objeto{
-	String nombre;
-	int ancho;
-	int altura;
-}
+
 class Juego {
 	public static void main(String[] args){
 		InterpreteComandos interp = new InterpreteComandos();
