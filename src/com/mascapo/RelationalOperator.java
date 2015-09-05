@@ -1,10 +1,17 @@
 package com.mascapo;
 
+import java.util.Scanner;
+
 public class RelationalOperator {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("alguien dijo chowdown");
+		
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		t = t + 4;
+		
+		sc.close();
 	}
 
 }
