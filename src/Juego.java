@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-class Juego {
+public class Juego {
     public static void main(String[] args){
         InterpreteComandos interp = new InterpreteComandos();
         GestorMapas gestor = new GestorMapas();
@@ -12,27 +12,40 @@ class Juego {
         System.out.println("b. Salir del juego");
         
         
-        int c='k';
+        int teclaPresionada = 0;
+        //bucle de lectura, aún no es el juego
+        //TODO: solo leer dato y pasárselo a InterpreteComandos
+        //Pueden usar System.exit(0) para salir del programa si no están en el main.
         while(true){
             try {
-                c = System.in.read();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
+                teclaPresionada = System.in.read();
+            } 
+            catch (IOException e) {
                 e.printStackTrace();
             }
-            if(c==10 || c==13) continue;
-            if(c=='a'){
+            if (teclaPresionada == -1) return; //fin de archivo
+            if(teclaPresionada == '\n' || teclaPresionada == '\r') continue; //Line feed o Carriage return (nueva línea)
+            
+            if(teclaPresionada == 'a'){
+                //ok, salimos del bucle de lectura
                 break;
-            }else if(c=='b'){
+            }
+            else if(teclaPresionada == 'b'){
                 System.out.println("El juego termina");
-                break;
-            }else{
+                return; //fin del programa
+            }
+            else{
                 System.out.println("Presione a o b");
             }
         }
-        if(c=='b') return; 
-        Renderizador rend = new Renderizador(gestor.getMapa(0));
+
+
         System.out.println("Ingrese su nombre");
-        String nombre = scanner.nextLine();
+        String nombre = scanner.next();
+        System.out.println("Tu nombre es " + nombre);
+        //Renderizador rend = new Renderizador(gestor.getMapa(0));
+        //TODO: renderizar primer nivel
+        
+        
     }
 }
