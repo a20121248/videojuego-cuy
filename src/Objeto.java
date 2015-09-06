@@ -1,5 +1,5 @@
 class Objeto{
-	String nombre;
-	int ancho;
-	int altura;
+    String nombre;
+    int ancho;
+    int altura;
 }

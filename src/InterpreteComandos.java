@@ -1,5 +1,5 @@
 class InterpreteComandos{
-	public void interpretar(String comando){
-		
-	}
+    public void interpretar(String comando){
+        
+    }
 }

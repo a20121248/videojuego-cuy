@@ -1,4 +1,4 @@
 class Personaje{
-	String nombre;
-	
+    String nombre;
+    
 }

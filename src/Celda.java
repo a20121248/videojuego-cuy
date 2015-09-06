@@ -1,3 +1,3 @@
 class Celda{
-	char valor;
+    char valor;
 }
