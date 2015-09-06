@@ -172,12 +172,137 @@ public class GestorMapas{
 		aux.setEspecial(2);
 		aux.setSprite('B');*/
 		mapas.add(m);
+		
+		// Nivel 1
+		
+		m = new Mapa(16,12,2,11,0,0);
+		obstaculos = new ArrayList<Objeto>();
+		b = new Objeto(8,9,2,2,'i');
+		obstaculos.add(b);
+		b = new Objeto(10,11,2,2,'g');
+		obstaculos.add(b);
+		b = new Objeto(8,3,1,4,'L');
+		obstaculos.add(b);
+		b = new Objeto(7,0,16,1,'p');
+		obstaculos.add(b);
+		m.setObstaculos(obstaculos);
+		for(int i=0;i<3;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = Esp.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}
+		for(int i=3;i<8;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = S.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}
+		/*for(int i=6;i<8;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = a.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}*/
+		for(int i=8;i<12;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = N.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}
+		for(int i=3;i<7;i++){
+			Celda auxi = m.getCelda(i,0);
+			auxi.setTipo(1);
+			auxi.setEspecial(3);
+		}
+		for(int i=8;i<12;i++){
+			Celda auxi = m.getCelda(i,0);
+			auxi.setTipo(2);
+			auxi.setEspecial(3);
+		}		
+		
+		
+		for(int i=0;i<obstaculos.size();i++){
+			Objeto bb = obstaculos.get(i);
+			int altura = bb.getAltura();
+			int ancho = bb.getAncho();
+			int posX = bb.getPosX();
+			int posY = bb.getPosY();
+			char sprite = bb.getSprite();
+			for(int j=0;j<altura;j++){
+				for(int k=0;k<ancho;k++){
+					Celda auxi = m.getCelda(posX+j,posY+k);
+					auxi.setTipo(0);
+					auxi.setSprite(sprite);
+				}
+			}
+		}
+		listaCeldaEsp = new ArrayList<CeldaEspecial>();
+		
+		aux = m.getCelda(4,10);
+		aux.setEspecial(1);
+		aux.setIndiceEspecial(0);
+		aux.setSprite('C');
+		celdaEsp = new CeldaEspecial();
+		celdaEsp.setComandoEspecial("SDQEQE");
+		direccion = new ArrayList<Integer>();
+		direccion.add(5);
+		direccion.add(6);
+		direccion.add(8);
+		celdaEsp.setDireccionX(direccion);
+		direccion = new ArrayList<Integer>();
+		direccion.add(10);
+		direccion.add(10);
+		direccion.add(10);
+		celdaEsp.setDireccionY(direccion);
+		liberaX = new ArrayList<Integer>();
+		liberaY = new ArrayList<Integer>();
+		valorLiberacion = new ArrayList<Integer>();
+		liberaX.add(9);
+		liberaY.add(4);
+		valorLiberacion.add(2);
+		valorLiberacion.add(2);
+		celdaEsp.setLiberaX(liberaX);
+		celdaEsp.setLiberaY(liberaY);
+		celdaEsp.setValorLiberacion(valorLiberacion);
+		listaCeldaEsp.add(celdaEsp);
+		
+		aux = m.getCelda(9,4);
+		aux.setEspecial(-1);
+		aux.setIndiceEspecial(1);
+		aux.setSprite('C');
+		celdaEsp = new CeldaEspecial();
+		celdaEsp.setComandoEspecial("JJUOJ");
+		direccion = new ArrayList<Integer>();
+		direccion.add(9);
+		direccion.add(9);
+		celdaEsp.setDireccionX(direccion);
+		direccion = new ArrayList<Integer>();
+		direccion.add(3);
+		direccion.add(2);
+		celdaEsp.setDireccionY(direccion);
+		listaCeldaEsp.add(celdaEsp);
+				
+		m.setListaEspecial(listaCeldaEsp);
+		/*aux = m.getCelda(11,0);
+		aux.setEspecial(2);
+		aux.setSprite('B');*/
+		mapas.add(m);
+			
 	}
 	public GestorMapas(){
 		mapas = new ArrayList<Mapa>();
 		rend = new Renderizador();
 		añadirMapas();
-		cant = 1;
+		cant = 2;
 		fin1 = false;
 		fin2 = false;
 	}

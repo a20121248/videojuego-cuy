@@ -37,7 +37,7 @@ public class Juego {
 		if(teclaPresionada=='b') return; 
 		System.out.println("Ingrese su nombre");
 		String nombre = scanner.nextLine();
-		int cantMapas = 1;
+		int cantMapas = 2;
 		
 		for(int i=0;i<cantMapas;i++){
 			gestor.cargarMapa(0);
@@ -49,7 +49,7 @@ public class Juego {
 				String aux = gestor.realizarMovimientoEspecial(valor); 
 				if(aux.equals("F")){
 					System.out.println("Felicidades, terminó el nivel");
-					break;
+					continue;
 				}else if(!aux.equals("")){
 					while(true){
 						comando = scanner.nextLine();
@@ -58,7 +58,7 @@ public class Juego {
 					}
 					if(gestor.ejecutarComando(valor).equals("F")){
 						System.out.println("Felicidades, terminó el nivel");
-						break;
+						continue;
 					}
 				}
 			}
