@@ -11,7 +11,7 @@ public class GestorMapas{
 	int indMapaActual;
 	int cant;
 	String comandoActual;
-	Celda celdaDual;
+	Celda celdaDual,celdaOriginal0,celdaOriginal1;
 	int dual;
 	int tipoDual; // 0 = jugador1, 1= jugador2
 	private void añadirMapas(){
@@ -19,7 +19,8 @@ public class GestorMapas{
 		Mapa m;
 		Objeto b;
 		List<Objeto> obstaculos;
-		List<Integer> direccion,liberaX,liberaY,valorLiberacion;
+		List<Integer> direccion,liberaX,liberaY,valorLiberacion,indObstaculo;
+		List<Celda> reemplazarObstaculo;
 		List<CeldaEspecial> listaCeldaEsp;
 		Celda Esp = new Celda(' ',0);
 		Celda S = new Celda('S',1);
@@ -78,7 +79,7 @@ public class GestorMapas{
 		}
 		for(int i=5;i<9;i++){
 			Celda aux = m.getCelda(i,15);
-			aux.setTipo(3);
+			aux.setTipo(0);
 			aux.setEspecial(3);
 			aux.setSprite('o');
 		}
@@ -175,7 +176,7 @@ public class GestorMapas{
 		
 		// Nivel 1
 		
-		m = new Mapa(16,12,2,11,0,0);
+		m = new Mapa(16,12,5,9,15,15);
 		obstaculos = new ArrayList<Objeto>();
 		b = new Objeto(8,9,2,2,'i');
 		obstaculos.add(b);
@@ -257,8 +258,10 @@ public class GestorMapas{
 		direccion.add(5);
 		direccion.add(6);
 		direccion.add(8);
+		direccion.add(4);
 		celdaEsp.setDireccionX(direccion);
 		direccion = new ArrayList<Integer>();
+		direccion.add(10);
 		direccion.add(10);
 		direccion.add(10);
 		direccion.add(10);
@@ -268,11 +271,23 @@ public class GestorMapas{
 		valorLiberacion = new ArrayList<Integer>();
 		liberaX.add(9);
 		liberaY.add(4);
-		valorLiberacion.add(2);
-		valorLiberacion.add(2);
+		valorLiberacion.add(1);
 		celdaEsp.setLiberaX(liberaX);
 		celdaEsp.setLiberaY(liberaY);
 		celdaEsp.setValorLiberacion(valorLiberacion);
+		indObstaculo = new ArrayList<Integer>();
+		reemplazarObstaculo = new ArrayList<Celda>();
+		indObstaculo.add(-1);
+		indObstaculo.add(-1);
+		indObstaculo.add(-1);
+		indObstaculo.add(0);
+		reemplazarObstaculo.add(null);
+		reemplazarObstaculo.add(null);
+		reemplazarObstaculo.add(null);
+		reemplazarObstaculo.add(N.copy());
+		celdaEsp.setIndObstaculo(indObstaculo);
+		celdaEsp.setReemplazarObstaculo(reemplazarObstaculo);
+		
 		listaCeldaEsp.add(celdaEsp);
 		
 		aux = m.getCelda(9,4);
@@ -289,6 +304,7 @@ public class GestorMapas{
 		direccion.add(3);
 		direccion.add(2);
 		celdaEsp.setDireccionY(direccion);
+		
 		listaCeldaEsp.add(celdaEsp);
 				
 		m.setListaEspecial(listaCeldaEsp);
@@ -302,7 +318,7 @@ public class GestorMapas{
 		mapas = new ArrayList<Mapa>();
 		rend = new Renderizador();
 		añadirMapas();
-		cant = 2;
+		cant = mapas.size();
 		fin1 = false;
 		fin2 = false;
 	}
@@ -310,31 +326,45 @@ public class GestorMapas{
 	public void cargarMapa(int index){
 		if(index>cant) return;
 		mapaActual = mapas.get(index).copy();
+		indMapaActual = index;
 		
 		jugador1 = new PersonajePrincipal(mapaActual.posX1,mapaActual.posY1);
 		Celda c = mapaActual.getCelda(jugador1.posX,jugador1.posY);
+		celdaOriginal0 = c.copy();
 		c.setJugador(0);
 		c.setSprite('A');
 		jugador2 = new PersonajePrincipal(mapaActual.posX2,mapaActual.posY2);
 		c = mapaActual.getCelda(jugador2.posX,jugador2.posY);
+		celdaOriginal1 = c.copy();
 		c.setJugador(1);
 		c.setSprite('B');
 		rend.dibujarMapa(mapaActual);
+		
 	}
 	public void realizarMovimiento(int mov){
 		
-		Celda c;
+		Celda c,c2=null;
 		int posXAux,posYAux;
 		if(mov==-1) return;
 		
 		if(mov<4){
-			c = mapas.get(indMapaActual).getCelda(jugador1.getPosX(),jugador1.getPosY());
+			c = celdaOriginal0;
 			posXAux = jugador1.getPosX(); posYAux = jugador1.getPosY();
+			
 		}else{
-			c = mapas.get(indMapaActual).getCelda(jugador2.getPosX(),jugador2.getPosY());
+			c = celdaOriginal1;
 			posXAux = jugador2.getPosX(); posYAux = jugador2.getPosY();
+			
 		}
-		
+		if(mov==0) c2 = mapaActual.getCelda(jugador1.posX-1,jugador1.posY);
+		else if(mov==1) c2 = mapaActual.getCelda(jugador1.posX,jugador1.posY-1);
+		else if(mov==2) c2 = mapaActual.getCelda(jugador1.posX+1,jugador1.posY);
+		else if(mov==3) c2 = mapaActual.getCelda(jugador1.posX,jugador1.posY+1);
+		else if(mov==4) c2 = mapaActual.getCelda(jugador2.posX-1,jugador2.posY);
+		else if(mov==5) c2 = mapaActual.getCelda(jugador2.posX,jugador2.posY-1);
+		else if(mov==6) c2 = mapaActual.getCelda(jugador2.posX+1,jugador2.posY);
+		else if(mov==7) c2 = mapaActual.getCelda(jugador2.posX,jugador2.posY+1);
+		if(c2!=null) c2 = c2.copy();
 		boolean aux=true;
 		if(mov==0) aux = jugador1.verificarPosX(1,0,mapaActual.getAltura(),mapaActual,0);
 		else if(mov==1) aux = jugador1.verificarPosY(1,0,mapaActual.getAncho(),mapaActual,0);
@@ -350,10 +380,12 @@ public class GestorMapas{
 		
 		
 		if(mov<4){
+			celdaOriginal0 = c2;
 			fin1 = false;
 			if(tipoDual == 0) dual=-1;
 			mapaActual.modificarPosJugador(0,jugador1.getPosX(),jugador1.getPosY());
 		}else{
+			celdaOriginal1 = c2;
 			fin2 = false;
 			if(tipoDual == 1) dual=-1;
 			mapaActual.modificarPosJugador(1,jugador2.getPosX(),jugador2.getPosY());
@@ -385,25 +417,6 @@ public class GestorMapas{
 			else realizarMovimientoEspecial(0);       //que se activo ahora
 			c.setEspecial(0);
 			
-			List<Integer> indObstaculo = celdaEsp.getIndObstaculo();
-			List<Celda> reemplazarObstaculo = celdaEsp.getReemplazarObstaculo();
-			
-			for(int i=0;i<indObstaculo.size();i++){
-				Objeto bb = mapas.get(indMapaActual).getObstaculo(indObstaculo.get(i));
-				int altura = bb.getAltura();
-				int ancho = bb.getAncho();
-				int posX = bb.getPosX();
-				int posY = bb.getPosY();
-				char sprite = bb.getSprite();
-				Celda celdaReemplazar = reemplazarObstaculo.get(i);
-				for(int j=0;j<altura;j++){
-					for(int k=0;k<ancho;k++){
-						Celda aux = mapaActual.getCelda(posX+j,posY+k);
-						aux.setSprite(celdaReemplazar.getSprite());
-						aux.setTipo(celdaReemplazar.getTipo());
-					}
-				}
-			}
 			return comandoActual;
 		}else if(especial==2){ //comando dual
 			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
@@ -455,6 +468,27 @@ public class GestorMapas{
 					jugador1.setPosX(movX.get(i));
 					jugador1.setPosY(movY.get(i));
 					mapaActual.modificarPosJugador(0,jugador1.getPosX(),jugador1.getPosY());
+					
+					List<Integer> indObstaculo = celdaEsp.getIndObstaculo();
+					List<Celda> reemplazarObstaculo = celdaEsp.getReemplazarObstaculo();
+					if(indObstaculo != null){
+						Integer indObst = indObstaculo.get(i);
+						if(indObst != -1){
+							Objeto bb = mapas.get(indMapaActual).getObstaculo(indObstaculo.get(i));
+							int altura = bb.getAltura();
+							int ancho = bb.getAncho();
+							int posX = bb.getPosX();
+							int posY = bb.getPosY();
+							Celda celdaReemplazar = reemplazarObstaculo.get(i);
+							for(int j=0;j<altura;j++){
+								for(int k=0;k<ancho;k++){
+									Celda aux = mapaActual.getCelda(posX+j,posY+k);
+									aux.setSprite(celdaReemplazar.getSprite());
+									aux.setTipo(celdaReemplazar.getTipo());
+								}
+							}
+						}
+					}
 					rend.dibujarMapa(mapaActual);
 					scanner.nextLine();
 				}
@@ -466,6 +500,28 @@ public class GestorMapas{
 					jugador2.setPosX(movX.get(i));
 					jugador2.setPosY(movY.get(i));
 					mapaActual.modificarPosJugador(1,jugador2.getPosX(),jugador2.getPosY());
+					
+					List<Integer> indObstaculo = celdaEsp.getIndObstaculo();
+					List<Celda> reemplazarObstaculo = celdaEsp.getReemplazarObstaculo();
+					if(indObstaculo != null){
+						Integer indObst = indObstaculo.get(i);
+						if(indObst != -1){
+							Objeto bb = mapas.get(indMapaActual).getObstaculo(indObstaculo.get(i));
+							int altura = bb.getAltura();
+							int ancho = bb.getAncho();
+							int posX = bb.getPosX();
+							int posY = bb.getPosY();
+							char sprite = bb.getSprite();
+							Celda celdaReemplazar = reemplazarObstaculo.get(i);
+							for(int j=0;j<altura;j++){
+								for(int k=0;k<ancho;k++){
+									Celda aux = mapaActual.getCelda(posX+j,posY+k);
+									aux.setSprite(celdaReemplazar.getSprite());
+									aux.setTipo(celdaReemplazar.getTipo());
+								}
+							}
+						}
+					}
 					rend.dibujarMapa(mapaActual);
 					scanner.nextLine();
 				}

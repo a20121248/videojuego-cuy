@@ -40,7 +40,7 @@ public class Juego {
 		int cantMapas = 2;
 		
 		for(int i=0;i<cantMapas;i++){
-			gestor.cargarMapa(0);
+			gestor.cargarMapa(i);
 			while(true){
 				System.out.println("Ingresar comando");
 				String comando = scanner.nextLine();
@@ -49,7 +49,7 @@ public class Juego {
 				String aux = gestor.realizarMovimientoEspecial(valor); 
 				if(aux.equals("F")){
 					System.out.println("Felicidades, terminó el nivel");
-					continue;
+					break;
 				}else if(!aux.equals("")){
 					while(true){
 						comando = scanner.nextLine();
@@ -58,7 +58,7 @@ public class Juego {
 					}
 					if(gestor.ejecutarComando(valor).equals("F")){
 						System.out.println("Felicidades, terminó el nivel");
-						continue;
+						break;
 					}
 				}
 			}
