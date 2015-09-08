@@ -1,9 +1,13 @@
 public class PersonajePrincipal extends Personaje {
-	static int vida = 10;
+	private static int vida = 10;
 
 	public static boolean perderVida(int v) {
 		vida -= v;
 		return (vida > 0);
+	}
+	
+	public static void reiniciarVida() {
+		vida = 10;
 	}
 
 	public PersonajePrincipal(int posX, int posY) {
