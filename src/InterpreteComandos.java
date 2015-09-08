@@ -13,7 +13,6 @@ public class InterpreteComandos{
 	}
 	public boolean interpretarEspecial(String comando,String comandoIdeal){
 		comando = comando.toUpperCase();
-		if(comando.equals(comandoIdeal)) return true;
-		else return false;
+		return comando.equals(comandoIdeal);
 	}
 }

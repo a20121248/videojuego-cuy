@@ -10,7 +10,6 @@ public class Juego {
 		System.out.println("a. Iniciar juego");
 		System.out.println("b. Salir del juego");
 		
-		
 		int teclaPresionada=0;
 		while(true){
             try {
@@ -36,7 +35,7 @@ public class Juego {
         }
 		if(teclaPresionada=='b') return; 
 		System.out.println("Ingrese su nombre");
-		String nombre = scanner.nextLine();
+		String nombre = scanner.next();
 		int cantMapas = 2;
 		
 		for(int i=0;i<cantMapas;i++){
@@ -53,7 +52,21 @@ public class Juego {
 				}else if(!aux.equals("")){
 					while(true){
 						comando = scanner.nextLine();
-						if(interp.interpretarEspecial(comando,aux)) break;
+						if(interp.interpretarEspecial(comando,aux)) {
+							//Slsvcn estuvo aquí 08/09/2015
+							//acertó el comando, salir del bucle
+							break;
+						}
+						else {
+							//se equivocó, bajarles vida
+							if (PersonajePrincipal.perderVida(2)) {
+								//siguen vivos
+								
+							}
+							else {
+								//gg
+							}
+						}
 						gestor.mostrarComando();
 					}
 					if(gestor.ejecutarComando(valor).equals("F")){
