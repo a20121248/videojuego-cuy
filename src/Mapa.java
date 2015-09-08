@@ -35,6 +35,8 @@ class Mapa{
 		aux.set(y, c);
 	}
 	public Celda getCelda(int x,int y){
+		if(x<0 || x>=altura)return null;
+		if(y<0 || y>=ancho) return null;
 		List<Celda> aux = map.get(x);
 		return aux.get(y);
 	}

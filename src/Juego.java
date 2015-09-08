@@ -37,10 +37,10 @@ public class Juego {
 		if(teclaPresionada=='b') return; 
 		System.out.println("Ingrese su nombre");
 		String nombre = scanner.nextLine();
-		int cantMapas = 1;
+		int cantMapas = 2;
 		
 		for(int i=0;i<cantMapas;i++){
-			gestor.cargarMapa(0);
+			gestor.cargarMapa(i);
 			while(true){
 				System.out.println("Ingresar comando");
 				String comando = scanner.nextLine();
