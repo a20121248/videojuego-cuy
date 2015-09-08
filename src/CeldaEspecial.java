@@ -10,11 +10,12 @@ public class CeldaEspecial {
 	List<Integer> valorLiberacion;
 	List<Integer> indObstaculo;
 	List<Celda> reemplazarObstaculo;
+	List<Integer> momentoObstaculo;
 	int dualOpuesto;
 	public CeldaEspecial(){
 		dualOpuesto = -1;
 		liberaX = new ArrayList<Integer>();
-		indObstaculo = new ArrayList<Integer>();
+		indObstaculo = null;
 		valorLiberacion = new ArrayList<Integer>();
 	}
 	public String getComandoEspecial(){return comandoEspecial;}

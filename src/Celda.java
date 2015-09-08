@@ -10,6 +10,7 @@ class Celda{
 		return sprite;
 	}
 	public Celda(char sprite, int tipo){
+		
 		this.sprite = sprite;
 		this.tipo = tipo;
 		this.jugador = -1;
