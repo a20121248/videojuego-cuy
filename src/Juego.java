@@ -36,7 +36,7 @@ public class Juego {
 		if(teclaPresionada=='b') return; 
 		System.out.println("Ingrese su nombre");
 		String nombre = scanner.next();
-		int cantMapas = 2;
+		int cantMapas = 3;
 		
 		for(int i=0;i<cantMapas;i++){
 			gestor.cargarMapa(i);
@@ -67,6 +67,7 @@ public class Juego {
 								//gg
 							}
 						}
+						System.out.println(comando);
 						gestor.mostrarComando();
 					}
 					if(gestor.ejecutarComando(valor).equals("F")){

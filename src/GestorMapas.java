@@ -116,6 +116,7 @@ public class GestorMapas{
 		direccion.add(10);
 		direccion.add(11);
 		celdaEsp.setDireccionY(direccion);
+		
 		liberaX = new ArrayList<Integer>();
 		liberaY = new ArrayList<Integer>();
 		valorLiberacion = new ArrayList<Integer>();
@@ -312,6 +313,163 @@ public class GestorMapas{
 		aux.setEspecial(2);
 		aux.setSprite('B');*/
 		mapas.add(m);
+		
+		//Nivel 2
+		
+		m = new Mapa(16,12,5,10,0,0);
+		obstaculos = new ArrayList<Objeto>();
+		b = new Objeto(7,0,9,1,'g');
+		obstaculos.add(b);
+		b = new Objeto(10,5,2,2,'h');
+		obstaculos.add(b);
+		b = new Objeto(3,4,1,4,'t');
+		obstaculos.add(b);
+		b = new Objeto(8,3,1,3,'m');
+		obstaculos.add(b);
+		b = new Objeto(3,9,7,9,'L');
+		obstaculos.add(b);
+		m.setObstaculos(obstaculos);
+		for(int i=0;i<3;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = Esp.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}
+		for(int i=3;i<8;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = S.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}
+		/*for(int i=6;i<8;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = a.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}*/
+		for(int i=8;i<12;i++){
+			List<Celda> l = new ArrayList<Celda>();
+			for(int j=0;j<16;j++){
+				Celda c = N.copy();
+				l.add(c);
+			}
+			m.addFila(l);
+		}
+		
+		for(int i=0;i<obstaculos.size();i++){
+			Objeto bb = obstaculos.get(i);
+			int altura = bb.getAltura();
+			int ancho = bb.getAncho();
+			int posX = bb.getPosX();
+			int posY = bb.getPosY();
+			char sprite = bb.getSprite();
+			for(int j=0;j<altura;j++){
+				for(int k=0;k<ancho;k++){
+					Celda auxi = m.getCelda(posX+j,posY+k);
+					auxi.setTipo(0);
+					auxi.setSprite(sprite);
+				}
+			}
+		}
+		
+		for(int j=12;j<16;j++){
+			Celda aux2 = m.getCelda(6,j);
+			aux2.setTipo(1);
+			aux2.setEspecial(0);
+			aux2.setSprite('o');
+			aux2 = m.getCelda(7,j);
+			aux2.setTipo(2);
+			aux2.setEspecial(0);
+			aux2.setSprite('o');
+		}
+		
+		Celda aux2 = m.getCelda(6, 15);
+		aux2.setEspecial(3);
+		aux2 = m.getCelda(7,15);
+		aux2.setEspecial(3);
+		
+		listaCeldaEsp = new ArrayList<CeldaEspecial>();
+		
+		aux = m.getCelda(4,2);
+		aux.setEspecial(1);
+		aux.setIndiceEspecial(0);
+		aux.setSprite('C');
+		celdaEsp = new CeldaEspecial();
+		celdaEsp.setComandoEspecial("SDEWD");
+		direccion = new ArrayList<Integer>();
+		direccion.add(4);
+		direccion.add(4);
+		direccion.add(4);
+		celdaEsp.setDireccionX(direccion);
+		direccion = new ArrayList<Integer>();
+		direccion.add(3);
+		direccion.add(4);
+		direccion.add(5);
+		celdaEsp.setDireccionY(direccion);
+		
+		liberaX = new ArrayList<Integer>();
+		liberaY = new ArrayList<Integer>();
+		valorLiberacion = new ArrayList<Integer>();
+		liberaX.add(6);
+		liberaY.add(8);
+		liberaX.add(8);
+		liberaY.add(8);
+		valorLiberacion.add(2);
+		valorLiberacion.add(2);
+		celdaEsp.setLiberaX(liberaX);
+		celdaEsp.setLiberaY(liberaY);
+		celdaEsp.setValorLiberacion(valorLiberacion);
+		listaCeldaEsp.add(celdaEsp);
+		
+		aux = m.getCelda(6,8);
+		aux.setEspecial(-2);
+		aux.setIndiceEspecial(1);
+		aux.setSprite('D');
+		celdaEsp = new CeldaEspecial();
+		celdaEsp.setComandoEspecial("SIQEUOKLSD");
+		celdaEsp.setDualOpuesto(2);
+		direccion = new ArrayList<Integer>();
+		direccion.add(6);
+		direccion.add(5);
+		direccion.add(6);
+		celdaEsp.setDireccionX(direccion);
+		direccion = new ArrayList<Integer>();
+		direccion.add(9);
+		direccion.add(12);
+		direccion.add(12);
+		celdaEsp.setDireccionY(direccion);
+		listaCeldaEsp.add(celdaEsp);
+		
+		aux = m.getCelda(8,8);
+		aux.setEspecial(-2);
+		aux.setIndiceEspecial(2);
+		aux.setSprite('D');
+		celdaEsp = new CeldaEspecial();
+		celdaEsp.setComandoEspecial("SIQEUOKLSD");
+		celdaEsp.setDualOpuesto(1);
+		direccion = new ArrayList<Integer>();
+		direccion.add(8);
+		direccion.add(8);
+		direccion.add(7);
+		celdaEsp.setDireccionX(direccion);
+		direccion = new ArrayList<Integer>();
+		direccion.add(9);
+		direccion.add(12);
+		direccion.add(12);
+		celdaEsp.setDireccionY(direccion);
+		listaCeldaEsp.add(celdaEsp);
+		
+		m.setListaEspecial(listaCeldaEsp);
+		/*aux = m.getCelda(11,0);
+		aux.setEspecial(2);
+		aux.setSprite('B');*/
+		mapas.add(m);
 			
 	}
 	public GestorMapas(){
@@ -376,16 +534,17 @@ public class GestorMapas{
 		else if(mov==7) aux = jugador2.verificarPosY(0,0,mapaActual.getAncho(),mapaActual,1);
 		if(!aux) return;
 		
+		//System.out.println("Retorno :"+c.getEspecial());
 		mapaActual.retornarCelda(posXAux, posYAux, c);
 		
 		
 		if(mov<4){
-			celdaOriginal0 = c2;
+			celdaOriginal0 = c2.copy();
 			fin1 = false;
 			if(tipoDual == 0) dual=-1;
 			mapaActual.modificarPosJugador(0,jugador1.getPosX(),jugador1.getPosY());
 		}else{
-			celdaOriginal1 = c2;
+			celdaOriginal1 = c2.copy();
 			fin2 = false;
 			if(tipoDual == 1) dual=-1;
 			mapaActual.modificarPosJugador(1,jugador2.getPosX(),jugador2.getPosY());
@@ -400,6 +559,7 @@ public class GestorMapas{
 		else c = mapaActual.getCelda(jugador2.getPosX(),jugador2.getPosY());
 		int especial = c.getEspecial();
 		int ind = c.getIndiceEspecial();
+		//System.out.println(especial);
 		if(especial == 0) return "";
 		else if(especial == 1){ //comando solo
 			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
@@ -416,6 +576,8 @@ public class GestorMapas{
 			if(mov<4) realizarMovimientoEspecial(4);  //se verifica si el otro personaje ya esta en un dual
 			else realizarMovimientoEspecial(0);       //que se activo ahora
 			c.setEspecial(0);
+			if(mov<4) celdaOriginal0.setEspecial(0);
+			else celdaOriginal1.setEspecial(0);
 			
 			return comandoActual;
 		}else if(especial==2){ //comando dual
@@ -425,6 +587,8 @@ public class GestorMapas{
 			if(dual == dualOpuesto){
 				rend.mostrarComandos(celdaEsp.getComandoEspecial());
 				comandoActual = celdaEsp.getComandoEspecial();
+				celdaOriginal0.setEspecial(0);
+				celdaOriginal1.setEspecial(0);
 				c.setEspecial(0);
 				celdaDual.setEspecial(0);
 			}else{
@@ -463,8 +627,8 @@ public class GestorMapas{
 			
 			if(mov<4){
 				for(int i=0;i<movX.size();i++){
-					mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), 
-							mapas.get(indMapaActual).getCelda(jugador1.getPosX(), jugador1.getPosY()));
+					mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), celdaOriginal0);
+					celdaOriginal0 = mapaActual.getCelda(movX.get(i),movY.get(i));
 					jugador1.setPosX(movX.get(i));
 					jugador1.setPosY(movY.get(i));
 					mapaActual.modificarPosJugador(0,jugador1.getPosX(),jugador1.getPosY());
@@ -495,8 +659,8 @@ public class GestorMapas{
 				realizarMovimientoEspecial(0);
 			}else{
 				for(int i=0;i<movX.size();i++){
-					mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), 
-							mapas.get(indMapaActual).getCelda(jugador2.getPosX(), jugador2.getPosY()));
+					mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), celdaOriginal1);
+					celdaOriginal1= mapaActual.getCelda(movX.get(i),movY.get(i));
 					jugador2.setPosX(movX.get(i));
 					jugador2.setPosY(movY.get(i));
 					mapaActual.modificarPosJugador(1,jugador2.getPosX(),jugador2.getPosY());
@@ -548,10 +712,10 @@ public class GestorMapas{
 				movY2 = celdaEsp.getDireccionY();
 			}
 			for(int i=0;i<movX1.size();i++){
-				mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), 
-						mapas.get(indMapaActual).getCelda(jugador2.getPosX(), jugador2.getPosY()));
-				mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), 
-						mapas.get(indMapaActual).getCelda(jugador1.getPosX(), jugador1.getPosY()));
+				mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), celdaOriginal0);
+				celdaOriginal0 = mapaActual.getCelda(movX1.get(i),movY1.get(i));
+				mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), celdaOriginal1);
+				celdaOriginal1 = mapaActual.getCelda(movX2.get(i),movY2.get(i));
 				jugador1.setPosX(movX1.get(i));
 				jugador1.setPosY(movY1.get(i));
 				jugador2.setPosX(movX2.get(i));
