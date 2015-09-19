@@ -95,8 +95,12 @@ public class Juego {
 			String nombre = scanner.nextLine();
 			int cantMapas = 3;
 			for (int i = 0; i < cantMapas; i++) {
-				System.out.println("Nivel " + (i + 1));
-				
+				if (i == 0) {
+					System.out.println("Tutorial");
+				}
+				else {
+					System.out.println("Nivel " + i);
+				}
 				//Pantalla de historia "i"
 				System.out.println(historias[i]);
 				System.out.print("Presione enter para continuar.");
