@@ -26,11 +26,11 @@ public class GestorMapas{
 		List<Integer> direccion,liberaX,liberaY,valorLiberacion,indObstaculo;
 		List<Celda> reemplazarObstaculo;
 		List<CeldaEspecial> listaCeldaEsp;
-		Celda Esp = new Celda(' ',0);
-		Celda S = new Celda('S',1);
-		Celda N = new Celda('N',2);
-		Celda a = new Celda('a',0);
-		Celda o = new Celda('o',3);
+		Celda Esp = new Celda(' ',TipoCelda.IMPASABLE);
+		Celda S = new Celda('S',TipoCelda.TERRENO_A);
+		Celda N = new Celda('N',TipoCelda.TERRENO_B);
+		Celda a = new Celda('a',TipoCelda.IMPASABLE);
+		Celda o = new Celda('o',TipoCelda.TERRENO_AMBOS);
 		
 		ArrayList<String> lineasMapa0 = new ArrayList<String>();
 		BufferedReader inputStream = null;
@@ -67,6 +67,17 @@ public class GestorMapas{
 		b = new Objeto(6,0,16,2,'a');
 		obstaculos.add(b);
 		m.setObstaculos(obstaculos);
+		
+		for (int i = 0; i < lineasMapa0.size(); i++) {
+			ArrayList<Celda> fila = new ArrayList<Celda>();
+			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
+				Celda celda = new Celda(lineasMapa0.get(i).charAt(j), 0); //todos impasables en un inicio
+				fila.add(celda);
+			}
+			m.addFila(fila);
+		}
+		
+		
 		for(int i=0;i<2;i++){
 			List<Celda> l = new ArrayList<Celda>();
 			for(int j=0;j<16;j++){

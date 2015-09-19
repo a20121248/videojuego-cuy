@@ -19,7 +19,7 @@ public class PersonajePrincipal extends Personaje {
 	 * void cambiarPosX(int dir){ if(dir==0) posX++; else posX--; } void
 	 * cambiarPosY(int dir){ if(dir==0) posY++; else posY--; }
 	 */
-	boolean verificarPosX(int dir, int bound1, int bound2, Mapa mapaActual, int tipo) {
+	boolean verificarPosX(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
 		int aux = posX;
 		if (dir == 0)
 			aux++;
@@ -34,7 +34,7 @@ public class PersonajePrincipal extends Personaje {
 		return true;
 	}
 
-	boolean verificarPosY(int dir, int bound1, int bound2, Mapa mapaActual, int tipo) {
+	boolean verificarPosY(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
 		int aux = posY;
 		if (dir == 0)
 			aux++;
