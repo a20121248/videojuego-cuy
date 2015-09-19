@@ -49,9 +49,9 @@ public class Juego {
 		final String cadenaJuegoCompletado = "El juego terminó, pero el chowdown sigue.";*/
 		final String[] historias = {
 			"Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
-			"Kiru y Milo viajan a paracas en un auto. Llegan a la playa y empiezan a jugar.",
+			"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
 			"Kiru y Milo se encuentran con Peli el Pelícano. Peli el pelícano no sabe de dónde viene Kiru. Kiru y Milo deciden viajar a la sierra.",
-			"Kiru y Milo conversan con Dana la Llama. Dana responde la pregunta de Kiru. Kiru se contenta y decide, con Milo, viajar por todos los andes."
+			"Kiru y Milo conversan con Dana la Llama. Dana responde la pregunta de Kiru. Kiru se contenta y decide, con Milo, viajar por todos los Andes."
 		};
 		
 		final String cadenaGameOver = "Has perdido.";
@@ -63,6 +63,7 @@ public class Juego {
 			"o	Los comandos deben ser ejecutados en la secuencia correcta sino perderás puntos de vida.\n"+
 			"o	Puedes ver los puntos de vida en la parte superior de la pantalla.\n"+
 			"o	Para activar los terrenos con acciones especiales dúo, tienen que estar sobre ellos Kiru y Milo al mismo tiempo, en los de acciones especiales sólo con uno basta.\n",
+			
 			"o	En tu aventura, a veces te toparás con animales malos.\n"+
 			"o	Estos enemigos te bajarán puntos de vida. Si tus puntos de vida llegan a 0, se acabará el juego.\n"+
 			"o	Si un enemigo afecta a un personaje, este no se podrá mover. Tendrás que usar a su amigo para ayudarlo.\n"
@@ -111,7 +112,7 @@ public class Juego {
 					scanner.nextLine();
 				}
 				
-				//Tutorial 1, Nivel 1, Nivel 2
+				//Tutorial, Nivel 1, Nivel 2
 				gestor.cargarMapa(i);
 				while (true) {
 					System.out.println("Ingresar comando");
