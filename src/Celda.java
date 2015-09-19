@@ -35,8 +35,8 @@ class Celda{
 	public void setIndiceEspecial(int indiceEspecial){this.indiceEspecial = indiceEspecial;}
 	
 	public boolean verificarMovimientoPosible(int tipo){
-		if(this.tipo==3) return true;
-		if(this.tipo == tipo+1) return true;
+		if( this.tipo==3 ) return true;
+		if( this.tipo == tipo+1 ) return true;
 		else return false;
 	}
 }

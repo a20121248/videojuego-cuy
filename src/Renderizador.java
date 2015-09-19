@@ -14,5 +14,4 @@ public class Renderizador{
 	public void mostrarComandos(String comandos){
 		System.out.println("Ejecute la secuencia de comandos: "+comandos);
 	}
-	
 }

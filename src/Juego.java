@@ -5,32 +5,21 @@ public class Juego {
 	public static void bucleLectura() {
 		int teclaPresionada = 0;
 		//System.exit(0) finaliza el programa.
-		while (true) {
+		while ( true ) {
 			try {
 				teclaPresionada = System.in.read();
 			} 
-			catch (IOException e) {
+			catch ( IOException e ) {
 				e.printStackTrace();
 			}
-			if (teclaPresionada == -1) {
-				// fin de archivo
-				System.exit(0);
-			}
-			if (teclaPresionada == '\n') {
-				//nueva línea
-				continue;
-			}
-			if (teclaPresionada == 'a') {
-				// ok, salimos del bucle de lectura
-				return;
-			} 
-			else if (teclaPresionada == 'b') {
+			if ( teclaPresionada == -1 ) System.exit(0);
+			if ( teclaPresionada == '\n' ) continue; //nueva línea
+			if ( teclaPresionada == 'a' ) return; // ok, salimos del bucle de lectura
+			else if ( teclaPresionada == 'b' ) {
 				System.out.println("El juego termina");
 				System.exit(0);
 			} 
-			else {
-				System.out.println("Presione a o b");
-			}
+			else System.out.println("Presione a o b");
 		}
 	}
 
@@ -74,7 +63,7 @@ public class Juego {
 		
 		boolean gameOver = false;
 		do {
-			if (gameOver) {
+			if ( gameOver ) {
 				//Se ha perdido por lo menos una vez
 				gameOver = false;
 				System.out.println("Vuevelo a intentar..");
@@ -96,17 +85,15 @@ public class Juego {
 			String nombre = scanner.nextLine();
 			int cantMapas = 3;
 			for (int i = 0; i < cantMapas; i++) {
-				if (i == 0) {
-					System.out.println("Tutorial");
-				}
-				else {
-					System.out.println("Nivel " + i);
-				}
+				
+				if ( i == 0 ) System.out.println("Tutorial");
+				else System.out.println("Nivel " + i);
+				
 				//Pantalla de historia "i"
 				System.out.println(historias[i]);
 				System.out.print("Presione enter para continuar.");
 				scanner.nextLine();
-				if(i==0){
+				if ( i==0 ) {
 					System.out.println(dialogo[0]);
 					System.out.print("Presione enter para continuar.");
 					scanner.nextLine();
@@ -120,24 +107,16 @@ public class Juego {
 					int valor = interp.interpretarMovimiento(comando);
 					gestor.realizarMovimiento(valor);
 					String aux = gestor.realizarMovimientoEspecial(valor);
-					if (aux.equals("F")) {
-						//System.out.println("Felicidades, terminó el nivel");
+					if ( aux.equals("F") ) {
 						break;
 					} 
-					else if (!aux.isEmpty()) {
+					else if ( !aux.isEmpty() ) {
 						while (true) {
 							comando = scanner.nextLine();
-							if (interp.interpretarEspecial(comando, aux)) {
-								// Slsvcn estuvo aquí 08/09/2015
-								// acertó el comando, salir del bucle
-								break;
-							} 
+							if ( interp.interpretarEspecial(comando, aux) ) break; // Slsvcn estuvo aquí 08/09/2015; acertó el comando, salir del bucle
 							else {
 								// se equivocó, bajarles vida
-								if (PersonajePrincipal.perderVida(2)) {
-									// siguen vivos
-									System.out.println("Kiru y Milo perdieron 2 puntos de vida.");
-								} 
+								if ( PersonajePrincipal.perderVida(2) ) System.out.println("Kiru y Milo perdieron 2 puntos de vida."); // siguen vivos
 								else {
 									// gg
 									System.out.println(cadenaGameOver);
@@ -147,19 +126,18 @@ public class Juego {
 							}
 							gestor.mostrarComando();
 						}
-						if (gameOver) break;
-						if (gestor.ejecutarComando(valor).equals("F")) {
-							if(i==0){
+						if ( gameOver ) break;
+						if ( gestor.ejecutarComando(valor).equals("F") ) {
+							if( i==0 ){
 								System.out.println(dialogo[1]);
 								System.out.print("Presione enter para continuar.");
 								scanner.nextLine();
 							}
-							//System.out.println("Felicidades, terminó el nivel");
 							break;
 						}
 					}
 				}
-				if (gameOver) break;
+				if ( gameOver ) break;
 			}
 		} 
 		while (gameOver);
@@ -169,7 +147,6 @@ public class Juego {
 		
 		//Pantalla de juego completado
 		System.out.println(cadenaJuegoCompletado);
-		
 		
 		scanner.close();
 	}
