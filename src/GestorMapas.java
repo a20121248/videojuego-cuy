@@ -129,7 +129,7 @@ public class GestorMapas{
 		aux.setEspecial(1);
 		aux.setIndiceEspecial(0);
 		aux.setSprite('C');
-		CeldaEspecial celdaEsp = new CeldaEspecial();
+		CeldaEspecial celdaEsp = new AccionSimple();
 		celdaEsp.setComandoEspecial("WDEQ");
 		direccion = new ArrayList<Integer>();
 		direccion.add(2);
@@ -160,7 +160,7 @@ public class GestorMapas{
 		aux.setEspecial(-2);
 		aux.setIndiceEspecial(1);
 		aux.setSprite('D');
-		celdaEsp = new CeldaEspecial();
+		celdaEsp = new AccionDual();
 		celdaEsp.setComandoEspecial("SDKIQEUO");
 		celdaEsp.setDualOpuesto(2);
 		direccion = new ArrayList<Integer>();
@@ -179,7 +179,7 @@ public class GestorMapas{
 		aux.setEspecial(-2);
 		aux.setIndiceEspecial(2);
 		aux.setSprite('D');
-		celdaEsp = new CeldaEspecial();
+		celdaEsp = new AccionDual();
 		celdaEsp.setComandoEspecial("SDKIQEUO");
 		celdaEsp.setDualOpuesto(1);
 		direccion = new ArrayList<Integer>();
@@ -267,7 +267,7 @@ public class GestorMapas{
 		aux.setEspecial(1);
 		aux.setIndiceEspecial(0);
 		aux.setSprite('C');
-		celdaEsp = new CeldaEspecial();
+		celdaEsp = new AccionSimple();
 		celdaEsp.setComandoEspecial("SDQEQE");
 		direccion = new ArrayList<Integer>();
 		direccion.add(5);
@@ -309,7 +309,7 @@ public class GestorMapas{
 		aux.setEspecial(-1);
 		aux.setIndiceEspecial(1);
 		aux.setSprite('C');
-		celdaEsp = new CeldaEspecial();
+		celdaEsp = new AccionSimple();
 		celdaEsp.setComandoEspecial("JJUOJ");
 		direccion = new ArrayList<Integer>();
 		direccion.add(9);
@@ -403,7 +403,7 @@ public class GestorMapas{
 		aux.setEspecial(1);
 		aux.setIndiceEspecial(0);
 		aux.setSprite('C');
-		celdaEsp = new CeldaEspecial();
+		celdaEsp = new AccionSimple();
 		celdaEsp.setComandoEspecial("SDEWD");
 		direccion = new ArrayList<Integer>();
 		direccion.add(4);
@@ -434,7 +434,7 @@ public class GestorMapas{
 		aux.setEspecial(-2);
 		aux.setIndiceEspecial(1);
 		aux.setSprite('D');
-		celdaEsp = new CeldaEspecial();
+		celdaEsp = new AccionDual();
 		celdaEsp.setComandoEspecial("SIQEUOKLSD");
 		celdaEsp.setDualOpuesto(2);
 		direccion = new ArrayList<Integer>();
@@ -453,7 +453,7 @@ public class GestorMapas{
 		aux.setEspecial(-2);
 		aux.setIndiceEspecial(2);
 		aux.setSprite('D');
-		celdaEsp = new CeldaEspecial();
+		celdaEsp = new AccionDual();
 		celdaEsp.setComandoEspecial("SIQEUOKLSD");
 		celdaEsp.setDualOpuesto(1);
 		direccion = new ArrayList<Integer>();
@@ -619,114 +619,12 @@ public class GestorMapas{
 		else c = mapas.get(indMapaActual).getCelda(jugador2.getPosX(),jugador2.getPosY());
 		int especial = c.getEspecial();
 		int ind = c.getIndiceEspecial();
-		if ( especial == 1 || especial == -1 ){ //comando solo
-			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
-			List<Integer> movX = celdaEsp.getDireccionX();
-			List<Integer> movY = celdaEsp.getDireccionY();
-			
-			if ( mov<4 ){
-				for(int i=0;i<movX.size();i++){
-					mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), celdaOriginal0);
-					celdaOriginal0 = mapaActual.getCelda(movX.get(i),movY.get(i));
-					jugador1.setPosX(movX.get(i));
-					jugador1.setPosY(movY.get(i));
-					mapaActual.modificarPosJugador(0,jugador1.getPosX(),jugador1.getPosY());
-					
-					List<Integer> indObstaculo = celdaEsp.getIndObstaculo();
-					List<Celda> reemplazarObstaculo = celdaEsp.getReemplazarObstaculo();
-					if ( indObstaculo != null ){
-						Integer indObst = indObstaculo.get(i);
-						if ( indObst != -1 ){
-							Objeto bb = mapas.get(indMapaActual).getObstaculo(indObstaculo.get(i));
-							int altura = bb.getAltura();
-							int ancho = bb.getAncho();
-							int posX = bb.getPosX();
-							int posY = bb.getPosY();
-							Celda celdaReemplazar = reemplazarObstaculo.get(i);
-							for(int j=0;j<altura;j++){
-								for(int k=0;k<ancho;k++){
-									Celda aux = mapaActual.getCelda(posX+j,posY+k);
-									aux.setSprite(celdaReemplazar.getSprite());
-									aux.setTipo(celdaReemplazar.getTipo());
-								}
-							}
-						}
-					}
-					rend.dibujarMapa(mapaActual);
-					scanner.nextLine();
-				}
-				realizarMovimientoEspecial(0);
-			}else{
-				for(int i=0;i<movX.size();i++){
-					mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), celdaOriginal1);
-					celdaOriginal1= mapaActual.getCelda(movX.get(i),movY.get(i));
-					jugador2.setPosX(movX.get(i));
-					jugador2.setPosY(movY.get(i));
-					mapaActual.modificarPosJugador(1,jugador2.getPosX(),jugador2.getPosY());
-					
-					List<Integer> indObstaculo = celdaEsp.getIndObstaculo();
-					List<Celda> reemplazarObstaculo = celdaEsp.getReemplazarObstaculo();
-					if ( indObstaculo != null ){
-						Integer indObst = indObstaculo.get(i);
-						if ( indObst != -1 ){
-							Objeto bb = mapas.get(indMapaActual).getObstaculo(indObstaculo.get(i));
-							int altura = bb.getAltura();
-							int ancho = bb.getAncho();
-							int posX = bb.getPosX();
-							int posY = bb.getPosY();
-							char sprite = bb.getSprite();
-							Celda celdaReemplazar = reemplazarObstaculo.get(i);
-							for(int j=0;j<altura;j++){
-								for(int k=0;k<ancho;k++){
-									Celda aux = mapaActual.getCelda(posX+j,posY+k);
-									aux.setSprite(celdaReemplazar.getSprite());
-									aux.setTipo(celdaReemplazar.getTipo());
-								}
-							}
-						}
-					}
-					rend.dibujarMapa(mapaActual);
-					scanner.nextLine();
-				}
-				realizarMovimientoEspecial(4);
-			}
-			c.setEspecial(0);
-		}else if ( especial==2 || especial==-2 ){ //comando dual
-			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
-			int dualOpuesto = celdaEsp.getDualOpuesto();
-			CeldaEspecial celdaEsp2 = mapaActual.getEspecial(dualOpuesto);
-			List<Integer> movX1;
-			List<Integer> movY1;
-			List<Integer> movX2;
-			List<Integer> movY2;
-			if ( mov<4 ){
-				movX1 = celdaEsp.getDireccionX();
-				movY1 = celdaEsp.getDireccionY();
-				movX2 = celdaEsp2.getDireccionX();
-				movY2 = celdaEsp2.getDireccionY();
-			}else{
-				movX1 = celdaEsp2.getDireccionX();
-				movY1 = celdaEsp2.getDireccionY();
-				movX2 = celdaEsp.getDireccionX();
-				movY2 = celdaEsp.getDireccionY();
-			}
-			for(int i=0;i<movX1.size();i++){
-				mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), celdaOriginal0);
-				celdaOriginal0 = mapaActual.getCelda(movX1.get(i),movY1.get(i));
-				mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), celdaOriginal1);
-				celdaOriginal1 = mapaActual.getCelda(movX2.get(i),movY2.get(i));
-				jugador1.setPosX(movX1.get(i));
-				jugador1.setPosY(movY1.get(i));
-				jugador2.setPosX(movX2.get(i));
-				jugador2.setPosY(movY2.get(i));
-				mapaActual.modificarPosJugador(0,jugador1.getPosX(),jugador1.getPosY());
-				mapaActual.modificarPosJugador(1,jugador2.getPosX(),jugador2.getPosY());
-				rend.dibujarMapa(mapaActual);
-				scanner.nextLine();
-			}
-			realizarMovimientoEspecial(0);
-			if ( realizarMovimientoEspecial(4).equals("F") ) return "F";
-		}
+		CeldaEspecial celdaEspp = mapaActual.getEspecial(ind);
+		celdaEspp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2, celdaOriginal0, celdaOriginal1, rend);
+		
+		if(realizarMovimientoEspecial(0).equals("F")) return "F";
+		if(realizarMovimientoEspecial(4).equals("F")) return "F";
+		
 		return "";
 	}
 }

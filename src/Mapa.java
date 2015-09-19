@@ -32,7 +32,7 @@ public class Mapa{
 	}
 	public void retornarCelda(int x,int y,Celda c){
 		List<Celda> aux = map.get(x);
-		aux.set(y, c);
+		aux.set(y, c.copy());
 	}
 	public Celda getCelda(int x,int y){
 		if ( x<0 || x>=altura ) return null;
@@ -60,6 +60,7 @@ public class Mapa{
 			}
 			m.addFila(l);
 		}
+		m.setObstaculos(obstaculos);
 		return m;
 	}
 }

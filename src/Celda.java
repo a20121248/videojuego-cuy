@@ -24,6 +24,13 @@ public class Celda{
 		c.setIndiceEspecial(indiceEspecial);
 		return c;
 	}
+	public void copy2(Celda c){
+		sprite = c.getSprite();
+		especial = c.getEspecial();
+		indiceEspecial = c.getIndiceEspecial();
+		jugador = c.getJugador();
+	}
+	public int getJugador(){return jugador;}
 	public void setJugador(int jugador){this.jugador = jugador;}
 	public void setTipo(TipoCelda tipo){this.tipo = tipo;}
 	public void setSprite(char sprite){this.sprite = sprite;}
