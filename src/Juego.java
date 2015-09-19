@@ -36,7 +36,9 @@ public class Juego {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		final String[] historias = {
+		/* Director's Cut
+		 * 
+		 * final String[] historias = {
 			"Había una vez un cuy que jugaba chowdown y se fue de viaje por el Perú buscando chowdonitas.",
 			"Conoció a Andrea Guardia y la retó a un chowdown. Fue ggeado.",
 			"Fue a la mundial de Pokémon y conoció a Cybertron.",
@@ -44,14 +46,38 @@ public class Juego {
 		};
 		
 		final String cadenaGameOver = "Has dejado en visto a Héctor.";
-		final String cadenaJuegoCompletado = "El juego terminó, pero el chowdown sigue.";
+		final String cadenaJuegoCompletado = "El juego terminó, pero el chowdown sigue.";*/
+		final String[] historias = {
+			"Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
+			"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
+			"Kiru y Milo se encuentran con Peli el Pelícano. Peli el pelícano no sabe de dónde viene Kiru. Kiru y Milo deciden viajar a la sierra.",
+			"Kiru y Milo conversan con Dana la Llama. Dana responde la pregunta de Kiru. Kiru se contenta y decide, con Milo, viajar por todos los Andes."
+		};
+		
+		final String cadenaGameOver = "Has perdido.";
+		final String cadenaJuegoCompletado = "Felicitaciones, has terminado el juego.";
+		final String[] dialogo = {
+			"o	Usa WASD para mover a Kiru y JKLI para mover a Milo"+
+			"o	Si ves un lugar para la acción o el dúo ¡Párate sobre él! Podrás realizar acciones especiales.\n"+
+			"o	Sólo podrás pasar los niveles con la ayuda de las acciones especiales. Para esto, tendrás que presionar comandos que se mostrarán en un cuadro de diálogo como éste.\n"+
+			"o	Los comandos deben ser ejecutados en la secuencia correcta sino perderás puntos de vida.\n"+
+			"o	Puedes ver los puntos de vida en la parte superior de la pantalla.\n"+
+			"o	Para activar los terrenos con acciones especiales dúo, tienen que estar sobre ellos Kiru y Milo al mismo tiempo, en los de acciones especiales sólo con uno basta.\n",
+			
+			"o	En tu aventura, a veces te toparás con animales malos.\n"+
+			"o	Estos enemigos te bajarán puntos de vida. Si tus puntos de vida llegan a 0, se acabará el juego.\n"+
+			"o	Si un enemigo afecta a un personaje, este no se podrá mover. Tendrás que usar a su amigo para ayudarlo.\n"
+
+
+		};
+		
 		
 		boolean gameOver = false;
 		do {
 			if (gameOver) {
 				//Se ha perdido por lo menos una vez
 				gameOver = false;
-				System.out.println("Así que quieres volver a intentarlo :v.");
+				System.out.println("Vuevelo a intentar..");
 				PersonajePrincipal.reiniciarVida();
 			}
 			InterpreteComandos interp = new InterpreteComandos();
@@ -63,26 +89,30 @@ public class Juego {
 			
 			//¿Juego nuevo o salir?
 			bucleLectura();
+			scanner.nextLine();
 			
 			//Solicitud de datos para juego nuevo
 			System.out.println("Ingrese su nombre");
-			String nombre = scanner.next();
+			String nombre = scanner.nextLine();
 			int cantMapas = 3;
 			for (int i = 0; i < cantMapas; i++) {
-				System.out.println("Nivel " + (i + 1));
-				
+				if (i == 0) {
+					System.out.println("Tutorial");
+				}
+				else {
+					System.out.println("Nivel " + i);
+				}
 				//Pantalla de historia "i"
 				System.out.println(historias[i]);
 				System.out.print("Presione enter para continuar.");
-				try {
-					System.in.read();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
+				scanner.nextLine();
+				if(i==0){
+					System.out.println(dialogo[0]);
+					System.out.print("Presione enter para continuar.");
+					scanner.nextLine();
 				}
 				
-				
-				//Tutorial 1, Nivel 1, Nivel 2
+				//Tutorial, Nivel 1, Nivel 2
 				gestor.cargarMapa(i);
 				while (true) {
 					System.out.println("Ingresar comando");
@@ -91,7 +121,7 @@ public class Juego {
 					gestor.realizarMovimiento(valor);
 					String aux = gestor.realizarMovimientoEspecial(valor);
 					if (aux.equals("F")) {
-						System.out.println("Felicidades, terminó el nivel");
+						//System.out.println("Felicidades, terminó el nivel");
 						break;
 					} 
 					else if (!aux.isEmpty()) {
@@ -119,7 +149,12 @@ public class Juego {
 						}
 						if (gameOver) break;
 						if (gestor.ejecutarComando(valor).equals("F")) {
-							System.out.println("Felicidades, terminó el nivel");
+							if(i==0){
+								System.out.println(dialogo[1]);
+								System.out.print("Presione enter para continuar.");
+								scanner.nextLine();
+							}
+							//System.out.println("Felicidades, terminó el nivel");
 							break;
 						}
 					}
