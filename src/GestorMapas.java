@@ -18,7 +18,7 @@ public class GestorMapas{
 	Celda celdaDual,celdaOriginal0,celdaOriginal1;
 	int dual;
 	int tipoDual; // 0 = jugador1, 1= jugador2
-	private void añadirMapas() throws IOException{
+	private void anadirMapas() throws IOException{
 		//16 de ancho, 12 de altura
 		Mapa m;
 		Objeto b;
