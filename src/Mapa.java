@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-class Mapa{
+public class Mapa{
 	int ancho;
 	int altura;
 	List<List<Celda> > map;

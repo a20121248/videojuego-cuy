@@ -15,7 +15,9 @@ public class PersonajePrincipal extends Personaje {
 		this.posY = posY;
 	}
 
-	boolean verificarPosX(int dir, int bound1, int bound2, Mapa mapaActual, int tipo) {
+
+	boolean verificarPosX(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
+
 		int aux = posX;
 		if ( dir == 0 ) aux++;
 		else aux--;
@@ -26,7 +28,7 @@ public class PersonajePrincipal extends Personaje {
 		return true;
 	}
 
-	boolean verificarPosY(int dir, int bound1, int bound2, Mapa mapaActual, int tipo) {
+	boolean verificarPosY(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
 		int aux = posY;
 		if ( dir == 0 ) aux++;
 		else aux--;

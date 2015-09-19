@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class GestorMapas{
 	Celda celdaDual,celdaOriginal0,celdaOriginal1;
 	int dual;
 	int tipoDual; // 0 = jugador1, 1= jugador2
-	private void añadirMapas(){
+	private void añadirMapas() throws IOException{
 		//16 de ancho, 12 de altura
 		Mapa m;
 		Objeto b;
@@ -22,11 +26,29 @@ public class GestorMapas{
 		List<Integer> direccion,liberaX,liberaY,valorLiberacion,indObstaculo;
 		List<Celda> reemplazarObstaculo;
 		List<CeldaEspecial> listaCeldaEsp;
-		Celda Esp = new Celda(' ',0);
-		Celda S = new Celda('S',1);
-		Celda N = new Celda('N',2);
-		Celda a = new Celda('a',0);
-		Celda o = new Celda('o',3);
+		Celda Esp = new Celda(' ',TipoCelda.IMPASABLE);
+		Celda S = new Celda('S',TipoCelda.TERRENO_A);
+		Celda N = new Celda('N',TipoCelda.TERRENO_B);
+		Celda a = new Celda('a',TipoCelda.IMPASABLE);
+		Celda o = new Celda('o',TipoCelda.TERRENO_AMBOS);
+		
+		ArrayList<String> lineasMapa0 = new ArrayList<String>();
+		BufferedReader inputStream = null;
+		try {
+			inputStream = new BufferedReader(new FileReader("src/MapaNivel1.txt"));
+			String linea;
+			while ((linea = inputStream.readLine()) != null) {
+				lineasMapa0.add(linea);
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("El archivo no existe en la ruta especificada.");
+		}
+		finally {
+			if (inputStream != null) inputStream.close();
+		}
+		
+		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 2, 11, 0, 0);
 		
 		m = new Mapa(16,12,2,11,0,0);
 		obstaculos = new ArrayList<Objeto>();
@@ -45,6 +67,17 @@ public class GestorMapas{
 		b = new Objeto(6,0,16,2,'a');
 		obstaculos.add(b);
 		m.setObstaculos(obstaculos);
+		
+		for (int i = 0; i < lineasMapa0.size(); i++) {
+			ArrayList<Celda> fila = new ArrayList<Celda>();
+			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
+				Celda celda = new Celda(lineasMapa0.get(i).charAt(j), 0); //todos impasables en un inicio
+				fila.add(celda);
+			}
+			m.addFila(fila);
+		}
+		
+		
 		for(int i=0;i<2;i++){
 			List<Celda> l = new ArrayList<Celda>();
 			for(int j=0;j<16;j++){
@@ -442,7 +475,13 @@ public class GestorMapas{
 	public GestorMapas(){
 		mapas = new ArrayList<Mapa>();
 		rend = new Renderizador();
-		añadirMapas();
+		try {
+			añadirMapas();
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		cant = mapas.size();
 		fin1 = false;
 		fin2 = false;
