@@ -1,7 +1,7 @@
-abstract class Personaje{
+abstract class Personaje implements Dibujable{
 	char sprite;
 	int posX;
 	int posY;
 	int ancho;
-	int alto;
+	int altura;
 }

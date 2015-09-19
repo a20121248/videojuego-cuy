@@ -47,11 +47,14 @@ public class PersonajePrincipal extends Personaje {
 		this.posY = posY;
 	}
 
-	int getPosX() {
+	public int getPosX() {
 		return posX;
 	}
 
-	int getPosY() {
+	public int getPosY() {
 		return posY;
 	}
+	public int getAncho(){return ancho;}
+	public int getAltura(){return altura;}
+	public char getSprite(){return sprite;}
 }
