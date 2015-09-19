@@ -476,7 +476,7 @@ public class GestorMapas{
 		mapas = new ArrayList<Mapa>();
 		rend = new Renderizador();
 		try {
-			añadirMapas();
+			anadirMapas();
 		} 
 		catch (IOException e) {
 			// TODO Auto-generated catch block
