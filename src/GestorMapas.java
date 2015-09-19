@@ -32,7 +32,7 @@ public class GestorMapas{
 		Celda a = new Celda('a',TipoCelda.IMPASABLE);
 		Celda o = new Celda('o',TipoCelda.TERRENO_AMBOS);
 		
-		ArrayList<String> lineasMapa0 = new ArrayList<String>();
+		/*ArrayList<String> lineasMapa0 = new ArrayList<String>();
 		BufferedReader inputStream = null;
 		try {
 			inputStream = new BufferedReader(new FileReader("src/MapaNivel1.txt"));
@@ -48,7 +48,7 @@ public class GestorMapas{
 			if (inputStream != null) inputStream.close();
 		}
 		
-		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 2, 11, 0, 0);
+		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 2, 11, 0, 0);*/
 		
 		m = new Mapa(16,12,2,11,0,0);
 		obstaculos = new ArrayList<Objeto>();
@@ -68,14 +68,14 @@ public class GestorMapas{
 		obstaculos.add(b);
 		m.setObstaculos(obstaculos);
 		
-		for (int i = 0; i < lineasMapa0.size(); i++) {
+		/*for (int i = 0; i < lineasMapa0.size(); i++) {
 			ArrayList<Celda> fila = new ArrayList<Celda>();
 			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
-				Celda celda = new Celda(lineasMapa0.get(i).charAt(j), 0); //todos impasables en un inicio
+				Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_A); //todos impasables en un inicio
 				fila.add(celda);
 			}
 			m.addFila(fila);
-		}
+		}*/
 		
 		
 		for(int i=0;i<2;i++){
@@ -104,7 +104,7 @@ public class GestorMapas{
 		}
 		for(int i=5;i<9;i++){
 			Celda aux = m.getCelda(i,15);
-			aux.setTipo(0);
+			aux.setTipo(TipoCelda.TERRENO_A);
 			aux.setEspecial(3);
 			aux.setSprite('o');
 		}
@@ -118,7 +118,7 @@ public class GestorMapas{
 			for(int j=0;j<altura;j++){
 				for(int k=0;k<ancho;k++){
 					Celda aux = m.getCelda(posX+j,posY+k);
-					aux.setTipo(0);
+					aux.setTipo(TipoCelda.IMPASABLE);
 					aux.setSprite(sprite);
 				}
 			}
@@ -236,12 +236,12 @@ public class GestorMapas{
 		}
 		for(int i=3;i<7;i++){
 			Celda auxi = m.getCelda(i,0);
-			auxi.setTipo(1);
+			auxi.setTipo(TipoCelda.TERRENO_A);
 			auxi.setEspecial(3);
 		}
 		for(int i=8;i<12;i++){
 			Celda auxi = m.getCelda(i,0);
-			auxi.setTipo(2);
+			auxi.setTipo(TipoCelda.TERRENO_B);
 			auxi.setEspecial(3);
 		}		
 		
@@ -256,7 +256,7 @@ public class GestorMapas{
 			for(int j=0;j<altura;j++){
 				for(int k=0;k<ancho;k++){
 					Celda auxi = m.getCelda(posX+j,posY+k);
-					auxi.setTipo(0);
+					auxi.setTipo(TipoCelda.IMPASABLE);
 					auxi.setSprite(sprite);
 				}
 			}
@@ -375,7 +375,7 @@ public class GestorMapas{
 			for(int j=0;j<altura;j++){
 				for(int k=0;k<ancho;k++){
 					Celda auxi = m.getCelda(posX+j,posY+k);
-					auxi.setTipo(0);
+					auxi.setTipo(TipoCelda.IMPASABLE);
 					auxi.setSprite(sprite);
 				}
 			}
@@ -383,11 +383,11 @@ public class GestorMapas{
 		
 		for(int j=12;j<16;j++){
 			Celda aux2 = m.getCelda(6,j);
-			aux2.setTipo(1);
+			aux2.setTipo(TipoCelda.TERRENO_A);
 			aux2.setEspecial(0);
 			aux2.setSprite('o');
 			aux2 = m.getCelda(7,j);
-			aux2.setTipo(2);
+			aux2.setTipo(TipoCelda.TERRENO_B);
 			aux2.setEspecial(0);
 			aux2.setSprite('o');
 		}
@@ -527,14 +527,14 @@ public class GestorMapas{
 		else if ( mov==7 ) c2 = mapaActual.getCelda(jugador2.posX,jugador2.posY+1);
 		if ( c2!=null ) c2 = c2.copy();
 		boolean aux=true;
-		if ( mov==0 ) aux = jugador1.verificarPosX(1,0,mapaActual.getAltura(),mapaActual,0);
-		else if ( mov==1 ) aux = jugador1.verificarPosY(1,0,mapaActual.getAncho(),mapaActual,0);
-		else if ( mov==2 ) aux = jugador1.verificarPosX(0,0,mapaActual.getAltura(),mapaActual,0);
-		else if ( mov==3 ) aux = jugador1.verificarPosY(0,0,mapaActual.getAncho(),mapaActual,0);
-		else if ( mov==4 ) aux = jugador2.verificarPosX(1,0,mapaActual.getAltura(),mapaActual,1);
-		else if ( mov==5 ) aux = jugador2.verificarPosY(1,0,mapaActual.getAncho(),mapaActual,1);
-		else if ( mov==6 ) aux = jugador2.verificarPosX(0,0,mapaActual.getAltura(),mapaActual,1);
-		else if ( mov==7 ) aux = jugador2.verificarPosY(0,0,mapaActual.getAncho(),mapaActual,1);
+		if ( mov==0 ) aux = jugador1.verificarPosX(1,0,mapaActual.getAltura(),mapaActual,TipoCelda.TERRENO_A);
+		else if ( mov==1 ) aux = jugador1.verificarPosY(1,0,mapaActual.getAncho(),mapaActual,TipoCelda.TERRENO_A);
+		else if ( mov==2 ) aux = jugador1.verificarPosX(0,0,mapaActual.getAltura(),mapaActual,TipoCelda.TERRENO_A);
+		else if ( mov==3 ) aux = jugador1.verificarPosY(0,0,mapaActual.getAncho(),mapaActual,TipoCelda.TERRENO_A);
+		else if ( mov==4 ) aux = jugador2.verificarPosX(1,0,mapaActual.getAltura(),mapaActual,TipoCelda.TERRENO_B);
+		else if ( mov==5 ) aux = jugador2.verificarPosY(1,0,mapaActual.getAncho(),mapaActual,TipoCelda.TERRENO_B);
+		else if ( mov==6 ) aux = jugador2.verificarPosX(0,0,mapaActual.getAltura(),mapaActual,TipoCelda.TERRENO_B);
+		else if ( mov==7 ) aux = jugador2.verificarPosY(0,0,mapaActual.getAncho(),mapaActual,TipoCelda.TERRENO_B);
 		if ( !aux ) return;
 		
 		mapaActual.retornarCelda(posXAux, posYAux, c);

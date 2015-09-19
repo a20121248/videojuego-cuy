@@ -38,7 +38,7 @@ public class Celda{
 
 	public boolean verificarMovimientoPosible(TipoCelda tipo){
 		if(this.tipo == TipoCelda.TERRENO_AMBOS) return true;
-		if(this.tipo == tipo + 1) return true;
+		if(this.tipo == tipo) return true;
 
 		else return false;
 	}
