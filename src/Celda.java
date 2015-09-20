@@ -27,6 +27,7 @@ public class Celda{
 	public void copy2(Celda c){
 		sprite = c.getSprite();
 		especial = c.getEspecial();
+		tipo = c.getTipo();
 		indiceEspecial = c.getIndiceEspecial();
 		jugador = c.getJugador();
 	}
