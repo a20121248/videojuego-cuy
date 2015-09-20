@@ -242,9 +242,89 @@ public class GestorMapas{
 		mapas.add(m);
 		
 		// Nivel 1
+		lineasMapa0 = new ArrayList<String>();
+		inputStream = null;
+		try {
+			inputStream = new BufferedReader(new FileReader("src/MapaNivel1.txt"));
+			String linea;
+			linea = inputStream.readLine();
+			while ((linea = inputStream.readLine()) != null) {
+				lineasMapa0.add(linea);
+				//System.out.println(linea);
+			}
+		}
+		catch (FileNotFoundException e) {
+			System.out.println("El archivo no existe en la ruta especificada.");
+		}
+		finally {
+			if (inputStream != null) inputStream.close();
+		}
+		//System.out.println(lineasMapa0.size());System.out.println(lineasMapa0.get(0).length());
+		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 5, 9, 15, 15);		
+		//m = new Mapa(16,12,5,9,15,15);
 		
-		m = new Mapa(16,12,5,9,15,15);
+		for (int i = 0; i < lineasMapa0.size(); i++) {
+			ArrayList<Celda> fila = new ArrayList<Celda>();
+			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
+				if(lineasMapa0.get(i).charAt(j)=='S'){
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_A);
+					//todos impasables en un inicio
+					fila.add(celda);
+				}else if(lineasMapa0.get(i).charAt(j)=='N') {
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_B);
+					//todos impasables en un inicio
+					fila.add(celda);
+				}else if(lineasMapa0.get(i).charAt(j)=='A'){
+					Celda celda = new Celda('S',TipoCelda.TERRENO_A);
+					//todos impasables en un inicio
+					fila.add(celda);
+				}else if(lineasMapa0.get(i).charAt(j)=='B'){
+					Celda celda = new Celda('N',TipoCelda.TERRENO_B);
+					//todos impasables en un inicio
+					fila.add(celda);
+				}else if(lineasMapa0.get(i).charAt(j)=='C' ||lineasMapa0.get(i).charAt(j)=='D'){
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
+					fila.add(celda);
+				}else{
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
+					//todos impasables en un inicio
+					fila.add(celda);
+				}
+			}
+			m.addFila(fila);
+		}
+		
 		obstaculos = new ArrayList<Objeto>();
+		
+		for(int i=0;i<12;i++){
+			for(int j=0;j<16;j++){
+				visit[i][j]=false;
+			}
+		}
+		
+		for(int i=0;i<12;i++){
+			for(int j=0;j<16;j++){
+				//System.out.println(i);System.out.println(j);
+				aux= m.getCelda(i,j);
+				char c=aux.getSprite();
+				//System.out.println(c);
+				if(visit[i][j]==false && c>='a' && c<='z'){
+					int contF=1,contC=1; //contador filas contador columnas
+					while(i+contF<11 && m.getCelda(i+contF,j).getSprite()==c) contF++;
+					while(j+contC<16 && m.getCelda(i,contC+j).getSprite()==c) contC++;
+					for(int k=0;i<contF;k++){
+						for(int l=0;l<contC;l++){
+							visit[i+k][j+l]=true;
+						}
+					}
+					b=new Objeto(i,j,contC,contF,c);
+					obstaculos.add(b);
+				}
+			}
+		}
+		m.setObstaculos(obstaculos);
+		
+		/*obstaculos = new ArrayList<Objeto>();
 		b = new Objeto(8,9,2,2,'i');
 		obstaculos.add(b);
 		b = new Objeto(10,11,2,2,'g');
@@ -254,6 +334,7 @@ public class GestorMapas{
 		b = new Objeto(7,0,16,1,'p');
 		obstaculos.add(b);
 		m.setObstaculos(obstaculos);
+		*/
 		for(int i=0;i<3;i++){
 			List<Celda> l = new ArrayList<Celda>();
 			for(int j=0;j<16;j++){
