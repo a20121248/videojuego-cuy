@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-class Mapa{
+public class Mapa{
 	int ancho;
 	int altura;
 	List<List<Celda> > map;
@@ -26,17 +26,17 @@ class Mapa{
 		List<Celda> aux = map.get(x);
 		Celda c = aux.get(y).copy();
 		c.setJugador(tipo);
-		if(tipo == 0) c.setSprite('A');
-		else if(tipo == 1) c.setSprite('B');
+		if ( tipo == 0 ) c.setSprite('A');
+		else if ( tipo == 1 ) c.setSprite('B');
 		aux.set(y,c);
 	}
 	public void retornarCelda(int x,int y,Celda c){
 		List<Celda> aux = map.get(x);
-		aux.set(y, c);
+		aux.set(y, c.copy());
 	}
 	public Celda getCelda(int x,int y){
-		if(x<0 || x>=altura)return null;
-		if(y<0 || y>=ancho) return null;
+		if ( x<0 || x>=altura ) return null;
+		if ( y<0 || y>=ancho ) return null;
 		List<Celda> aux = map.get(x);
 		return aux.get(y);
 	}
@@ -60,6 +60,7 @@ class Mapa{
 			}
 			m.addFila(l);
 		}
+		m.setObstaculos(obstaculos);
 		return m;
 	}
 }

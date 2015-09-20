@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class CeldaEspecial {
+public abstract class CeldaEspecial {
 	String comandoEspecial;
 	List<Integer> direccionX; //solo si es especial
 	List<Integer> direccionY;
@@ -36,4 +37,6 @@ public class CeldaEspecial {
 	public List<Integer> getIndObstaculo(){return indObstaculo;}
 	public List<Celda> getReemplazarObstaculo(){return reemplazarObstaculo;}
 	public int getDualOpuesto(){return dualOpuesto;}
+	public abstract void ejecutarEspecial(int mov,Mapa mapaActual,PersonajePrincipal jugador1,PersonajePrincipal jugador2,
+			Celda celdaOriginal0, Celda celdaOriginal1, Renderizador rend);
 }
