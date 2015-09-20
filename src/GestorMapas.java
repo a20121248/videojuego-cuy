@@ -119,33 +119,7 @@ public class GestorMapas{
 		}
 		m.setObstaculos(obstaculos);
 		
-		//Coloca las celdas impasables
-		for(int i=0;i<2;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = Esp.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
 		
-		//
-		for(int i=2;i<7;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = S.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		for(int i=7;i<12;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = N.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
 		for(int i=5;i<9;i++){
 			Celda aux = m.getCelda(i,15);
 			aux.setTipo(TipoCelda.TERRENO_A);
