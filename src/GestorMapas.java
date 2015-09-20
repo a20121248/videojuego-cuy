@@ -37,10 +37,8 @@ public class GestorMapas{
 		try {
 			inputStream = new BufferedReader(new FileReader("src/MapaTutorial.txt"));
 			String linea;
-			linea = inputStream.readLine();
 			while ((linea = inputStream.readLine()) != null) {
 				lineasMapa0.add(linea);
-				//System.out.println(linea);
 			}
 		}
 		catch (FileNotFoundException e) {
@@ -49,7 +47,6 @@ public class GestorMapas{
 		finally {
 			if (inputStream != null) inputStream.close();
 		}
-		//System.out.println(lineasMapa0.size());System.out.println(lineasMapa0.get(0).length());
 		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 2, 11, 0, 0);
 		
 		for (int i = 0; i < lineasMapa0.size(); i++) {
@@ -57,26 +54,21 @@ public class GestorMapas{
 			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
 				if(lineasMapa0.get(i).charAt(j)=='S'){
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_A);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='N') {
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_B);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='A'){
 					Celda celda = new Celda('S',TipoCelda.TERRENO_A);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='B'){
 					Celda celda = new Celda('N',TipoCelda.TERRENO_B);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='C' ||lineasMapa0.get(i).charAt(j)=='D'){
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
 					fila.add(celda);
 				}else{
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}
 			}
@@ -241,10 +233,8 @@ public class GestorMapas{
 		try {
 			inputStream = new BufferedReader(new FileReader("src/MapaNivel1.txt"));
 			String linea;
-			linea = inputStream.readLine();
 			while ((linea = inputStream.readLine()) != null) {
 				lineasMapa0.add(linea);
-				//System.out.println(linea);
 			}
 		}
 		catch (FileNotFoundException e) {
@@ -262,26 +252,21 @@ public class GestorMapas{
 			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
 				if(lineasMapa0.get(i).charAt(j)=='S'){
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_A);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='N') {
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_B);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='A'){
 					Celda celda = new Celda('S',TipoCelda.TERRENO_A);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='B'){
 					Celda celda = new Celda('N',TipoCelda.TERRENO_B);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}else if(lineasMapa0.get(i).charAt(j)=='C' ||lineasMapa0.get(i).charAt(j)=='D'){
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
 					fila.add(celda);
 				}else{
 					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
-					//todos impasables en un inicio
 					fila.add(celda);
 				}
 			}
