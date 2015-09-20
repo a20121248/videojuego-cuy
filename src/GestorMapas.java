@@ -34,6 +34,7 @@ public class GestorMapas{
 		ArrayList<String> lineasMapa0 = new ArrayList<String>();
 		BufferedReader inputStream = null;
 
+		//Lectura de archivos de texto
 		try {
 			inputStream = new BufferedReader(new FileReader("src/MapaTutorial.txt"));
 			String linea;
@@ -49,6 +50,7 @@ public class GestorMapas{
 		}
 		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 2, 11, 0, 0);
 		
+		//Se le va agregando celdas en base a los caracteres y el tipo.
 		for (int i = 0; i < lineasMapa0.size(); i++) {
 			ArrayList<Celda> fila = new ArrayList<Celda>();
 			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
@@ -75,9 +77,9 @@ public class GestorMapas{
 			m.addFila(fila);
 		}
 		
-		
 		obstaculos = new ArrayList<Objeto>();
 		
+		//Obstaculos visitados
 		boolean[][] visit = new boolean [20][20];
 		for(int i=0;i<12;i++){
 			for(int j=0;j<16;j++){
@@ -85,6 +87,7 @@ public class GestorMapas{
 			}
 		}
 		
+		//Saca todos los obstaculos del nivel para tenerlos en el atributo obstaculos
 		for(int i=0;i<12;i++){
 			for(int j=0;j<16;j++){
 				//System.out.println(i);System.out.println(j);
@@ -108,30 +111,6 @@ public class GestorMapas{
 		m.setObstaculos(obstaculos);
 		
 		
-		for(int i=0;i<2;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = Esp.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		for(int i=2;i<7;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = S.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		for(int i=7;i<12;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = N.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
 		for(int i=5;i<9;i++){
 			Celda aux = m.getCelda(i,15);
 			aux.setTipo(TipoCelda.TERRENO_A);
