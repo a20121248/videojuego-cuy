@@ -44,6 +44,7 @@ public class Celda{
 
 
 	public boolean verificarMovimientoPosible(TipoCelda tipo){
+		//System.out.println(this.tipo);System.out.println(TipoCelda.TERRENO_AMBOS);
 		if(this.tipo == TipoCelda.TERRENO_AMBOS) return true;
 		if(this.tipo == tipo) return true;
 
