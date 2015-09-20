@@ -94,11 +94,11 @@ public class GestorMapas{
 				Celda aux= m.getCelda(i,j);
 				char c=aux.getSprite();
 				//System.out.println(c);
-				if(visit[i][j]==false && c>='a' && c<='z'){
+				if(visit[i][j]==false && c!=' ' && c!='A' && c!='B' && c!='S' && c!='N' && c!='D' && c!='C'){
 					int contF=1,contC=1; //contador filas contador columnas
 					while(i+contF<12 && m.getCelda(i+contF,j).getSprite()==c) contF++;
 					while(j+contC<16 && m.getCelda(i,contC+j).getSprite()==c) contC++;
-					for(int k=0;i<contF;k++){
+					for(int k=0;k<contF;k++){
 						for(int l=0;l<contC;l++){
 							visit[i+k][j+l]=true;
 						}
@@ -266,11 +266,11 @@ public class GestorMapas{
 				aux= m.getCelda(i,j);
 				char c=aux.getSprite();
 				//System.out.println(c);
-				if(visit[i][j]==false && c>='a' && c<='z'){
+				if(visit[i][j]==false && c!=' ' && c!='A' && c!='B' && c!='S' && c!='N' && c!='D' && c!='C'){
 					int contF=1,contC=1; //contador filas contador columnas
-					while(i+contF<11 && m.getCelda(i+contF,j).getSprite()==c) contF++;
+					while(i+contF<12 && m.getCelda(i+contF,j).getSprite()==c) contF++;
 					while(j+contC<16 && m.getCelda(i,contC+j).getSprite()==c) contC++;
-					for(int k=0;i<contF;k++){
+					for(int k=0;k<contF;k++){
 						for(int l=0;l<contC;l++){
 							visit[i+k][j+l]=true;
 						}
@@ -378,7 +378,7 @@ public class GestorMapas{
 		indObstaculo.add(-1);
 		indObstaculo.add(-1);
 		indObstaculo.add(-1);
-		indObstaculo.add(0);
+		indObstaculo.add(2);
 		reemplazarObstaculo.add(null);
 		reemplazarObstaculo.add(null);
 		reemplazarObstaculo.add(null);
