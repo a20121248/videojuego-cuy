@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.List;
 
@@ -40,7 +42,8 @@ public class GestorMapas{
 
 		//Lectura de archivos de texto
 		try {
-			inputStream = new BufferedReader(new FileReader("src/MapaTutorial.txt"));
+			InputStream in = getClass().getResourceAsStream("/MapaTutorial.txt");
+			inputStream = new BufferedReader(new InputStreamReader(in));
 			String linea;
 			while ((linea = inputStream.readLine()) != null) {
 				lineasMapa0.add(linea);
@@ -214,7 +217,8 @@ public class GestorMapas{
 		lineasMapa0 = new ArrayList<String>();
 		inputStream = null;
 		try {
-			inputStream = new BufferedReader(new FileReader("src/MapaNivel1.txt"));
+			InputStream in = getClass().getResourceAsStream("/MapaNivel1.txt");
+			inputStream = new BufferedReader(new InputStreamReader(in));
 			String linea;
 			while ((linea = inputStream.readLine()) != null) {
 				lineasMapa0.add(linea);
