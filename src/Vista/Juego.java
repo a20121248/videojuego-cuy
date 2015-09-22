@@ -74,7 +74,7 @@ public class Juego {
 			if ( gameOver ) {
 				//Se ha perdido por lo menos una vez
 				gameOver = false;
-				System.out.println("Vuevelo a intentar..");
+				System.out.println("VueLvelo a intentar..");
 				gestor.reiniciarVida();
 			}
 			

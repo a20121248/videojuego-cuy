@@ -24,6 +24,203 @@ public class GestorMapas{
 	int tipoDual; // 0 = jugador1, 1= jugador2
 	int indMovimientoEspecial;
 	CeldaEspecial espAux;
+	private Mapa Leer_Mapa(List<Objeto> obstaculos,int i1,int j1,int i2,int j2,BufferedReader inputStream,ArrayList<String> lineasMapa0, String nombre){
+		boolean[][] visit = new boolean [20][20];
+		for(int i=0;i<12;i++){
+			for(int j=0;j<16;j++){
+				visit[i][j]=false;
+			}
+		}
+		//Lectura de archivos de texto
+		InputStream in = getClass().getResourceAsStream(nombre);
+		inputStream = new BufferedReader(new InputStreamReader(in));
+				
+					String linea;
+					try {
+						while ((linea = inputStream.readLine()) != null) {
+							if(linea.equals("")) break;
+							lineasMapa0.add(linea);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+				Mapa m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), i1, j1, i2, j2);		
+				//m = new Mapa(16,12,5,9,15,15);
+				
+				for (int i = 0; i < lineasMapa0.size(); i++) {
+					ArrayList<Celda> fila = new ArrayList<Celda>();
+					for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
+						if(lineasMapa0.get(i).charAt(j)=='S'){
+							Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_A);
+							fila.add(celda);
+						}else if(lineasMapa0.get(i).charAt(j)=='N') {
+							Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_B);
+							fila.add(celda);
+						}else if(lineasMapa0.get(i).charAt(j)=='A'){
+							Celda celda = new Celda('S',TipoCelda.TERRENO_A);
+							fila.add(celda);
+						}else if(lineasMapa0.get(i).charAt(j)=='B'){
+							Celda celda = new Celda('N',TipoCelda.TERRENO_B);
+							fila.add(celda);
+						}else if(lineasMapa0.get(i).charAt(j)=='C' ||lineasMapa0.get(i).charAt(j)=='D'){
+							Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
+							fila.add(celda);
+						}else{
+							Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
+							fila.add(celda);
+						}
+					}
+					m.addFila(fila);
+				}
+				Celda aux;Objeto b;
+				for(int i=0;i<12;i++){
+					for(int j=0;j<16;j++){
+						//System.out.println(i);System.out.println(j);
+						aux= m.getCelda(i,j);
+						char c=aux.getSprite();
+						//System.out.println(c);
+						if(visit[i][j]==false && c!=' ' && c!='A' && c!='B' && c!='S' && c!='N' && c!='D' && c!='C'){
+							int contF=1,contC=1; //contador filas contador columnas
+							while(i+contF<12 && m.getCelda(i+contF,j).getSprite()==c) contF++;
+							while(j+contC<16 && m.getCelda(i,contC+j).getSprite()==c) contC++;
+							for(int k=0;k<contF;k++){
+								for(int l=0;l<contC;l++){
+									visit[i+k][j+l]=true;
+								}
+							}
+							b=new Objeto(i,j,contC,contF,c);
+							obstaculos.add(b);
+						}
+					}
+				}
+				m.setObstaculos(obstaculos);	
+				for(int i=0;i<obstaculos.size();i++){
+					Objeto bb = obstaculos.get(i);
+					int altura = bb.getAltura();
+					int ancho = bb.getAncho();
+					int posX = bb.getPosX();
+					int posY = bb.getPosY();
+					char sprite = bb.getSprite();
+					for(int j=0;j<altura;j++){
+						for(int k=0;k<ancho;k++){
+							aux = m.getCelda(posX+j,posY+k);
+							aux.setTipo(TipoCelda.IMPASABLE);
+							aux.setSprite(sprite);
+						}
+					}
+				}
+				int cantCeldasEspeciales=0;
+				try {
+					while ((linea = inputStream.readLine()) != null) {
+						if(linea.equals("")) break;
+						cantCeldasEspeciales = Integer.parseInt(linea);
+						
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				List<CeldaEspecial> listaCeldaEsp = new ArrayList<CeldaEspecial>();
+				//System.out.println("KEK");
+				//System.out.println(cantCeldasEspeciales);
+				for(int i=0;i<cantCeldasEspeciales;i++){
+					//System.out.println(i);
+					int x,y,esp;
+					List<Integer> direccion;
+					
+					try {
+						CeldaEspecial celdaEsp;
+						x = Integer.parseInt(inputStream.readLine());
+						y = Integer.parseInt(inputStream.readLine());
+						aux = m.getCelda(x, y);
+						esp = Integer.parseInt(inputStream.readLine());
+						aux.setEspecial(esp);
+						if(esp == 1 || esp == -1) celdaEsp = new AccionSimple();
+						else celdaEsp = new AccionDual();
+						if(esp == 1 || esp == -1) aux.setSprite('C');
+						else aux.setSprite('D');
+						
+						aux.setIndiceEspecial(Integer.parseInt(inputStream.readLine()));
+						celdaEsp.setComandoEspecial(inputStream.readLine());
+						direccion = new ArrayList<Integer>();
+						int cantMov = Integer.parseInt(inputStream.readLine());
+						for(int j=0;j<cantMov;j++) direccion.add(Integer.parseInt(inputStream.readLine()));
+						celdaEsp.setDireccionX(direccion);
+						direccion = new ArrayList<Integer>();
+						for(int j=0;j<cantMov;j++) direccion.add(Integer.parseInt(inputStream.readLine()));
+						celdaEsp.setDireccionY(direccion);
+						
+						List<Integer >liberaX = new ArrayList<Integer>();
+						List<Integer> liberaY = new ArrayList<Integer>();
+						List<Integer> valorLiberacion = new ArrayList<Integer>();
+						
+						int cantLibera = Integer.parseInt(inputStream.readLine());
+						
+						for(int j=0;j<cantLibera;j++) liberaX.add(Integer.parseInt(inputStream.readLine()));
+						for(int j=0;j<cantLibera;j++) liberaY.add(Integer.parseInt(inputStream.readLine()));
+						for(int j=0;j<cantLibera;j++) valorLiberacion.add(Integer.parseInt(inputStream.readLine()));
+						
+						celdaEsp.setLiberaX(liberaX);
+						celdaEsp.setLiberaY(liberaY);
+						celdaEsp.setValorLiberacion(valorLiberacion);
+						
+						
+						int cantDestruye = Integer.parseInt(inputStream.readLine());
+						
+						
+						if(cantDestruye==1){
+							List<Integer> indObstaculo = new ArrayList<Integer>();
+							List<Celda> reemplazarObstaculo = new ArrayList<Celda>();
+							indObstaculo.add(-1);
+							indObstaculo.add(-1);
+							indObstaculo.add(-1);
+							indObstaculo.add(2);
+							reemplazarObstaculo.add(null);
+							reemplazarObstaculo.add(null);
+							reemplazarObstaculo.add(null);
+							reemplazarObstaculo.add(new Celda('N',TipoCelda.TERRENO_B));
+							celdaEsp.setIndObstaculo(indObstaculo);
+							celdaEsp.setReemplazarObstaculo(reemplazarObstaculo);
+						}
+						
+						if(esp == 2 || esp == -2){
+							celdaEsp.setDualOpuesto(Integer.parseInt(inputStream.readLine()));
+						}
+						
+						listaCeldaEsp.add(celdaEsp);
+						//System.out.println(cantDestruye);
+						inputStream.readLine();
+						
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				m.setListaEspecial(listaCeldaEsp);
+				try {
+					try {
+						while ((linea = inputStream.readLine()) != null) {
+							lineasMapa0.add(linea);
+							if(linea.equals("")) break;
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				finally {
+					if (inputStream != null)
+						try {
+							inputStream.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				}
+				return m;
+	}
 	private void anadirMapas() throws IOException{
 		//16 de ancho, 12 de altura
 		Mapa m;
@@ -38,293 +235,26 @@ public class GestorMapas{
 		Celda a = new Celda('a',TipoCelda.IMPASABLE);
 		Celda o = new Celda('o',TipoCelda.TERRENO_AMBOS);
 		ArrayList<String> lineasMapa0 = new ArrayList<String>();
-		BufferedReader inputStream = null;
-
-		//Lectura de archivos de texto
-		try {
-			InputStream in = getClass().getResourceAsStream("/MapaTutorial.txt");
-			inputStream = new BufferedReader(new InputStreamReader(in));
-			String linea;
-			while ((linea = inputStream.readLine()) != null) {
-				lineasMapa0.add(linea);
-			}
-		}
-		catch (FileNotFoundException e) {
-			System.out.println("El archivo no existe en la ruta especificada.");
-		}
-		finally {
-			if (inputStream != null) inputStream.close();
-		}
-		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 2, 11, 0, 0);
-		
-		//Se le va agregando celdas en base a los caracteres y el tipo.
-		for (int i = 0; i < lineasMapa0.size(); i++) {
-			ArrayList<Celda> fila = new ArrayList<Celda>();
-			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
-				if(lineasMapa0.get(i).charAt(j)=='S'){
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_A);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='N') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_B);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='A'){
-					Celda celda = new Celda('S',TipoCelda.TERRENO_A);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='B'){
-					Celda celda = new Celda('N',TipoCelda.TERRENO_B);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='C' ||lineasMapa0.get(i).charAt(j)=='D'){
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
-					fila.add(celda);
-				}else{
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
-					fila.add(celda);
-				}
-			}
-			m.addFila(fila);
-		}
-		
-		obstaculos = new ArrayList<Objeto>();
-		
-		//Obstaculos visitados
-		boolean[][] visit = new boolean [20][20];
-		for(int i=0;i<12;i++){
-			for(int j=0;j<16;j++){
-				visit[i][j]=false;
-			}
-		}
-		
-		//Saca todos los obstaculos del nivel para tenerlos en el atributo obstaculos
-		for(int i=0;i<12;i++){
-			for(int j=0;j<16;j++){
-				//System.out.println(i);System.out.println(j);
-				Celda aux= m.getCelda(i,j);
-				char c=aux.getSprite();
-				//System.out.println(c);
-				if(visit[i][j]==false && c!=' ' && c!='A' && c!='B' && c!='S' && c!='N' && c!='D' && c!='C'){
-					int contF=1,contC=1; //contador filas contador columnas
-					while(i+contF<12 && m.getCelda(i+contF,j).getSprite()==c) contF++;
-					while(j+contC<16 && m.getCelda(i,contC+j).getSprite()==c) contC++;
-					for(int k=0;k<contF;k++){
-						for(int l=0;l<contC;l++){
-							visit[i+k][j+l]=true;
-						}
-					}
-					b=new Objeto(i,j,contC,contF,c);
-					obstaculos.add(b);
-				}
-			}
-		}
-		m.setObstaculos(obstaculos);
-		
-		
+		BufferedReader inputStream = null;		
+		obstaculos = new ArrayList<Objeto>();	
+		m = Leer_Mapa(obstaculos,2,11,0,0,inputStream,lineasMapa0,"/MapaTutorial.txt");		
 		for(int i=5;i<9;i++){
 			Celda aux = m.getCelda(i,15);
 			aux.setTipo(TipoCelda.TERRENO_A);
 			aux.setEspecial(3);
 			aux.setSprite('o');
 		}
-		for(int i=0;i<obstaculos.size();i++){
-			Objeto bb = obstaculos.get(i);
-			int altura = bb.getAltura();
-			int ancho = bb.getAncho();
-			int posX = bb.getPosX();
-			int posY = bb.getPosY();
-			char sprite = bb.getSprite();
-			for(int j=0;j<altura;j++){
-				for(int k=0;k<ancho;k++){
-					Celda aux = m.getCelda(posX+j,posY+k);
-					aux.setTipo(TipoCelda.IMPASABLE);
-					aux.setSprite(sprite);
-				}
-			}
-		}
-		listaCeldaEsp = new ArrayList<CeldaEspecial>();
+		Celda aux;
+		CeldaEspecial celdaEsp;
 		
-		Celda aux = m.getCelda(2,8);
-		aux.setEspecial(1);
-		aux.setIndiceEspecial(0);
-		aux.setSprite('C');
-		CeldaEspecial celdaEsp = new AccionSimple();
-		celdaEsp.setComandoEspecial("WDEQ");
-		direccion = new ArrayList<Integer>();
-		direccion.add(2);
-		direccion.add(2);
-		direccion.add(2);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(9);
-		direccion.add(10);
-		direccion.add(11);
-		celdaEsp.setDireccionY(direccion);
-		
-		liberaX = new ArrayList<Integer>();
-		liberaY = new ArrayList<Integer>();
-		valorLiberacion = new ArrayList<Integer>();
-		liberaX.add(5);
-		liberaX.add(8);
-		liberaY.add(13);
-		liberaY.add(13);
-		valorLiberacion.add(2);
-		valorLiberacion.add(2);
-		celdaEsp.setLiberaX(liberaX);
-		celdaEsp.setLiberaY(liberaY);
-		celdaEsp.setValorLiberacion(valorLiberacion);
-		listaCeldaEsp.add(celdaEsp);
-		
-		aux = m.getCelda(5,13);
-		aux.setEspecial(-2);
-		aux.setIndiceEspecial(1);
-		aux.setSprite('D');
-		celdaEsp = new AccionDual();
-		celdaEsp.setComandoEspecial("SDKIQEUO");
-		celdaEsp.setDualOpuesto(2);
-		direccion = new ArrayList<Integer>();
-		direccion.add(6);
-		direccion.add(6);
-		direccion.add(6);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(13);
-		direccion.add(14);
-		direccion.add(15);
-		celdaEsp.setDireccionY(direccion);
-		listaCeldaEsp.add(celdaEsp);
-		
-		aux = m.getCelda(8,13);
-		aux.setEspecial(-2);
-		aux.setIndiceEspecial(2);
-		aux.setSprite('D');
-		celdaEsp = new AccionDual();
-		celdaEsp.setComandoEspecial("SDKIQEUO");
-		celdaEsp.setDualOpuesto(1);
-		direccion = new ArrayList<Integer>();
-		direccion.add(7);
-		direccion.add(7);
-		direccion.add(7);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(13);
-		direccion.add(14);
-		direccion.add(15);
-		celdaEsp.setDireccionY(direccion);
-		listaCeldaEsp.add(celdaEsp);
-		
-		m.setListaEspecial(listaCeldaEsp);
 		mapas.add(m);
 		
 		// Nivel 1
 		lineasMapa0 = new ArrayList<String>();
 		inputStream = null;
-		try {
-			InputStream in = getClass().getResourceAsStream("/MapaNivel1.txt");
-			inputStream = new BufferedReader(new InputStreamReader(in));
-			String linea;
-			while ((linea = inputStream.readLine()) != null) {
-				lineasMapa0.add(linea);
-			}
-		}
-		catch (FileNotFoundException e) {
-			System.out.println("El archivo no existe en la ruta especificada.");
-		}
-		finally {
-			if (inputStream != null) inputStream.close();
-		}
-		//System.out.println(lineasMapa0.size());System.out.println(lineasMapa0.get(0).length());
-		m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), 5, 9, 15, 15);		
-		//m = new Mapa(16,12,5,9,15,15);
+		obstaculos = new ArrayList<Objeto>();	
+		m=Leer_Mapa(obstaculos,5,9,15,15,inputStream,lineasMapa0,"/MapaNivel1.txt");
 		
-		for (int i = 0; i < lineasMapa0.size(); i++) {
-			ArrayList<Celda> fila = new ArrayList<Celda>();
-			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
-				if(lineasMapa0.get(i).charAt(j)=='S'){
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_A);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='N') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_B);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='A'){
-					Celda celda = new Celda('S',TipoCelda.TERRENO_A);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='B'){
-					Celda celda = new Celda('N',TipoCelda.TERRENO_B);
-					fila.add(celda);
-				}else if(lineasMapa0.get(i).charAt(j)=='C' ||lineasMapa0.get(i).charAt(j)=='D'){
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
-					fila.add(celda);
-				}else{
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
-					fila.add(celda);
-				}
-			}
-			m.addFila(fila);
-		}
-		
-		obstaculos = new ArrayList<Objeto>();
-		
-		for(int i=0;i<12;i++){
-			for(int j=0;j<16;j++){
-				visit[i][j]=false;
-			}
-		}
-		
-		for(int i=0;i<12;i++){
-			for(int j=0;j<16;j++){
-				//System.out.println(i);System.out.println(j);
-				aux= m.getCelda(i,j);
-				char c=aux.getSprite();
-				//System.out.println(c);
-				if(visit[i][j]==false && c!=' ' && c!='A' && c!='B' && c!='S' && c!='N' && c!='D' && c!='C'){
-					int contF=1,contC=1; //contador filas contador columnas
-					while(i+contF<12 && m.getCelda(i+contF,j).getSprite()==c) contF++;
-					while(j+contC<16 && m.getCelda(i,contC+j).getSprite()==c) contC++;
-					for(int k=0;k<contF;k++){
-						for(int l=0;l<contC;l++){
-							visit[i+k][j+l]=true;
-						}
-					}
-					b=new Objeto(i,j,contC,contF,c);
-					obstaculos.add(b);
-				}
-			}
-		}
-		m.setObstaculos(obstaculos);
-		
-		/*obstaculos = new ArrayList<Objeto>();
-		b = new Objeto(8,9,2,2,'i');
-		obstaculos.add(b);
-		b = new Objeto(10,11,2,2,'g');
-		obstaculos.add(b);
-		b = new Objeto(8,3,1,4,'L');
-		obstaculos.add(b);
-		b = new Objeto(7,0,16,1,'p');
-		obstaculos.add(b);
-		m.setObstaculos(obstaculos);
-		*/
-		for(int i=0;i<3;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = Esp.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		for(int i=3;i<8;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = S.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		for(int i=8;i<12;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = N.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
 		for(int i=3;i<7;i++){
 			Celda auxi = m.getCelda(i,0);
 			auxi.setTipo(TipoCelda.TERRENO_A);
@@ -334,143 +264,13 @@ public class GestorMapas{
 			Celda auxi = m.getCelda(i,0);
 			auxi.setTipo(TipoCelda.TERRENO_B);
 			auxi.setEspecial(3);
-		}		
-		
-		
-		for(int i=0;i<obstaculos.size();i++){
-			Objeto bb = obstaculos.get(i);
-			int altura = bb.getAltura();
-			int ancho = bb.getAncho();
-			int posX = bb.getPosX();
-			int posY = bb.getPosY();
-			char sprite = bb.getSprite();
-			for(int j=0;j<altura;j++){
-				for(int k=0;k<ancho;k++){
-					Celda auxi = m.getCelda(posX+j,posY+k);
-					auxi.setTipo(TipoCelda.IMPASABLE);
-					auxi.setSprite(sprite);
-				}
-			}
-		}
-		listaCeldaEsp = new ArrayList<CeldaEspecial>();
-		
-		aux = m.getCelda(4,10);
-		aux.setEspecial(1);
-		aux.setIndiceEspecial(0);
-		aux.setSprite('C');
-		celdaEsp = new AccionSimple();
-		celdaEsp.setComandoEspecial("SDQEQE");
-		direccion = new ArrayList<Integer>();
-		direccion.add(5);
-		direccion.add(6);
-		direccion.add(8);
-		direccion.add(4);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(10);
-		direccion.add(10);
-		direccion.add(10);
-		direccion.add(10);
-		celdaEsp.setDireccionY(direccion);
-		liberaX = new ArrayList<Integer>();
-		liberaY = new ArrayList<Integer>();
-		valorLiberacion = new ArrayList<Integer>();
-		liberaX.add(9);
-		liberaY.add(4);
-		valorLiberacion.add(1);
-		celdaEsp.setLiberaX(liberaX);
-		celdaEsp.setLiberaY(liberaY);
-		celdaEsp.setValorLiberacion(valorLiberacion);
-		indObstaculo = new ArrayList<Integer>();
-		reemplazarObstaculo = new ArrayList<Celda>();
-		indObstaculo.add(-1);
-		indObstaculo.add(-1);
-		indObstaculo.add(-1);
-		indObstaculo.add(2);
-		reemplazarObstaculo.add(null);
-		reemplazarObstaculo.add(null);
-		reemplazarObstaculo.add(null);
-		reemplazarObstaculo.add(N.copy());
-		celdaEsp.setIndObstaculo(indObstaculo);
-		celdaEsp.setReemplazarObstaculo(reemplazarObstaculo);
-		
-		listaCeldaEsp.add(celdaEsp);
-		
-		aux = m.getCelda(9,4);
-		aux.setEspecial(-1);
-		aux.setIndiceEspecial(1);
-		aux.setSprite('C');
-		celdaEsp = new AccionSimple();
-		celdaEsp.setComandoEspecial("JJUOJ");
-		direccion = new ArrayList<Integer>();
-		direccion.add(9);
-		direccion.add(9);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(3);
-		direccion.add(2);
-		celdaEsp.setDireccionY(direccion);
-		
-		listaCeldaEsp.add(celdaEsp);
-				
-		m.setListaEspecial(listaCeldaEsp);
-		mapas.add(m);
-		
+		}				
+		mapas.add(m);		
 		//Nivel 2
-		
-		m = new Mapa(16,12,5,10,0,0);
-		obstaculos = new ArrayList<Objeto>();
-		b = new Objeto(7,0,9,1,'g');
-		obstaculos.add(b);
-		b = new Objeto(10,5,2,2,'h');
-		obstaculos.add(b);
-		b = new Objeto(3,4,1,4,'t');
-		obstaculos.add(b);
-		b = new Objeto(8,3,1,3,'m');
-		obstaculos.add(b);
-		b = new Objeto(3,9,7,9,'L');
-		obstaculos.add(b);
-		m.setObstaculos(obstaculos);
-		for(int i=0;i<3;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = Esp.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		for(int i=3;i<8;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = S.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		for(int i=8;i<12;i++){
-			List<Celda> l = new ArrayList<Celda>();
-			for(int j=0;j<16;j++){
-				Celda c = N.copy();
-				l.add(c);
-			}
-			m.addFila(l);
-		}
-		
-		for(int i=0;i<obstaculos.size();i++){
-			Objeto bb = obstaculos.get(i);
-			int altura = bb.getAltura();
-			int ancho = bb.getAncho();
-			int posX = bb.getPosX();
-			int posY = bb.getPosY();
-			char sprite = bb.getSprite();
-			for(int j=0;j<altura;j++){
-				for(int k=0;k<ancho;k++){
-					Celda auxi = m.getCelda(posX+j,posY+k);
-					auxi.setTipo(TipoCelda.IMPASABLE);
-					auxi.setSprite(sprite);
-				}
-			}
-		}
+		lineasMapa0 = new ArrayList<String>();
+		inputStream = null;
+		obstaculos = new ArrayList<Objeto>();	
+		m=Leer_Mapa(obstaculos,5,10,0,0,inputStream,lineasMapa0,"/MapaNivel2.txt");	
 		
 		for(int j=12;j<16;j++){
 			Celda aux2 = m.getCelda(6,j);
@@ -488,78 +288,6 @@ public class GestorMapas{
 		aux2 = m.getCelda(7,15);
 		aux2.setEspecial(3);
 		
-		listaCeldaEsp = new ArrayList<CeldaEspecial>();
-		
-		aux = m.getCelda(4,2);
-		aux.setEspecial(1);
-		aux.setIndiceEspecial(0);
-		aux.setSprite('C');
-		celdaEsp = new AccionSimple();
-		celdaEsp.setComandoEspecial("SDEWD");
-		direccion = new ArrayList<Integer>();
-		direccion.add(4);
-		direccion.add(4);
-		direccion.add(4);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(3);
-		direccion.add(4);
-		direccion.add(5);
-		celdaEsp.setDireccionY(direccion);
-		
-		liberaX = new ArrayList<Integer>();
-		liberaY = new ArrayList<Integer>();
-		valorLiberacion = new ArrayList<Integer>();
-		liberaX.add(6);
-		liberaY.add(8);
-		liberaX.add(8);
-		liberaY.add(8);
-		valorLiberacion.add(2);
-		valorLiberacion.add(2);
-		celdaEsp.setLiberaX(liberaX);
-		celdaEsp.setLiberaY(liberaY);
-		celdaEsp.setValorLiberacion(valorLiberacion);
-		listaCeldaEsp.add(celdaEsp);
-		
-		aux = m.getCelda(6,8);
-		aux.setEspecial(-2);
-		aux.setIndiceEspecial(1);
-		aux.setSprite('D');
-		celdaEsp = new AccionDual();
-		celdaEsp.setComandoEspecial("SIQEUOKLSD");
-		celdaEsp.setDualOpuesto(2);
-		direccion = new ArrayList<Integer>();
-		direccion.add(6);
-		direccion.add(5);
-		direccion.add(6);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(9);
-		direccion.add(12);
-		direccion.add(12);
-		celdaEsp.setDireccionY(direccion);
-		listaCeldaEsp.add(celdaEsp);
-		
-		aux = m.getCelda(8,8);
-		aux.setEspecial(-2);
-		aux.setIndiceEspecial(2);
-		aux.setSprite('D');
-		celdaEsp = new AccionDual();
-		celdaEsp.setComandoEspecial("SIQEUOKLSD");
-		celdaEsp.setDualOpuesto(1);
-		direccion = new ArrayList<Integer>();
-		direccion.add(8);
-		direccion.add(8);
-		direccion.add(7);
-		celdaEsp.setDireccionX(direccion);
-		direccion = new ArrayList<Integer>();
-		direccion.add(9);
-		direccion.add(12);
-		direccion.add(12);
-		celdaEsp.setDireccionY(direccion);
-		listaCeldaEsp.add(celdaEsp);
-		
-		m.setListaEspecial(listaCeldaEsp);
 		mapas.add(m);
 			
 	}
@@ -715,10 +443,6 @@ public class GestorMapas{
 		indMovimientoEspecial += 1;
 		List<Integer> aux = celdaEspp.getDireccionX();
 		List<Integer> auy = celdaEspp.getDireccionY();
-		for(int i=0;i<aux.size();i++){
-			System.out.println(aux.get(i));
-			System.out.println(auy.get(i));
-		}
 		if(celdaEspp.getDireccionX().size() == indMovimientoEspecial){
 			if(realizarMovimientoEspecial(0).equals("F")) return "F";
 			if(realizarMovimientoEspecial(4).equals("F")) return "F";
