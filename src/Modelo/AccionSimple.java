@@ -57,7 +57,6 @@ public class AccionSimple extends CeldaEspecial {
 							int ancho = bb.getAncho();
 							int posX = bb.getPosX();
 							int posY = bb.getPosY();
-							char sprite = bb.getSprite();
 							Celda celdaReemplazar = reemplazarObstaculo.get(i);
 							for(int j=0;j<altura;j++){
 								for(int k=0;k<ancho;k++){

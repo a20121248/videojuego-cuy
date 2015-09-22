@@ -3,8 +3,6 @@ package Controlador;
 import Modelo.*;
 import java.util.ArrayList;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -224,16 +222,7 @@ public class GestorMapas{
 	private void anadirMapas() throws IOException{
 		//16 de ancho, 12 de altura
 		Mapa m;
-		Objeto b;
 		List<Objeto> obstaculos;
-		List<Integer> direccion,liberaX,liberaY,valorLiberacion,indObstaculo;
-		List<Celda> reemplazarObstaculo;
-		List<CeldaEspecial> listaCeldaEsp;
-		Celda Esp = new Celda(' ',TipoCelda.IMPASABLE);
-		Celda S = new Celda('S',TipoCelda.TERRENO_A);
-		Celda N = new Celda('N',TipoCelda.TERRENO_B);
-		Celda a = new Celda('a',TipoCelda.IMPASABLE);
-		Celda o = new Celda('o',TipoCelda.TERRENO_AMBOS);
 		ArrayList<String> lineasMapa0 = new ArrayList<String>();
 		BufferedReader inputStream = null;		
 		obstaculos = new ArrayList<Objeto>();	
@@ -244,8 +233,6 @@ public class GestorMapas{
 			aux.setEspecial(3);
 			aux.setSprite('o');
 		}
-		Celda aux;
-		CeldaEspecial celdaEsp;
 		
 		mapas.add(m);
 		
