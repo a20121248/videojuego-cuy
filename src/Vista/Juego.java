@@ -4,6 +4,7 @@ import Controlador.*;
 import Modelo.*;
 import java.io.IOException;
 import java.util.*;
+import java.lang.String;
 
 public class Juego {
 	public static void bucleLectura() {
@@ -118,7 +119,7 @@ public class Juego {
 					if ( aux.equals("F") ) {
 						break;
 					} 
-					else if ( !aux.isEmpty() ) {
+					else if (!aux.equals("")) {
 						while (true) {
 							rend.mostrarComandos(aux);
 							comando = scanner.nextLine();

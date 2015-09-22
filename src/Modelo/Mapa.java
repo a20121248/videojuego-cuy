@@ -12,7 +12,7 @@ public class Mapa{
 	List<CeldaEspecial> celdasEspeciales;
 	public Mapa(int ancho,int altura,int posX1,int posX2,int posY1,int posY2){
 		obstaculos = new ArrayList<Objeto>();
-		map = new ArrayList<>();
+		map = new ArrayList<List<Celda> >();
 		celdasEspeciales = new ArrayList<CeldaEspecial>();
 		this.ancho = ancho;
 		this.altura = altura;
