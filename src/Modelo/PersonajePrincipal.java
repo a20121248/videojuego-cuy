@@ -1,3 +1,5 @@
+package Modelo;
+
 public class PersonajePrincipal extends Personaje {
 	private static int vida = 10;
 
@@ -16,7 +18,7 @@ public class PersonajePrincipal extends Personaje {
 	}
 
 
-	boolean verificarPosX(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
+	public boolean verificarPosX(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
 
 		int aux = posX;
 		if ( dir == 0 ) aux++;
@@ -28,7 +30,7 @@ public class PersonajePrincipal extends Personaje {
 		return true;
 	}
 
-	boolean verificarPosY(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
+	public boolean verificarPosY(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
 		int aux = posY;
 		if ( dir == 0 ) aux++;
 		else aux--;

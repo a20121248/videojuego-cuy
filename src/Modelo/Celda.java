@@ -1,3 +1,5 @@
+package Modelo;
+
 public class Celda{
 	private char sprite;
 	private TipoCelda tipo; // 0 = impasable, 1 = terreno para A, 2 = terreno para B, 3 = terreno para ambos

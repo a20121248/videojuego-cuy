@@ -1,10 +1,11 @@
+package Modelo;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class AccionDual extends CeldaEspecial {
 	public void ejecutarEspecial(int mov,Mapa mapaActual,PersonajePrincipal jugador1,PersonajePrincipal jugador2,
-			Celda celdaOriginal0, Celda celdaOriginal1, Renderizador rend){
-		Scanner scanner = new Scanner(System.in);
+			Celda celdaOriginal0, Celda celdaOriginal1,int i){
 			CeldaEspecial celdaEsp = this;
 			int dualOpuesto = celdaEsp.getDualOpuesto();
 			CeldaEspecial celdaEsp2 = mapaActual.getEspecial(dualOpuesto);
@@ -22,8 +23,9 @@ public class AccionDual extends CeldaEspecial {
 				movY1 = celdaEsp2.getDireccionY();
 				movX2 = celdaEsp.getDireccionX();
 				movY2 = celdaEsp.getDireccionY();
+				
 			}
-			for(int i=0;i<movX1.size();i++){
+			
 				mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), celdaOriginal0);
 				celdaOriginal0.copy2(mapaActual.getCelda(movX1.get(i),movY1.get(i)));
 				mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), celdaOriginal1);
@@ -34,9 +36,7 @@ public class AccionDual extends CeldaEspecial {
 				jugador2.setPosY(movY2.get(i));
 				mapaActual.modificarPosJugador(0,jugador1.getPosX(),jugador1.getPosY());
 				mapaActual.modificarPosJugador(1,jugador2.getPosX(),jugador2.getPosY());
-				rend.dibujarMapa(mapaActual);
-				scanner.nextLine();
-			}
+			
 		
 	}
 }

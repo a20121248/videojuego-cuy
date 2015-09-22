@@ -1,3 +1,5 @@
+package Modelo;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -5,7 +7,7 @@ public class Mapa{
 	int ancho;
 	int altura;
 	List<List<Celda> > map;
-	int posX1,posX2,posY1,posY2;
+	public int posX1,posX2,posY1,posY2;
 	List<Objeto> obstaculos;
 	List<CeldaEspecial> celdasEspeciales;
 	public Mapa(int ancho,int altura,int posX1,int posX2,int posY1,int posY2){

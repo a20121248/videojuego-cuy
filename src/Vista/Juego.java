@@ -1,3 +1,7 @@
+package Vista;
+
+import Controlador.*;
+import Modelo.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -63,14 +67,16 @@ public class Juego {
 		
 		boolean gameOver = false;
 		do {
+			InterpreteComandos interp = new InterpreteComandos();
+			GestorMapas gestor = new GestorMapas();
+			Renderizador rend = new Renderizador();
 			if ( gameOver ) {
 				//Se ha perdido por lo menos una vez
 				gameOver = false;
 				System.out.println("Vuevelo a intentar..");
-				PersonajePrincipal.reiniciarVida();
+				gestor.reiniciarVida();
 			}
-			InterpreteComandos interp = new InterpreteComandos();
-			GestorMapas gestor = new GestorMapas();
+			
 			//INICIO: Pantalla de inicio
 			System.out.println("Kiru es un cuy mascota");
 			System.out.println("a. Iniciar juego");
@@ -101,22 +107,25 @@ public class Juego {
 				
 				//Tutorial, Nivel 1, Nivel 2
 				gestor.cargarMapa(i);
+				rend.dibujarMapa(gestor.getMapaActual());
 				while (true) {
 					System.out.println("Ingresar comando");
 					String comando = scanner.nextLine();
 					int valor = interp.interpretarMovimiento(comando);
 					gestor.realizarMovimiento(valor);
+					rend.dibujarMapa(gestor.getMapaActual());
 					String aux = gestor.realizarMovimientoEspecial(valor);
 					if ( aux.equals("F") ) {
 						break;
 					} 
 					else if ( !aux.isEmpty() ) {
 						while (true) {
+							rend.mostrarComandos(aux);
 							comando = scanner.nextLine();
 							if ( interp.interpretarEspecial(comando, aux) ) break; // Slsvcn estuvo aquí 08/09/2015; acertó el comando, salir del bucle
 							else {
 								// se equivocó, bajarles vida
-								if ( PersonajePrincipal.perderVida(2) ) System.out.println("Kiru y Milo perdieron 2 puntos de vida."); // siguen vivos
+								if ( gestor.perderVida(2) ) System.out.println("Kiru y Milo perdieron 2 puntos de vida."); // siguen vivos
 								else {
 									// gg
 									System.out.println(cadenaGameOver);
@@ -124,18 +133,23 @@ public class Juego {
 									break;
 								}
 							}
-							gestor.mostrarComando();
 						}
 						if ( gameOver ) break;
-						if ( gestor.ejecutarComando(valor).equals("F") ) {
-							if( i==0 ){
+						
+						while(true) {
+							aux = gestor.ejecutarComando(valor);
+							rend.dibujarMapa(gestor.getMapaActual());
+							scanner.nextLine();
+							if( aux.equals("F") && i==0 ){
 								System.out.println(dialogo[1]);
 								System.out.print("Presione enter para continuar.");
 								scanner.nextLine();
+								break;
 							}
-							break;
+							if( aux.equals("Done")) break;
 						}
 					}
+					if(aux.equals("F")) break;
 				}
 				if ( gameOver ) break;
 			}

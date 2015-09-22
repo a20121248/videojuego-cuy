@@ -1,3 +1,4 @@
+package Modelo;
 
 public class PersonajeSecundario extends Personaje{
 	public int getPosX(){return posX;}

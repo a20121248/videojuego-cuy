@@ -1,3 +1,5 @@
+package Modelo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -38,5 +40,5 @@ public abstract class CeldaEspecial {
 	public List<Celda> getReemplazarObstaculo(){return reemplazarObstaculo;}
 	public int getDualOpuesto(){return dualOpuesto;}
 	public abstract void ejecutarEspecial(int mov,Mapa mapaActual,PersonajePrincipal jugador1,PersonajePrincipal jugador2,
-			Celda celdaOriginal0, Celda celdaOriginal1, Renderizador rend);
+			Celda celdaOriginal0, Celda celdaOriginal1,int indiceMovimientoEspecial);
 }

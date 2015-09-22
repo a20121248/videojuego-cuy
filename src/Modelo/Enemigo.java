@@ -1,3 +1,5 @@
+package Modelo;
+
 
 public class Enemigo extends Personaje {
 	public int getPosX(){return posX;}

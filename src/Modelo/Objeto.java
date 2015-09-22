@@ -1,3 +1,5 @@
+package Modelo;
+
 public class Objeto implements Dibujable{
 	char sprite;
 	int posX,posY; //esquina superior izquierda

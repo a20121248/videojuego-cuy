@@ -1,16 +1,15 @@
+package Modelo;
+
 import java.util.List;
-import java.util.Scanner;
 
 public class AccionSimple extends CeldaEspecial {
 	public void ejecutarEspecial(int mov,Mapa mapaActual,PersonajePrincipal jugador1,PersonajePrincipal jugador2,
-			Celda celdaOriginal0, Celda celdaOriginal1, Renderizador rend){
-		Scanner scanner = new Scanner(System.in);
+			Celda celdaOriginal0, Celda celdaOriginal1, int i){
 			CeldaEspecial celdaEsp = this;
 			List<Integer> movX = celdaEsp.getDireccionX();
 			List<Integer> movY = celdaEsp.getDireccionY();
 			
 			if ( mov<4 ){
-				for(int i=0;i<movX.size();i++){
 					
 					mapaActual.retornarCelda(jugador1.getPosX(), jugador1.getPosY(), celdaOriginal0);
 					//celdaOriginal0 = mapaActual.getCelda(movX.get(i),movY.get(i)).copy();
@@ -40,11 +39,8 @@ public class AccionSimple extends CeldaEspecial {
 							}
 						}
 					}
-					rend.dibujarMapa(mapaActual);
-					scanner.nextLine();
-				}
+				
 			}else{
-				for(int i=0;i<movX.size();i++){
 					mapaActual.retornarCelda(jugador2.getPosX(), jugador2.getPosY(), celdaOriginal1);
 					celdaOriginal1.copy2(mapaActual.getCelda(movX.get(i),movY.get(i)));
 					jugador2.setPosX(movX.get(i));
@@ -72,9 +68,7 @@ public class AccionSimple extends CeldaEspecial {
 							}
 						}
 					}
-					rend.dibujarMapa(mapaActual);
-					scanner.nextLine();
-				}
+				
 			}
 		
 	}

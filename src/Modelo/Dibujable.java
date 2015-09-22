@@ -1,3 +1,5 @@
+package Modelo;
+
 public interface Dibujable {
 	public int getPosX();
 	public int getPosY();

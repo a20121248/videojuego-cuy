@@ -1,3 +1,5 @@
+package Controlador;
+
 public class InterpreteComandos{
 	public int interpretarMovimiento(String comando){
 		if ( comando.equals("") ) return -1;
