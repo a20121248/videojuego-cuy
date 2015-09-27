@@ -5,15 +5,15 @@ import java.util.List;
 
 public abstract class CeldaEspecial {
 	String comandoEspecial;
-	List<Integer> direccionX; //solo si es especial
-	List<Integer> direccionY;
-	List<Integer> liberaX;
-	List<Integer> liberaY;
-	List<Integer> valorLiberacion;
-	List<Integer> indObstaculo;
-	List<Celda> reemplazarObstaculo;
-	List<Integer> momentoObstaculo;
-	int dualOpuesto;
+	private List<Integer> direccionX; //solo si es especial
+	private List<Integer> direccionY;
+	private List<Integer> liberaX;
+	private List<Integer> liberaY;
+	private List<Integer> valorLiberacion;
+	private List<Integer> indObstaculo;
+	private List<Celda> reemplazarObstaculo;
+	//private List<Integer> momentoObstaculo;
+	private int dualOpuesto;
 	public CeldaEspecial(){
 		dualOpuesto = -1;
 		liberaX = new ArrayList<Integer>();
