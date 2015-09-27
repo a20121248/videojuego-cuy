@@ -67,8 +67,6 @@ public class AccionSimple extends CeldaEspecial {
 					}
 				}
 			}
-
 		}
-
 	}
 }

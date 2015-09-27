@@ -1,9 +1,9 @@
 package modelo;
 
 abstract class Personaje implements Dibujable{
-	char sprite;
-	int posX;
-	int posY;
-	int ancho;
-	int altura;
+	protected char sprite;
+	protected int posX;
+	protected int posY;
+	protected int ancho;
+	protected int altura;
 }

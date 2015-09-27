@@ -6,7 +6,7 @@ public class Celda{
 	private int jugador; // -1 = nadie, 0 = jugador A, 1 = jugador B
 	private int especial; // 0 = no 1 = solo activado 2 = ambos activado 3 = fin de nivel
 					//-1 = solo desactivado -2 = ambos desactivado
-	int indiceEspecial;
+	private int indiceEspecial;
 	
 	public char getSprite(){
 		return sprite;

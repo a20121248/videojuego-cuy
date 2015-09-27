@@ -1,10 +1,10 @@
 package modelo;
 
 public class Objeto implements Dibujable{
-	char sprite;
-	int posX,posY; //esquina superior izquierda
-	int ancho;
-	int altura;
+	private char sprite;
+	private int posX,posY; //esquina superior izquierda
+	private int ancho;
+	private int altura;
 	
 	public Objeto(int posX,int posY,int ancho,int altura,char sprite){
 		this.posX = posX;
