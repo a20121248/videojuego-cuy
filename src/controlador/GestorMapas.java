@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
 import java.util.List;
 
 import modelo.*;
@@ -415,12 +414,12 @@ public class GestorMapas{
 	}
 	public String ejecutarComando(int mov){
 		Celda c;
-		Scanner scanner = new Scanner(System.in);
+		//Scanner scanner = new Scanner(System.in);
 		if ( mov<4 ) c = mapas.get(indMapaActual).getCelda(jugador1.getPosX(),jugador1.getPosY());
 		else c = mapas.get(indMapaActual).getCelda(jugador2.getPosX(),jugador2.getPosY());
 		CeldaEspecial celdaEspp;
 		if(indMovimientoEspecial == 0){
-			int especial = c.getEspecial();
+			//int especial = c.getEspecial();
 			int ind = c.getIndiceEspecial();
 			celdaEspp = mapaActual.getEspecial(ind);
 			espAux = celdaEspp;
@@ -429,8 +428,8 @@ public class GestorMapas{
 		}
 		celdaEspp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2, celdaOriginal0, celdaOriginal1,indMovimientoEspecial);
 		indMovimientoEspecial += 1;
-		List<Integer> aux = celdaEspp.getDireccionX();
-		List<Integer> auy = celdaEspp.getDireccionY();
+		//List<Integer> aux = celdaEspp.getDireccionX();
+		//List<Integer> auy = celdaEspp.getDireccionY();
 		if(celdaEspp.getDireccionX().size() == indMovimientoEspecial){
 			if(realizarMovimientoEspecial(0).equals("F")) return "F";
 			if(realizarMovimientoEspecial(4).equals("F")) return "F";

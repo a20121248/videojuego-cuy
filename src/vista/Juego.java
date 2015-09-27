@@ -1,7 +1,7 @@
 package vista;
 
 import controlador.*;
-import modelo.*;
+//import modelo.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,17 +31,6 @@ public class Juego {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		/* Director's Cut
-		 * 
-		 * final String[] historias = {
-			"Había una vez un cuy que jugaba chowdown y se fue de viaje por el Perú buscando chowdonitas.",
-			"Conoció a Andrea Guardia y la retó a un chowdown. Fue ggeado.",
-			"Fue a la mundial de Pokémon y conoció a Cybertron.",
-			"Venció al jefe final Mascapo y se volvió el mejor chowdownita de la historia."
-		};
-		
-		final String cadenaGameOver = "Has dejado en visto a Héctor.";
-		final String cadenaJuegoCompletado = "El juego terminó, pero el chowdown sigue.";*/
 		final String[] historias = {
 			"Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
 			"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
@@ -62,8 +51,6 @@ public class Juego {
 			"o	En tu aventura, a veces te toparás con animales malos.\n"+
 			"o	Estos enemigos te bajarán puntos de vida. Si tus puntos de vida llegan a 0, se acabará el juego.\n"+
 			"o	Si un enemigo afecta a un personaje, este no se podrá mover. Tendrás que usar a su amigo para ayudarlo.\n"
-
-
 		};
 		
 		
@@ -91,6 +78,7 @@ public class Juego {
 			//Solicitud de datos para juego nuevo
 			System.out.println("Ingrese su nombre");
 			String nombre = scanner.nextLine();
+			System.out.println("Bienvenido " + nombre + ".");
 			int cantMapas = 3;
 			for (int i = 0; i < cantMapas; i++) {
 				
