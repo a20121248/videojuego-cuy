@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 abstract class Personaje implements Dibujable{
 	char sprite;

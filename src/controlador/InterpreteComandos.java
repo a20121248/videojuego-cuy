@@ -1,4 +1,4 @@
-package Controlador;
+package controlador;
 
 public class InterpreteComandos{
 	public int interpretarMovimiento(String comando){

@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 public interface Dibujable {
 	public int getPosX();

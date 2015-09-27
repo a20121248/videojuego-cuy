@@ -1,6 +1,6 @@
-package Vista;
+package vista;
 
-import Modelo.*;
+import modelo.*;
 public class Renderizador{
 	public void dibujarMapa(Mapa mapa){
 		int ancho = mapa.getAncho();

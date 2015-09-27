@@ -1,7 +1,8 @@
-package Vista;
+package vista;
 
-import Controlador.*;
-import Modelo.*;
+import controlador.*;
+import modelo.*;
+
 import java.io.IOException;
 import java.util.*;
 import java.lang.String;

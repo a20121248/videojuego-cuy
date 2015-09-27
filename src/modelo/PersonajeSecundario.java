@@ -1,7 +1,6 @@
-package Modelo;
+package modelo;
 
-
-public class Enemigo extends Personaje {
+public class PersonajeSecundario extends Personaje{
 	public int getPosX(){return posX;}
 	public int getPosY(){return posY;}
 	public int getAncho(){return ancho;}

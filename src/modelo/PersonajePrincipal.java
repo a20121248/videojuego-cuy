@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 public class PersonajePrincipal extends Personaje {
 	private static int vida = 10;
