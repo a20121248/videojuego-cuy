@@ -111,7 +111,6 @@ public class GestorMapas {
 				}
 			}
 		}
-		System.out.println("kek");
 		nombre = nombre.replace(".txt", "");
 		for(int i=0;i<12;i++){
 			int j;
