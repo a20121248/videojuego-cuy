@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.Graphics2D;
+import java.awt.image.*;
 
 public class Mapa {
 	private int ancho;
@@ -91,4 +93,8 @@ public class Mapa {
 		m.setObstaculos(obstaculos);
 		return m;
 	}
+	public void eliminarObstaculo(int i){
+		obstaculos.remove(i);
+	}
+	public int cantidadObstaculos(){return obstaculos.size();}
 }

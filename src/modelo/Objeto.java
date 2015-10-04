@@ -1,10 +1,13 @@
 package modelo;
 
+import java.awt.image.BufferedImage;
+
 public class Objeto implements Dibujable{
 	private char sprite;
 	private int posX,posY; //esquina superior izquierda
 	private int ancho;
 	private int altura;
+	BufferedImage img;
 	
 	public Objeto(int posX,int posY,int ancho,int altura,char sprite){
 		this.posX = posX;
@@ -18,4 +21,6 @@ public class Objeto implements Dibujable{
 	public int getAncho(){return ancho;}
 	public int getAltura(){return altura;}
 	public char getSprite(){return sprite;}
+	public BufferedImage getImg(){return img;}
+	public void setImg(BufferedImage img){this.img=img;}
 }

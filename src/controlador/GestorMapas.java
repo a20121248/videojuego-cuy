@@ -1,11 +1,15 @@
 package controlador;
 
 import java.util.ArrayList;
+import java.awt.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import modelo.*;
 
@@ -107,6 +111,43 @@ public class GestorMapas {
 				}
 			}
 		}
+		System.out.println("kek");
+		nombre = nombre.replace(".txt", "");
+		for(int i=0;i<12;i++){
+			int j;
+			for(j=0;j<16;j++){
+				Celda c = m.getCelda(i, j);
+				if(c.getSprite() == 'S' || c.getSprite()=='A') break;
+			}
+			if(j!=16){
+				for(j=0;j<16;j++){
+					Celda c = m.getCelda(i, j);
+					try {
+						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso1.gif")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			for(j=0;j<16;j++){
+				Celda c = m.getCelda(i, j);
+				if(c.getSprite() == 'N' || c.getSprite()=='B') break;
+			}
+			if(j!= 16){
+				for(j=0;j<16;j++){
+					Celda c = m.getCelda(i, j);
+					try {
+						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+				
+		}
 		m.setObstaculos(obstaculos);
 		for (int i = 0; i < obstaculos.size(); i++) {
 			Objeto bb = obstaculos.get(i);
@@ -115,11 +156,26 @@ public class GestorMapas {
 			int posX = bb.getPosX();
 			int posY = bb.getPosY();
 			char sprite = bb.getSprite();
+			if(sprite != 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite != 'g' & sprite != 't' && sprite != 'd')
+				try {
+					bb.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			for (int j = 0; j < altura; j++) {
 				for (int k = 0; k < ancho; k++) {
 					aux = m.getCelda(posX + j, posY + k);
 					aux.setTipo(TipoCelda.IMPASABLE);
 					aux.setSprite(sprite);
+					if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L' || sprite == 'g' || sprite == 't' || sprite == 'd')
+						try {
+							//System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
+							aux.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 				}
 			}
 		}
@@ -155,6 +211,21 @@ public class GestorMapas {
 					celdaEsp = new AccionSimple();
 				else
 					celdaEsp = new AccionDual();
+				if (esp == 1 || esp == -1)
+					try {
+						aux.setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				else
+					try {
+						aux.setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_rojo.png")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 				if (esp == 1 || esp == -1)
 					aux.setSprite('C');
 				else
@@ -261,6 +332,20 @@ public class GestorMapas {
 			aux.setEspecial(3);
 			aux.setSprite('o');
 		}
+		for(int i=0;i<16;i++){
+			try {
+				m.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				m.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/piso madera.gif")));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		mapas.add(m);
 
@@ -279,6 +364,21 @@ public class GestorMapas {
 			Celda auxi = m.getCelda(i, 0);
 			auxi.setTipo(TipoCelda.TERRENO_B);
 			auxi.setEspecial(3);
+		}
+		for(int i=0;i<16;i++){
+			try {
+				m.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				m.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		mapas.add(m);
 		// Nivel 2

@@ -20,7 +20,7 @@ public class Juego {
 			if (teclaPresionada == -1)
 				System.exit(0);
 			if (teclaPresionada == '\n')
-				continue; // nueva línea
+				continue; // nueva låŒ¤ea
 			if (teclaPresionada == 'a')
 				return; // ok, salimos del bucle de lectura
 			else if (teclaPresionada == 'b') {
@@ -36,7 +36,7 @@ public class Juego {
 		final String[] historias = { 
 			"Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
 			"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
-			"Kiru y Milo se encuentran con Peli el Pelícano. Peli el pelícano no sabe de dónde viene Kiru. Kiru y Milo deciden viajar a la sierra.",
+			"Kiru y Milo se encuentran con Peli el Pelå…¤ano. Peli el pelå…¤ano no sabe de dî‰¢de viene Kiru. Kiru y Milo deciden viajar a la sierra.",
 			"Kiru y Milo conversan con Dana la Llama. Dana responde la pregunta de Kiru. Kiru se contenta y decide, con Milo, viajar por todos los Andes."
 		};
 
@@ -44,22 +44,25 @@ public class Juego {
 		final String cadenaJuegoCompletado = "Felicitaciones, has terminado el juego.";
 		final String[] dialogo = { 
 			"o	Usa WASD para mover a Kiru y JKLI para mover a Milo" +
-			"o	Si ves un lugar para la acción o el dúo ¡Párate sobre él! Podrás realizar acciones especiales.\n" +
-			"o	Sólo podrás pasar los niveles con la ayuda de las acciones especiales. Para esto, tendrás que presionar comandos que se mostrarán en un cuadro de diálogo como éste.\n" +
-			"o	Los comandos deben ser ejecutados en la secuencia correcta sino perderás puntos de vida.\n" +
+			"o	Si ves un lugar para la acciî‰¢ o el dä¾’ ï½¡Pç–µate sobre é§˜! Podrç–½ realizar acciones especiales.\n" +
+			"o	Sî‰ o podrç–½ pasar los niveles con la ayuda de las acciones especiales. Para esto, tendrç–½ que presionar comandos que se mostrarç–£ en un cuadro de diç–ogo como é§¸te.\n" +
+			"o	Los comandos deben ser ejecutados en la secuencia correcta sino perderç–½ puntos de vida.\n" +
 			"o	Puedes ver los puntos de vida en la parte superior de la pantalla.\n" +
-			"o	Para activar los terrenos con acciones especiales dúo, tienen que estar sobre ellos Kiru y Milo al mismo tiempo, en los de acciones especiales sólo con uno basta.\n",
+			"o	Para activar los terrenos con acciones especiales dä¾’, tienen que estar sobre ellos Kiru y Milo al mismo tiempo, en los de acciones especiales sî‰ o con uno basta.\n",
 
-			"o	En tu aventura, a veces te toparás con animales malos.\n" +
-			"o	Estos enemigos te bajarán puntos de vida. Si tus puntos de vida llegan a 0, se acabará el juego.\n" +
-			"o	Si un enemigo afecta a un personaje, este no se podrá mover. Tendrás que usar a su amigo para ayudarlo.\n" 
+			"o	En tu aventura, a veces te toparç–½ con animales malos.\n" +
+			"o	Estos enemigos te bajarç–£ puntos de vida. Si tus puntos de vida llegan a 0, se acabarï¿½ el juego.\n" +
+			"o	Si un enemigo afecta a un personaje, este no se podrï¿½ mover. Tendrç–½ que usar a su amigo para ayudarlo.\n" 
 		};
 
+		
 		boolean gameOver = false;
 		do {
 			InterpreteComandos interp = new InterpreteComandos();
 			GestorMapas gestor = new GestorMapas();
 			Renderizador rend = new Renderizador();
+			Ventana v = new Ventana();
+			v.setVisible(true);
 			if (gameOver) {
 				// Se ha perdido por lo menos una vez
 				gameOver = false;
@@ -72,7 +75,7 @@ public class Juego {
 			System.out.println("a. Iniciar juego");
 			System.out.println("b. Salir del juego");
 
-			// ¿Juego nuevo o salir?
+			// ï½¿Juego nuevo o salir?
 			bucleLectura();
 			scanner.nextLine();
 
@@ -100,13 +103,17 @@ public class Juego {
 
 				// Tutorial, Nivel 1, Nivel 2
 				gestor.cargarMapa(i);
+				System.out.println("kya");
+				v.dibujar(gestor.getMapaActual());
 				rend.dibujarMapa(gestor.getMapaActual());
 				while (true) {
 					System.out.println("Ingresar comando");
 					String comando = scanner.nextLine();
 					int valor = interp.interpretarMovimiento(comando);
 					gestor.realizarMovimiento(valor);
+					v.dibujar(gestor.getMapaActual());
 					rend.dibujarMapa(gestor.getMapaActual());
+					
 					String aux = gestor.realizarMovimientoEspecial(valor);
 					if (aux.equals("F")) {
 						break;
@@ -116,10 +123,10 @@ public class Juego {
 							rend.mostrarComandos(aux);
 							comando = scanner.nextLine();
 							if (interp.interpretarEspecial(comando, aux))
-								break; // Slsvcn estuvo aquí 08/09/2015; acertó
+								break; // Slsvcn estuvo aquï¿½ 08/09/2015; acertï¿½
 										// el comando, salir del bucle
 							else {
-								// se equivocó, bajarles vida
+								// se equivocï¿½, bajarles vida
 								if (gestor.perderVida(2))
 									System.out.println("Kiru y Milo perdieron 2 puntos de vida."); // siguen vivos
 								else {
@@ -135,6 +142,7 @@ public class Juego {
 
 						while (true) {
 							aux = gestor.ejecutarComando(valor);
+							v.dibujar(gestor.getMapaActual());
 							rend.dibujarMapa(gestor.getMapaActual());
 							scanner.nextLine();
 							if (aux.equals("F") && i == 0) {
