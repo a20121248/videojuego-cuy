@@ -3,8 +3,11 @@ package modelo;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 public class Celda{
 	private char sprite;
+	@XStreamOmitField
 	private BufferedImage img;
 	private TipoCelda tipo; // 0 = impasable, 1 = terreno para A, 2 = terreno para B, 3 = terreno para ambos
 	private int jugador; // -1 = nadie, 0 = jugador A, 1 = jugador B

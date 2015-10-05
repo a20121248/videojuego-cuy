@@ -25,6 +25,7 @@ public class GestorMapas {
 	private int dual;
 	private int tipoDual; // 0 = jugador1, 1= jugador2
 	private int indMovimientoEspecial;
+	private int vida;
 	private CeldaEspecial espAux;
 
 	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2, int j2, BufferedReader inputStream,
@@ -408,6 +409,7 @@ public class GestorMapas {
 
 	public GestorMapas() {
 		mapas = new ArrayList<Mapa>();
+		vida = 10;
 		try {
 			anadirMapas();
 		} 
@@ -621,14 +623,224 @@ public class GestorMapas {
 	}
 
 	public void reiniciarVida() {
-		PersonajePrincipal.reiniciarVida();
+		vida = 10;
 	}
 
 	public boolean perderVida(int v) {
-		return PersonajePrincipal.perderVida(v);
+		vida -= v;
+		return (vida > 0);
 	}
 
 	public Mapa getMapaActual() {
 		return mapaActual;
+	}
+	public int getIndMapaActual(){return indMapaActual;}
+	
+	public int getVida(){return vida;}
+	
+	public void recargarImagenes(){
+		Celda aux;
+		mapas = new ArrayList<Mapa>();
+		try {
+			anadirMapas();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		/*for(int m=0;m<mapas.size();m++){
+			
+			String nombre;
+			if(m==0) nombre ="/MapaTutorial";
+			else nombre = "/MapaNivel"+m;
+			for(int i=0;i<12;i++){
+				int j;
+				for(j=0;j<16;j++){
+					Celda c = mapas.get(m).getCelda(i, j);
+					if(c.getSprite() == 'S' || c.getSprite()=='A') break;
+				}
+				if(j!=16){
+					for(j=0;j<16;j++){
+						Celda c = mapas.get(m).getCelda(i, j);
+						try {
+							c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso1.gif")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				
+				for(j=0;j<16;j++){
+					Celda c = mapas.get(m).getCelda(i, j);
+					if(c.getSprite() == 'N' || c.getSprite()=='B') break;
+				}
+				if(j!= 16){
+					for(j=0;j<16;j++){
+						Celda c = mapas.get(m).getCelda(i, j);
+						try {
+							c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+					
+			}
+			for (int i = 0; i < mapas.get(m).cantidadObstaculos(); i++) {
+				Objeto bb = mapas.get(m).getObstaculo(i);
+				int altura = bb.getAltura();
+				int ancho = bb.getAncho();
+				int posX = bb.getPosX();
+				int posY = bb.getPosY();
+				char sprite = bb.getSprite();
+				if(sprite != 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite != 'g' & sprite != 't' && sprite != 'd')
+					try {
+						bb.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				for (int j = 0; j < altura; j++) {
+					for (int k = 0; k < ancho; k++) {
+						aux = mapas.get(m).getCelda(posX + j, posY + k);
+						aux.setTipo(TipoCelda.IMPASABLE);
+						aux.setSprite(sprite);
+						if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L' || sprite == 'g' || sprite == 't' || sprite == 'd')
+							try {
+								//System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
+								aux.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+					}
+				}
+			}
+		}*/
+		String nombre;
+		if(indMapaActual==0) nombre ="/MapaTutorial";
+		else nombre = "/MapaNivel"+indMapaActual;
+		
+		celdaOriginal0.setImg(mapas.get(indMapaActual).getCelda(jugador1.getPosX(), jugador1.getPosY()).getImg());
+		celdaOriginal1.setImg(mapas.get(indMapaActual).getCelda(jugador2.getPosX(), jugador2.getPosY()).getImg());
+		
+		for(int i=0;i<12;i++){
+			int j;
+			for(j=0;j<16;j++){
+				Celda c = mapas.get(indMapaActual).getCelda(i, j);
+				if(c.getSprite() == 'S' || c.getSprite()=='A') break;
+			}
+			if(j!=16){
+				for(j=0;j<16;j++){
+					Celda c = mapaActual.getCelda(i, j);
+					try {
+						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso1.gif")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			for(j=0;j<16;j++){
+				Celda c = mapas.get(indMapaActual).getCelda(i, j);
+				if(c.getSprite() == 'N' || c.getSprite()=='B') break;
+			}
+			if(j!= 16){
+				for(j=0;j<16;j++){
+					Celda c = mapaActual.getCelda(i, j);
+					try {
+						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}		
+		}
+		for (int i = 0; i < mapaActual.cantidadObstaculos(); i++) {
+			Objeto bb = mapaActual.getObstaculo(i);
+			int altura = bb.getAltura();
+			int ancho = bb.getAncho();
+			int posX = bb.getPosX();
+			int posY = bb.getPosY();
+			char sprite = bb.getSprite();
+			if(sprite != 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite != 'g' & sprite != 't' && sprite != 'd')
+				try {
+					bb.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			for (int j = 0; j < altura; j++) {
+				for (int k = 0; k < ancho; k++) {
+					aux = mapaActual.getCelda(posX + j, posY + k);
+					aux.setTipo(TipoCelda.IMPASABLE);
+					aux.setSprite(sprite);
+					if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L' || sprite == 'g' || sprite == 't' || sprite == 'd')
+						try {
+							//System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
+							aux.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				}
+			}
+		}
+		if(indMapaActual==0){
+			for(int i=0;i<16;i++){
+				try {
+					mapaActual.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					mapaActual.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/piso madera.gif")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}else if(indMapaActual==1){
+			for(int i=0;i<16;i++){
+				try {
+					mapaActual.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					mapaActual.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
+		int cant = mapaActual.cantidadCeldasEsp();
+		for(int i=0;i<12;i++){
+			for(int j=0;j<16;j++){
+				aux = mapas.get(indMapaActual).getCelda(i, j);
+				if(aux.getEspecial()==1 || aux.getEspecial() == -1){
+					try {
+						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else if(aux.getEspecial()==2 || aux.getEspecial() == -2){
+					try {
+						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_rojo.png")));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 }

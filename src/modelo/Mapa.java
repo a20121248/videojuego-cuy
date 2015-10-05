@@ -90,11 +90,16 @@ public class Mapa {
 			}
 			m.addFila(l);
 		}
-		m.setObstaculos(obstaculos);
+		List<Objeto> obstaculos2 = new ArrayList<Objeto>();
+		for(int i=0;i<obstaculos.size();i++){
+			obstaculos2.add(obstaculos.get(i).copy());
+		}
+		m.setObstaculos(obstaculos2);
 		return m;
 	}
 	public void eliminarObstaculo(int i){
 		obstaculos.remove(i);
 	}
 	public int cantidadObstaculos(){return obstaculos.size();}
+	public int cantidadCeldasEsp(){return celdasEspeciales.size();}
 }

@@ -10,7 +10,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.*;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 
@@ -21,6 +24,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import java.awt.*;
 import javax.swing.*;
 public class Ventana extends JFrame {
@@ -210,7 +217,31 @@ public class Ventana extends JFrame {
 					addTexto("Presione enter para terminar");
 					dibujarExtra();
 					flag = -3;
+				}else if(e.getKeyChar() == 'c' || e.getKeyChar()=='C'){
+					textos.clear();
+					addTexto("Cargando juego, espere un momento");
+					dibujarExtra();
+					try {XStream xs = new XStream(new DomDriver());
+					
+						gestor = (GestorMapas)xs.fromXML(new FileInputStream("Savestate.xml"));
+						gestor.recargarImagenes();
+			           dibujar(gestor.getMapaActual());
+			           mapaActual = gestor.getIndMapaActual();
+						inicializarTexto();
+						if(mapaActual>0) cambiarNivel(mapaActual);
+						int aux = gestor.getVida();
+						while(aux!=10){
+							quitarVida(2);
+							aux+=2;
+						}
+						dibujarExtra();
+						flag = 1;
+			       } catch (IOException i) {
+			          System.out.println(i.toString());}
+			       
+					
 				}
+				
 			}else if(flag == -4 && e.getKeyCode() == KeyEvent.VK_ENTER){ // game over
 				flag = -5;
 				mapaActual = 0;
@@ -218,6 +249,7 @@ public class Ventana extends JFrame {
 				addTexto("Kiru es un cuy mascota");
 				addTexto("a. Iniciar juego");
 				addTexto("b. Salir del juego");
+				addTexto("c. Cargar partida");
 				dibujarExtra();
 			}else if(flag == -3 && e.getKeyCode() == KeyEvent.VK_ENTER){ // juego terminado
 				System.exit(0);
@@ -247,6 +279,20 @@ public class Ventana extends JFrame {
 			}else if(flag == 1){ // movimiento
 				String str = "";
 				str += e.getKeyChar();
+				if(str.charAt(0) == 'G' || str.charAt(0)=='g'){
+					try {XStream xs = new XStream(new DomDriver());
+					xs.omitField(Celda.class, "img");
+					xs.omitField(GestorMapas.class, "mapas");
+					xs.omitField(Objeto.class, "img");
+			           // 1. Escribir el archivoFileWriter 
+			           FileWriter fw = new FileWriter("savestate.xml");
+			           fw.write(xs.toXML(gestor));
+			           fw.close();
+			           System.exit(0);
+			       } catch (IOException i) {
+			          System.out.println(i.toString());}
+			       }
+				
 				valor = interp.interpretarMovimiento(str);
 				gestor.realizarMovimiento(valor);
 				dibujar(gestor.getMapaActual());
@@ -411,6 +457,7 @@ public class Ventana extends JFrame {
 		addTexto("Kiru es un cuy mascota");
 		addTexto("a. Iniciar juego");
 		addTexto("b. Salir del juego");
+		addTexto("c. Cargar partida");
 	}
 	
 	public static void main(String[] args) {
