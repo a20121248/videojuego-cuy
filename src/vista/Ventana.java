@@ -182,7 +182,11 @@ public class Ventana extends JFrame {
 			}
 			if(flag == -6){ //ingresar nombre
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) nuevoNivel(mapaActual);
-				else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) eliminarUltimo();
+				else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+					eliminarUltimo();
+					if(nombre.length()!=0) nombre= nombre.substring(0,nombre.length()-1);
+					dibujarExtra();
+				}
 				else{
 					char c = e.getKeyChar();
 					if((c>='a' && c<='z')||(c>='A' && c<='Z')){
