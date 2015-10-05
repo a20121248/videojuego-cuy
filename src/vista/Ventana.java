@@ -21,7 +21,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
+import java.awt.*;
+import javax.swing.*;
 public class Ventana extends JFrame {
 
 	private JPanel contentPane;
@@ -59,7 +60,7 @@ public class Ventana extends JFrame {
 			"o	Para activar los terrenos con acciones especiales duo, tienen que estar sobre ellos Kiru y Milo al mismo tiempo, en los de acciones especiales solo con uno basta. ",
 
 			"o	En tu aventura, a veces te toparas con animales malos. " +
-			"o	Estos enemigos te bajaran｣ puntos de vida, si tus puntos de vida llegan a 0, se acabara el juego. " +
+			"o	Estos enemigos te bajaran�ｽ｣ puntos de vida, si tus puntos de vida llegan a 0, se acabara el juego. " +
 			"o	Si un enemigo afecta a un personaje, este no se podra mover, tendra que usar a su amigo para ayudarlo. " 
 		};
 	
@@ -102,11 +103,10 @@ public class Ventana extends JFrame {
 		
 		public void paint(Graphics g){
 			super.paint(g);
-			System.out.println("topkek");
-			int aux = 10;
-			
+			//System.out.println("topkek");
+			int aux = 10;			
 			for(int i=0;i<textos.size();i++){
-				System.out.println(textos.get(i));
+				//System.out.println(textos.get(i));
 				String[] s = textos.get(i).split(" ");
 				String out = "";
 				int l = 0;
@@ -121,8 +121,6 @@ public class Ventana extends JFrame {
 					out += " ";
 					out += s[j];
 					if(out.charAt(out.length()-1) == '.'){
-						
-						System.out.println("kepo");
 						g.drawString(out, 10, aux);
 						out = "";
 						aux+=30;
@@ -367,7 +365,7 @@ public class Ventana extends JFrame {
 		panel.repaint();
 	}
 	public void dibujarExtra(){
-		System.out.println("kya");
+		//System.out.println("kya");
 		panel2.repaint();
 	}
 
@@ -376,14 +374,15 @@ public class Ventana extends JFrame {
 	 */
 	public Ventana() {
 		flag = -5;
-		
+		 JLabel label;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1324, 768);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		/*label = new JLabel();
+		label.setForeground(Color.GREEN);*/
 		panel = new Panel();
 		panel.setBounds(0, 0, 1024, 768);
 		panel.setFocusable(true);
