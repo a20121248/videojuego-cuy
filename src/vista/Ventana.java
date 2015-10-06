@@ -196,7 +196,7 @@ public class Ventana extends JFrame {
 				Object[] options = {"Si","No"};
 				
 				int n = JOptionPane.showOptionDialog(this,
-				    "¿Seguro que desea salir?",
+				    "Â¿Seguro que desea salir?",
 				    "A Silly Question",
 				    JOptionPane.YES_OPTION,
 				    JOptionPane.NO_OPTION,
