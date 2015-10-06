@@ -29,7 +29,6 @@ public class InterpreteComandos {
 
 	public boolean interpretarEspecial(String comando, char comandoIdeal) {
 		comando = comando.toUpperCase();
-		if(comando.charAt(0) == comandoIdeal) return true;
-		else return false;
+		return comando.charAt(0) == comandoIdeal;
 	}
 }
