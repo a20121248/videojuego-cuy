@@ -428,6 +428,26 @@ public class GestorMapas {
 		aux2.setEspecial(3);
 		aux2 = nuevoMapa.getCelda(7, 15);
 		aux2.setEspecial(3);
+		
+		for (int i = 0; i < 8; i++) {
+			try {
+				nuevoMapa.getCelda(0, i*2).setImg(
+						ImageIO.read(getClass().getResource(
+								"/imagenes/MapaNivel2/fondo.png")));
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+			try {
+				nuevoMapa.getCelda(1, i*2).setImg(
+						ImageIO.read(getClass().getResource(
+								"/imagenes/MapaNivel2/fondo.png")));
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+
+		}
 
 		mapas.add(nuevoMapa);
 
@@ -791,6 +811,26 @@ public class GestorMapas {
 							ImageIO.read(getClass().getResource(
 									"/imagenes/MapaNivel1/1.gif")));
 				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		}else if(indMapaActual == 2){
+			for (int i = 0; i < 8; i++) {
+				try {
+					mapaActual.getCelda(0, i*2).setImg(
+							ImageIO.read(getClass().getResource(
+									"/imagenes/MapaNivel2/fondo.png")));
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+				try {
+					mapaActual.getCelda(1, i*2).setImg(
+							ImageIO.read(getClass().getResource(
+									"/imagenes/MapaNivel2/fondo.png")));
+				} catch (IOException e) {
+
 					e.printStackTrace();
 				}
 
