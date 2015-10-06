@@ -105,7 +105,7 @@ public class Ventana extends JFrame {
 		aux = aux.substring(0, aux.length()-1);
 		textos.set(textos.size()-1, aux);
 	}
-	class Panel2 extends JPanel{
+	class PanelGraficos extends JPanel{
 		
 		
 		public void paint(Graphics g){
@@ -140,7 +140,7 @@ public class Ventana extends JFrame {
 		}
 		
 	}
-	class Panel extends JPanel implements KeyListener{
+	class PanelTexto extends JPanel implements KeyListener{
 		public void paint(Graphics g){
 			super.paint(g);
 			if(m!=null){
@@ -178,7 +178,7 @@ public class Ventana extends JFrame {
 			}
 		}
 		
-		public Panel(){
+		public PanelTexto(){
 			addKeyListener(this);
 		}
 
@@ -434,11 +434,11 @@ public class Ventana extends JFrame {
 		contentPane.setLayout(null);
 		/*label = new JLabel();
 		label.setForeground(Color.GREEN);*/
-		panel = new Panel();
+		panel = new PanelTexto();
 		panel.setBounds(0, 0, 1024, 768);
 		panel.setFocusable(true);
 		contentPane.add(panel);
-		panel2 = new Panel2();
+		panel2 = new PanelGraficos();
 		panel2.setBounds(1024,0,200,768);
 		contentPane.add(panel2);
 		this.addFocusListener(new FocusAdapter() {
