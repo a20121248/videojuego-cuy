@@ -20,6 +20,7 @@ public class GestorMapas {
 	private boolean fin1, fin2;
 	private int indMapaActual;
 	private int cant;
+	private String jugador_nombre;
 	private String comandoActual;
 	private Celda celdaDual, celdaOriginal0, celdaOriginal1;
 	private int dual;
@@ -27,6 +28,9 @@ public class GestorMapas {
 	private int indMovimientoEspecial;
 	private int vida;
 	private CeldaEspecial espAux;
+	public String Get_nombre(){
+		return jugador_nombre;
+	}
 
 	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapa0, String nombre) {
 		boolean[][] visit = new boolean[20][20];
@@ -428,12 +432,12 @@ public class GestorMapas {
 		fin2 = false;
 	}
 
-	public void cargarMapa(int index) {
+	public void cargarMapa(int index,String nombre_j) {
 		if (index > cant)
 			return;
 		mapaActual = mapas.get(index).copy();
 		indMapaActual = index;
-
+		jugador_nombre= nombre_j;
 		jugador1 = new PersonajePrincipal(mapaActual.posX1, mapaActual.posY1);
 		Celda c = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
 		celdaOriginal0 = c.copy();
