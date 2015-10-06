@@ -28,7 +28,6 @@ public class GestorMapas {
 	private int indMovimientoEspecial;
 	private int vida;
 	private CeldaEspecial espAux;
-<<<<<<< HEAD
 	
 	//Constantes
 	public static final int MAXY = 12;
@@ -51,16 +50,13 @@ public class GestorMapas {
 		fin2 = false;
 	}
 	
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
-		
-		//Se va a crear una matriz auxiliar para verificar donde estan los obstaculos
-=======
 	public String Get_nombre(){
 		return jugador_nombre;
 	}
-
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapa0, String nombre) {
->>>>>>> origin/master
+	
+	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
+	
+      //Se va a crear una matriz auxiliar para verificar donde estan los obstaculos
 		boolean[][] visit = new boolean[20][20];
 		for (int i = 0; i < MAXY; i++) {
 			for (int j = 0; j < MAXX; j++) {
@@ -90,10 +86,8 @@ public class GestorMapas {
 		for (int i = 0; i < tamY; i++) {
 			ArrayList<Celda> fila = new ArrayList<Celda>();
 			for (int j = 0; j < tamX; j++) {
-				
 				Celda celda;
 				char charAux = lineasMapaAux.get(i).charAt(j);
-				
 				if (charAux == 'S') celda = new Celda(charAux, TipoCelda.TERRENO_A);
 				else if (charAux == 'N') celda = new Celda(charAux, TipoCelda.TERRENO_B);
 				else if (charAux == 'A') celda = new Celda('S', TipoCelda.TERRENO_A);
@@ -105,39 +99,36 @@ public class GestorMapas {
 			nuevoMapa.addFila(fila);
 		}
 		
-		Celda aux;
-		Objeto b;
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 16; j++) {
-				aux = nuevoMapa.getCelda(i, j);
-				char c = aux.getSprite();
-				if (visit[i][j] == false && c != ' ' && c != 'A' && c != 'B'
-						&& c != 'S' && c != 'N' && c != 'D' && c != 'C') {
-					int contF = 1, contC = 1; // contador filas contador
-												// columnas
-					while (i + contF < 12
-							&& nuevoMapa.getCelda(i + contF, j).getSprite() == c)
-						contF++;
-					while (j + contC < 16
-							&& nuevoMapa.getCelda(i, contC + j).getSprite() == c)
-						contC++;
+		//Lectura de Obstaculos
+		Celda celdaAux;
+		Objeto objAux;
+		for (int i = 0; i < MAXY; i++) {
+			for (int j = 0; j < MAXX; j++) {
+				celdaAux = nuevoMapa.getCelda(i, j);
+				char c = celdaAux.getSprite();
+				boolean esObstaculo = c != ' ' && c != 'A' && c != 'B' && c != 'S' && c != 'N' && c != 'D' && c != 'C';
+				if (visit[i][j] == false && esObstaculo) {
+					int contF = 1, contC = 1; // contador filas y contador columnas
+					while (i + contF < MAXY && nuevoMapa.getCelda(i + contF, j).getSprite() == c) contF++;
+					while (j + contC < MAXX && nuevoMapa.getCelda(i, contC + j).getSprite() == c) contC++;
 					for (int k = 0; k < contF; k++) {
 						for (int l = 0; l < contC; l++) {
 							visit[i + k][j + l] = true;
 						}
 					}
-					b = new Objeto(i, j, contC, contF, c);
-					obstaculos.add(b);
+					objAux = new Objeto(i, j, contC, contF, c);
+					obstaculos.add(objAux);
 				}
 			}
 		}
+		
+		//Lectura de imagenes
 		nombre = nombre.replace(".txt", "");
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < MAXY; i++) {
 			int j;
-			for (j = 0; j < 16; j++) {
+			for (j = 0; j < MAXX; j++) {
 				Celda c = nuevoMapa.getCelda(i, j);
-				if (c.getSprite() == 'S' || c.getSprite() == 'A')
-					break;
+				if (c.getSprite() == 'S' || c.getSprite() == 'A') break;
 			}
 			if (j != 16) {
 				for (j = 0; j < 16; j++) {
@@ -189,15 +180,15 @@ public class GestorMapas {
 				}
 			for (int j = 0; j < altura; j++) {
 				for (int k = 0; k < ancho; k++) {
-					aux = nuevoMapa.getCelda(posX + j, posY + k);
-					aux.setTipo(TipoCelda.IMPASABLE);
-					aux.setSprite(sprite);
+					celdaAux = nuevoMapa.getCelda(posX + j, posY + k);
+					celdaAux.setTipo(TipoCelda.IMPASABLE);
+					celdaAux.setSprite(sprite);
 					if (sprite == 'a' || sprite == 'p' || sprite == 'o'
 							|| sprite == 'L' || sprite == 'g' || sprite == 't'
 							|| sprite == 'd')
 						try {
 							// System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
-							aux.setImg(ImageIO.read(getClass().getResource(
+							celdaAux.setImg(ImageIO.read(getClass().getResource(
 									"/imagenes" + nombre + "/" + sprite
 											+ ".gif")));
 						} catch (IOException e) {
@@ -228,16 +219,16 @@ public class GestorMapas {
 				CeldaEspecial celdaEsp;
 				x = Integer.parseInt(inputStream.readLine());
 				y = Integer.parseInt(inputStream.readLine());
-				aux = nuevoMapa.getCelda(x, y);
+				celdaAux = nuevoMapa.getCelda(x, y);
 				esp = Integer.parseInt(inputStream.readLine());
-				aux.setEspecial(esp);
+				celdaAux.setEspecial(esp);
 				if (esp == 1 || esp == -1)
 					celdaEsp = new AccionSimple();
 				else
 					celdaEsp = new AccionDual();
 				if (esp == 1 || esp == -1)
 					try {
-						aux.setImg(ImageIO.read(getClass().getResource(
+						celdaAux.setImg(ImageIO.read(getClass().getResource(
 								"/imagenes/sprite_azul.png")));
 					} catch (IOException e) {
 
@@ -245,7 +236,7 @@ public class GestorMapas {
 					}
 				else
 					try {
-						aux.setImg(ImageIO.read(getClass().getResource(
+						celdaAux.setImg(ImageIO.read(getClass().getResource(
 								"/imagenes/sprite_rojo.png")));
 					} catch (IOException e) {
 
@@ -253,11 +244,11 @@ public class GestorMapas {
 					}
 
 				if (esp == 1 || esp == -1)
-					aux.setSprite('C');
+					celdaAux.setSprite('C');
 				else
-					aux.setSprite('D');
+					celdaAux.setSprite('D');
 
-				aux.setIndiceEspecial(Integer.parseInt(inputStream.readLine()));
+				celdaAux.setIndiceEspecial(Integer.parseInt(inputStream.readLine()));
 				celdaEsp.setComandoEspecial(inputStream.readLine());
 				direccion = new ArrayList<Integer>();
 				int cantMov = Integer.parseInt(inputStream.readLine());
@@ -441,26 +432,9 @@ public class GestorMapas {
 		mapas.add(nuevoMapa);
 
 	}
-
-<<<<<<< HEAD
-	public void cargarMapa(int index) {
-=======
-	public GestorMapas() {
-		mapas = new ArrayList<Mapa>();
-		vida = 10;
-		try {
-			anadirMapas();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		cant = mapas.size();
-		fin1 = false;
-		fin2 = false;
-	}
-
+	
 	public void cargarMapa(int index,String nombre_j) {
->>>>>>> origin/master
+
 		if (index > cant)
 			return;
 		mapaActual = mapas.get(index).copy();
