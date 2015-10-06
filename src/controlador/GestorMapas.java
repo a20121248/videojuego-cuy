@@ -28,8 +28,9 @@ public class GestorMapas {
 	private int vida;
 	private CeldaEspecial espAux;
 
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2, int j2, BufferedReader inputStream,
-			ArrayList<String> lineasMapa0, String nombre) {
+	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,
+			int j2, BufferedReader inputStream, ArrayList<String> lineasMapa0,
+			String nombre) {
 		boolean[][] visit = new boolean[20][20];
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 16; j++) {
@@ -47,40 +48,39 @@ public class GestorMapas {
 					break;
 				lineasMapa0.add(linea);
 			}
-		} 
-		catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
 
-		Mapa m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), i1, j1, i2, j2);
-		// m = new Mapa(16,12,5,9,15,15);
+		Mapa m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), i1,
+				j1, i2, j2);
 
 		for (int i = 0; i < lineasMapa0.size(); i++) {
 			ArrayList<Celda> fila = new ArrayList<Celda>();
 			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
 				if (lineasMapa0.get(i).charAt(j) == 'S') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.TERRENO_A);
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
+							TipoCelda.TERRENO_A);
 					fila.add(celda);
-				}
-				else if (lineasMapa0.get(i).charAt(j) == 'N') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.TERRENO_B);
+				} else if (lineasMapa0.get(i).charAt(j) == 'N') {
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
+							TipoCelda.TERRENO_B);
 					fila.add(celda);
-				}
-				else if (lineasMapa0.get(i).charAt(j) == 'A') {
+				} else if (lineasMapa0.get(i).charAt(j) == 'A') {
 					Celda celda = new Celda('S', TipoCelda.TERRENO_A);
 					fila.add(celda);
-				} 
-				else if (lineasMapa0.get(i).charAt(j) == 'B') {
+				} else if (lineasMapa0.get(i).charAt(j) == 'B') {
 					Celda celda = new Celda('N', TipoCelda.TERRENO_B);
 					fila.add(celda);
-				}
-				else if (lineasMapa0.get(i).charAt(j) == 'C' || lineasMapa0.get(i).charAt(j) == 'D') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.TERRENO_AMBOS);
+				} else if (lineasMapa0.get(i).charAt(j) == 'C'
+						|| lineasMapa0.get(i).charAt(j) == 'D') {
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
+							TipoCelda.TERRENO_AMBOS);
 					fila.add(celda);
-				}
-				else {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.IMPASABLE);
+				} else {
+					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
+							TipoCelda.IMPASABLE);
 					fila.add(celda);
 				}
 			}
@@ -90,17 +90,17 @@ public class GestorMapas {
 		Objeto b;
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 16; j++) {
-				// System.out.println(i);System.out.println(j);
 				aux = m.getCelda(i, j);
 				char c = aux.getSprite();
-				// System.out.println(c);
-				if (visit[i][j] == false && c != ' ' && c != 'A' && c != 'B' && c != 'S' && c != 'N' && c != 'D'
-						&& c != 'C') {
+				if (visit[i][j] == false && c != ' ' && c != 'A' && c != 'B'
+						&& c != 'S' && c != 'N' && c != 'D' && c != 'C') {
 					int contF = 1, contC = 1; // contador filas contador
 												// columnas
-					while (i + contF < 12 && m.getCelda(i + contF, j).getSprite() == c)
+					while (i + contF < 12
+							&& m.getCelda(i + contF, j).getSprite() == c)
 						contF++;
-					while (j + contC < 16 && m.getCelda(i, contC + j).getSprite() == c)
+					while (j + contC < 16
+							&& m.getCelda(i, contC + j).getSprite() == c)
 						contC++;
 					for (int k = 0; k < contF; k++) {
 						for (int l = 0; l < contC; l++) {
@@ -113,40 +113,44 @@ public class GestorMapas {
 			}
 		}
 		nombre = nombre.replace(".txt", "");
-		for(int i=0;i<12;i++){
+		for (int i = 0; i < 12; i++) {
 			int j;
-			for(j=0;j<16;j++){
+			for (j = 0; j < 16; j++) {
 				Celda c = m.getCelda(i, j);
-				if(c.getSprite() == 'S' || c.getSprite()=='A') break;
+				if (c.getSprite() == 'S' || c.getSprite() == 'A')
+					break;
 			}
-			if(j!=16){
-				for(j=0;j<16;j++){
+			if (j != 16) {
+				for (j = 0; j < 16; j++) {
 					Celda c = m.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso1.gif")));
+						c.setImg(ImageIO.read(getClass().getResource(
+								"/imagenes" + nombre + "/piso1.gif")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
 				}
 			}
-			
-			for(j=0;j<16;j++){
+
+			for (j = 0; j < 16; j++) {
 				Celda c = m.getCelda(i, j);
-				if(c.getSprite() == 'N' || c.getSprite()=='B') break;
+				if (c.getSprite() == 'N' || c.getSprite() == 'B')
+					break;
 			}
-			if(j!= 16){
-				for(j=0;j<16;j++){
+			if (j != 16) {
+				for (j = 0; j < 16; j++) {
 					Celda c = m.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif")));
+						c.setImg(ImageIO.read(getClass().getResource(
+								"/imagenes" + nombre + "/piso2.gif")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
 				}
 			}
-				
+
 		}
 		m.setObstaculos(obstaculos);
 		for (int i = 0; i < obstaculos.size(); i++) {
@@ -156,11 +160,14 @@ public class GestorMapas {
 			int posX = bb.getPosX();
 			int posY = bb.getPosY();
 			char sprite = bb.getSprite();
-			if(sprite != 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite != 'g' & sprite != 't' && sprite != 'd')
+			if (sprite != 'a' && sprite != 'p' && sprite != 'o'
+					&& sprite != 'L' && sprite != 'g' & sprite != 't'
+					&& sprite != 'd')
 				try {
-					bb.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+					bb.setImg(ImageIO.read(getClass().getResource(
+							"/imagenes" + nombre + "/" + sprite + ".gif")));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 			for (int j = 0; j < altura; j++) {
@@ -168,12 +175,16 @@ public class GestorMapas {
 					aux = m.getCelda(posX + j, posY + k);
 					aux.setTipo(TipoCelda.IMPASABLE);
 					aux.setSprite(sprite);
-					if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L' || sprite == 'g' || sprite == 't' || sprite == 'd')
+					if (sprite == 'a' || sprite == 'p' || sprite == 'o'
+							|| sprite == 'L' || sprite == 'g' || sprite == 't'
+							|| sprite == 'd')
 						try {
-							//System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
-							aux.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+							// System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
+							aux.setImg(ImageIO.read(getClass().getResource(
+									"/imagenes" + nombre + "/" + sprite
+											+ ".gif")));
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+
 							e.printStackTrace();
 						}
 				}
@@ -187,9 +198,8 @@ public class GestorMapas {
 				cantCeldasEspeciales = Integer.parseInt(linea);
 
 			}
-		} 
-		catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
 		List<CeldaEspecial> listaCeldaEsp = new ArrayList<CeldaEspecial>();
@@ -213,19 +223,21 @@ public class GestorMapas {
 					celdaEsp = new AccionDual();
 				if (esp == 1 || esp == -1)
 					try {
-						aux.setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
+						aux.setImg(ImageIO.read(getClass().getResource(
+								"/imagenes/sprite_azul.png")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
 				else
 					try {
-						aux.setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_rojo.png")));
+						aux.setImg(ImageIO.read(getClass().getResource(
+								"/imagenes/sprite_rojo.png")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
-				
+
 				if (esp == 1 || esp == -1)
 					aux.setSprite('C');
 				else
@@ -254,7 +266,8 @@ public class GestorMapas {
 				for (int j = 0; j < cantLibera; j++)
 					liberaY.add(Integer.parseInt(inputStream.readLine()));
 				for (int j = 0; j < cantLibera; j++)
-					valorLiberacion.add(Integer.parseInt(inputStream.readLine()));
+					valorLiberacion
+							.add(Integer.parseInt(inputStream.readLine()));
 
 				celdaEsp.setLiberaX(liberaX);
 				celdaEsp.setLiberaY(liberaY);
@@ -272,22 +285,23 @@ public class GestorMapas {
 					reemplazarObstaculo.add(null);
 					reemplazarObstaculo.add(null);
 					reemplazarObstaculo.add(null);
-					reemplazarObstaculo.add(new Celda('N', TipoCelda.TERRENO_B));
+					reemplazarObstaculo
+							.add(new Celda('N', TipoCelda.TERRENO_B));
 					celdaEsp.setIndObstaculo(indObstaculo);
 					celdaEsp.setReemplazarObstaculo(reemplazarObstaculo);
 				}
 
 				if (esp == 2 || esp == -2) {
-					celdaEsp.setDualOpuesto(Integer.parseInt(inputStream.readLine()));
+					celdaEsp.setDualOpuesto(Integer.parseInt(inputStream
+							.readLine()));
 				}
 
 				listaCeldaEsp.add(celdaEsp);
 				// System.out.println(cantDestruye);
 				inputStream.readLine();
 
-			} 
-			catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException e) {
+
 				e.printStackTrace();
 			}
 		}
@@ -299,19 +313,16 @@ public class GestorMapas {
 					if (linea.equals(""))
 						break;
 				}
-			} 
-			catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException e) {
+
 				e.printStackTrace();
 			}
-		} 
-		finally {
+		} finally {
 			if (inputStream != null)
 				try {
 					inputStream.close();
-				} 
-			catch (IOException e) {
-					// TODO Auto-generated catch block
+				} catch (IOException e) {
+
 					e.printStackTrace();
 				}
 		}
@@ -325,24 +336,29 @@ public class GestorMapas {
 		ArrayList<String> lineasMapa0 = new ArrayList<String>();
 		BufferedReader inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		m = Leer_Mapa(obstaculos, 2, 11, 0, 0, inputStream, lineasMapa0, "/MapaTutorial.txt");
+		m = Leer_Mapa(obstaculos, 2, 11, 0, 0, inputStream, lineasMapa0,
+				"/MapaTutorial.txt");
 		for (int i = 5; i < 9; i++) {
 			Celda aux = m.getCelda(i, 15);
 			aux.setTipo(TipoCelda.TERRENO_A);
 			aux.setEspecial(3);
 			aux.setSprite('o');
 		}
-		for(int i=0;i<16;i++){
+		for (int i = 0; i < 16; i++) {
 			try {
-				m.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
+				m.getCelda(0, i).setImg(
+						ImageIO.read(getClass().getResource(
+								"/imagenes/MapaTutorial/pared.gif")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			try {
-				m.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/piso madera.gif")));
+				m.getCelda(1, i).setImg(
+						ImageIO.read(getClass().getResource(
+								"/imagenes/MapaTutorial/piso madera.gif")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 		}
@@ -353,7 +369,8 @@ public class GestorMapas {
 		lineasMapa0 = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		m = Leer_Mapa(obstaculos, 5, 9, 15, 15, inputStream, lineasMapa0, "/MapaNivel1.txt");
+		m = Leer_Mapa(obstaculos, 5, 9, 15, 15, inputStream, lineasMapa0,
+				"/MapaNivel1.txt");
 
 		for (int i = 3; i < 7; i++) {
 			Celda auxi = m.getCelda(i, 0);
@@ -365,17 +382,21 @@ public class GestorMapas {
 			auxi.setTipo(TipoCelda.TERRENO_B);
 			auxi.setEspecial(3);
 		}
-		for(int i=0;i<16;i++){
+		for (int i = 0; i < 16; i++) {
 			try {
-				m.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+				m.getCelda(0, i).setImg(
+						ImageIO.read(getClass().getResource(
+								"/imagenes/MapaNivel1/1.gif")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			try {
-				m.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+				m.getCelda(1, i).setImg(
+						ImageIO.read(getClass().getResource(
+								"/imagenes/MapaNivel1/1.gif")));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 
@@ -385,7 +406,8 @@ public class GestorMapas {
 		lineasMapa0 = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		m = Leer_Mapa(obstaculos, 5, 10, 0, 0, inputStream, lineasMapa0, "/MapaNivel2.txt");
+		m = Leer_Mapa(obstaculos, 5, 10, 0, 0, inputStream, lineasMapa0,
+				"/MapaNivel2.txt");
 
 		for (int j = 12; j < 16; j++) {
 			Celda aux2 = m.getCelda(6, j);
@@ -412,9 +434,8 @@ public class GestorMapas {
 		vida = 10;
 		try {
 			anadirMapas();
-		} 
-		catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
 		cant = mapas.size();
@@ -451,47 +472,62 @@ public class GestorMapas {
 			c = celdaOriginal0;
 			posXAux = jugador1.getPosX();
 			posYAux = jugador1.getPosY();
-		}
-		else {
+		} else {
 			c = celdaOriginal1;
 			posXAux = jugador2.getPosX();
 			posYAux = jugador2.getPosY();
 		}
 		if (mov == 0)
-			c2 = mapaActual.getCelda(jugador1.getPosX() - 1, jugador1.getPosY());
+			c2 = mapaActual
+					.getCelda(jugador1.getPosX() - 1, jugador1.getPosY());
 		else if (mov == 1)
-			c2 = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY() - 1);
+			c2 = mapaActual
+					.getCelda(jugador1.getPosX(), jugador1.getPosY() - 1);
 		else if (mov == 2)
-			c2 = mapaActual.getCelda(jugador1.getPosX() + 1, jugador1.getPosY());
+			c2 = mapaActual
+					.getCelda(jugador1.getPosX() + 1, jugador1.getPosY());
 		else if (mov == 3)
-			c2 = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY() + 1);
+			c2 = mapaActual
+					.getCelda(jugador1.getPosX(), jugador1.getPosY() + 1);
 		else if (mov == 4)
-			c2 = mapaActual.getCelda(jugador2.getPosX() - 1, jugador2.getPosY());
+			c2 = mapaActual
+					.getCelda(jugador2.getPosX() - 1, jugador2.getPosY());
 		else if (mov == 5)
-			c2 = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY() - 1);
+			c2 = mapaActual
+					.getCelda(jugador2.getPosX(), jugador2.getPosY() - 1);
 		else if (mov == 6)
-			c2 = mapaActual.getCelda(jugador2.getPosX() + 1, jugador2.getPosY());
+			c2 = mapaActual
+					.getCelda(jugador2.getPosX() + 1, jugador2.getPosY());
 		else if (mov == 7)
-			c2 = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY() + 1);
+			c2 = mapaActual
+					.getCelda(jugador2.getPosX(), jugador2.getPosY() + 1);
 		if (c2 != null)
 			c2 = c2.copy();
 		boolean aux = true;
 		if (mov == 0)
-			aux = jugador1.verificarPosX(1, 0, mapaActual.getAltura(), mapaActual, TipoCelda.TERRENO_A);
+			aux = jugador1.verificarPosX(1, 0, mapaActual.getAltura(),
+					mapaActual, TipoCelda.TERRENO_A);
 		else if (mov == 1)
-			aux = jugador1.verificarPosY(1, 0, mapaActual.getAncho(), mapaActual, TipoCelda.TERRENO_A);
+			aux = jugador1.verificarPosY(1, 0, mapaActual.getAncho(),
+					mapaActual, TipoCelda.TERRENO_A);
 		else if (mov == 2)
-			aux = jugador1.verificarPosX(0, 0, mapaActual.getAltura(), mapaActual, TipoCelda.TERRENO_A);
+			aux = jugador1.verificarPosX(0, 0, mapaActual.getAltura(),
+					mapaActual, TipoCelda.TERRENO_A);
 		else if (mov == 3)
-			aux = jugador1.verificarPosY(0, 0, mapaActual.getAncho(), mapaActual, TipoCelda.TERRENO_A);
+			aux = jugador1.verificarPosY(0, 0, mapaActual.getAncho(),
+					mapaActual, TipoCelda.TERRENO_A);
 		else if (mov == 4)
-			aux = jugador2.verificarPosX(1, 0, mapaActual.getAltura(), mapaActual, TipoCelda.TERRENO_B);
+			aux = jugador2.verificarPosX(1, 0, mapaActual.getAltura(),
+					mapaActual, TipoCelda.TERRENO_B);
 		else if (mov == 5)
-			aux = jugador2.verificarPosY(1, 0, mapaActual.getAncho(), mapaActual, TipoCelda.TERRENO_B);
+			aux = jugador2.verificarPosY(1, 0, mapaActual.getAncho(),
+					mapaActual, TipoCelda.TERRENO_B);
 		else if (mov == 6)
-			aux = jugador2.verificarPosX(0, 0, mapaActual.getAltura(), mapaActual, TipoCelda.TERRENO_B);
+			aux = jugador2.verificarPosX(0, 0, mapaActual.getAltura(),
+					mapaActual, TipoCelda.TERRENO_B);
 		else if (mov == 7)
-			aux = jugador2.verificarPosY(0, 0, mapaActual.getAncho(), mapaActual, TipoCelda.TERRENO_B);
+			aux = jugador2.verificarPosY(0, 0, mapaActual.getAncho(),
+					mapaActual, TipoCelda.TERRENO_B);
 		if (!aux)
 			return;
 
@@ -502,14 +538,15 @@ public class GestorMapas {
 			fin1 = false;
 			if (tipoDual == 0)
 				dual = -1;
-			mapaActual.modificarPosJugador(0, jugador1.getPosX(), jugador1.getPosY());
-		}
-		else {
+			mapaActual.modificarPosJugador(0, jugador1.getPosX(),
+					jugador1.getPosY());
+		} else {
 			celdaOriginal1 = c2.copy();
 			fin2 = false;
 			if (tipoDual == 1)
 				dual = -1;
-			mapaActual.modificarPosJugador(1, jugador2.getPosX(), jugador2.getPosY());
+			mapaActual.modificarPosJugador(1, jugador2.getPosX(),
+					jugador2.getPosY());
 		}
 	}
 
@@ -549,8 +586,7 @@ public class GestorMapas {
 				celdaOriginal1.setEspecial(0);
 
 			return comandoActual;
-		} 
-		else if (especial == 2) { // comando dual
+		} else if (especial == 2) { // comando dual
 
 			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
 			int dualOpuesto = celdaEsp.getDualOpuesto();
@@ -560,8 +596,7 @@ public class GestorMapas {
 				celdaOriginal1.setEspecial(0);
 				c.setEspecial(0);
 				celdaDual.setEspecial(0);
-			} 
-			else {
+			} else {
 				indMovimientoEspecial = 0;
 				dual = ind;
 				celdaDual = c;
@@ -572,15 +607,13 @@ public class GestorMapas {
 				return "";
 			}
 			return comandoActual;
-		} 
-		else if (especial == 3) { // llego a fin de mapa
+		} else if (especial == 3) { // llego a fin de mapa
 			if (mov < 4) {
 				if (fin2)
 					return "F";
 				else
 					fin1 = true;
-			} 
-			else {
+			} else {
 				if (fin1)
 					return "F";
 				else
@@ -594,21 +627,22 @@ public class GestorMapas {
 		Celda c;
 		// Scanner scanner = new Scanner(System.in);
 		if (mov < 4)
-			c = mapas.get(indMapaActual).getCelda(jugador1.getPosX(), jugador1.getPosY());
+			c = mapas.get(indMapaActual).getCelda(jugador1.getPosX(),
+					jugador1.getPosY());
 		else
-			c = mapas.get(indMapaActual).getCelda(jugador2.getPosX(), jugador2.getPosY());
+			c = mapas.get(indMapaActual).getCelda(jugador2.getPosX(),
+					jugador2.getPosY());
 		CeldaEspecial celdaEspp;
 		if (indMovimientoEspecial == 0) {
 			// int especial = c.getEspecial();
 			int ind = c.getIndiceEspecial();
 			celdaEspp = mapaActual.getEspecial(ind);
 			espAux = celdaEspp;
-		} 
-		else {
+		} else {
 			celdaEspp = espAux;
 		}
-		celdaEspp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2, celdaOriginal0, celdaOriginal1,
-				indMovimientoEspecial);
+		celdaEspp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2,
+				celdaOriginal0, celdaOriginal1, indMovimientoEspecial);
 		indMovimientoEspecial += 1;
 		// List<Integer> aux = celdaEspp.getDireccionX();
 		// List<Integer> auy = celdaEspp.getDireccionY();
@@ -634,130 +668,116 @@ public class GestorMapas {
 	public Mapa getMapaActual() {
 		return mapaActual;
 	}
-	public int getIndMapaActual(){return indMapaActual;}
-	
-	public int getVida(){return vida;}
-	
-	public void recargarImagenes(){
+
+	public int getIndMapaActual() {
+		return indMapaActual;
+	}
+
+	public int getVida() {
+		return vida;
+	}
+
+	public void recargarImagenes() {
 		Celda aux;
 		mapas = new ArrayList<Mapa>();
 		try {
 			anadirMapas();
 		} catch (IOException e2) {
-			// TODO Auto-generated catch block
+
 			e2.printStackTrace();
 		}
-		/*for(int m=0;m<mapas.size();m++){
-			
-			String nombre;
-			if(m==0) nombre ="/MapaTutorial";
-			else nombre = "/MapaNivel"+m;
-			for(int i=0;i<12;i++){
-				int j;
-				for(j=0;j<16;j++){
-					Celda c = mapas.get(m).getCelda(i, j);
-					if(c.getSprite() == 'S' || c.getSprite()=='A') break;
-				}
-				if(j!=16){
-					for(j=0;j<16;j++){
-						Celda c = mapas.get(m).getCelda(i, j);
-						try {
-							c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso1.gif")));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				
-				for(j=0;j<16;j++){
-					Celda c = mapas.get(m).getCelda(i, j);
-					if(c.getSprite() == 'N' || c.getSprite()=='B') break;
-				}
-				if(j!= 16){
-					for(j=0;j<16;j++){
-						Celda c = mapas.get(m).getCelda(i, j);
-						try {
-							c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif")));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-					
-			}
-			for (int i = 0; i < mapas.get(m).cantidadObstaculos(); i++) {
-				Objeto bb = mapas.get(m).getObstaculo(i);
-				int altura = bb.getAltura();
-				int ancho = bb.getAncho();
-				int posX = bb.getPosX();
-				int posY = bb.getPosY();
-				char sprite = bb.getSprite();
-				if(sprite != 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite != 'g' & sprite != 't' && sprite != 'd')
-					try {
-						bb.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				for (int j = 0; j < altura; j++) {
-					for (int k = 0; k < ancho; k++) {
-						aux = mapas.get(m).getCelda(posX + j, posY + k);
-						aux.setTipo(TipoCelda.IMPASABLE);
-						aux.setSprite(sprite);
-						if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L' || sprite == 'g' || sprite == 't' || sprite == 'd')
-							try {
-								//System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
-								aux.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-					}
-				}
-			}
-		}*/
+		/*
+		 * for(int m=0;m<mapas.size();m++){
+		 * 
+		 * String nombre; if(m==0) nombre ="/MapaTutorial"; else nombre =
+		 * "/MapaNivel"+m; for(int i=0;i<12;i++){ int j; for(j=0;j<16;j++){
+		 * Celda c = mapas.get(m).getCelda(i, j); if(c.getSprite() == 'S' ||
+		 * c.getSprite()=='A') break; } if(j!=16){ for(j=0;j<16;j++){ Celda c =
+		 * mapas.get(m).getCelda(i, j); try {
+		 * c.setImg(ImageIO.read(getClass().getResource
+		 * ("/imagenes"+nombre+"/piso1.gif"))); } catch (IOException e) {
+		 * 
+		 * e.printStackTrace(); } } }
+		 * 
+		 * for(j=0;j<16;j++){ Celda c = mapas.get(m).getCelda(i, j);
+		 * if(c.getSprite() == 'N' || c.getSprite()=='B') break; } if(j!= 16){
+		 * for(j=0;j<16;j++){ Celda c = mapas.get(m).getCelda(i, j); try {
+		 * c.setImg
+		 * (ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif"
+		 * ))); } catch (IOException e) {
+		 * 
+		 * e.printStackTrace(); } } }
+		 * 
+		 * } for (int i = 0; i < mapas.get(m).cantidadObstaculos(); i++) {
+		 * Objeto bb = mapas.get(m).getObstaculo(i); int altura =
+		 * bb.getAltura(); int ancho = bb.getAncho(); int posX = bb.getPosX();
+		 * int posY = bb.getPosY(); char sprite = bb.getSprite(); if(sprite !=
+		 * 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite !=
+		 * 'g' & sprite != 't' && sprite != 'd') try {
+		 * bb.setImg(ImageIO.read(getClass
+		 * ().getResource("/imagenes"+nombre+"/"+sprite+".gif"))); } catch
+		 * (IOException e1) {
+		 * 
+		 * e1.printStackTrace(); } for (int j = 0; j < altura; j++) { for (int k
+		 * = 0; k < ancho; k++) { aux = mapas.get(m).getCelda(posX + j, posY +
+		 * k); aux.setTipo(TipoCelda.IMPASABLE); aux.setSprite(sprite);
+		 * if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L'
+		 * || sprite == 'g' || sprite == 't' || sprite == 'd') try {
+		 * //System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
+		 * aux.setImg
+		 * (ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+
+		 * sprite+".gif"))); } catch (IOException e) {
+		 * 
+		 * e.printStackTrace(); } } } } }
+		 */
 		String nombre;
-		if(indMapaActual==0) nombre ="/MapaTutorial";
-		else nombre = "/MapaNivel"+indMapaActual;
-		
-		celdaOriginal0.setImg(mapas.get(indMapaActual).getCelda(jugador1.getPosX(), jugador1.getPosY()).getImg());
-		celdaOriginal1.setImg(mapas.get(indMapaActual).getCelda(jugador2.getPosX(), jugador2.getPosY()).getImg());
-		
-		for(int i=0;i<12;i++){
+		if (indMapaActual == 0)
+			nombre = "/MapaTutorial";
+		else
+			nombre = "/MapaNivel" + indMapaActual;
+
+		celdaOriginal0.setImg(mapas.get(indMapaActual)
+				.getCelda(jugador1.getPosX(), jugador1.getPosY()).getImg());
+		celdaOriginal1.setImg(mapas.get(indMapaActual)
+				.getCelda(jugador2.getPosX(), jugador2.getPosY()).getImg());
+
+		for (int i = 0; i < 12; i++) {
 			int j;
-			for(j=0;j<16;j++){
+			for (j = 0; j < 16; j++) {
 				Celda c = mapas.get(indMapaActual).getCelda(i, j);
-				if(c.getSprite() == 'S' || c.getSprite()=='A') break;
+				if (c.getSprite() == 'S' || c.getSprite() == 'A')
+					break;
 			}
-			if(j!=16){
-				for(j=0;j<16;j++){
+			if (j != 16) {
+				for (j = 0; j < 16; j++) {
 					Celda c = mapaActual.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso1.gif")));
+						c.setImg(ImageIO.read(getClass().getResource(
+								"/imagenes" + nombre + "/piso1.gif")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
 				}
 			}
-			
-			for(j=0;j<16;j++){
+
+			for (j = 0; j < 16; j++) {
 				Celda c = mapas.get(indMapaActual).getCelda(i, j);
-				if(c.getSprite() == 'N' || c.getSprite()=='B') break;
+				if (c.getSprite() == 'N' || c.getSprite() == 'B')
+					break;
 			}
-			if(j!= 16){
-				for(j=0;j<16;j++){
+			if (j != 16) {
+				for (j = 0; j < 16; j++) {
 					Celda c = mapaActual.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif")));
+						c.setImg(ImageIO.read(getClass().getResource(
+								"/imagenes" + nombre + "/piso2.gif")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
 				}
-			}		
+			}
 		}
 		for (int i = 0; i < mapaActual.cantidadObstaculos(); i++) {
 			Objeto bb = mapaActual.getObstaculo(i);
@@ -766,11 +786,14 @@ public class GestorMapas {
 			int posX = bb.getPosX();
 			int posY = bb.getPosY();
 			char sprite = bb.getSprite();
-			if(sprite != 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite != 'g' & sprite != 't' && sprite != 'd')
+			if (sprite != 'a' && sprite != 'p' && sprite != 'o'
+					&& sprite != 'L' && sprite != 'g' & sprite != 't'
+					&& sprite != 'd')
 				try {
-					bb.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+					bb.setImg(ImageIO.read(getClass().getResource(
+							"/imagenes" + nombre + "/" + sprite + ".gif")));
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+
 					e1.printStackTrace();
 				}
 			for (int j = 0; j < altura; j++) {
@@ -778,65 +801,79 @@ public class GestorMapas {
 					aux = mapaActual.getCelda(posX + j, posY + k);
 					aux.setTipo(TipoCelda.IMPASABLE);
 					aux.setSprite(sprite);
-					if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L' || sprite == 'g' || sprite == 't' || sprite == 'd')
+					if (sprite == 'a' || sprite == 'p' || sprite == 'o'
+							|| sprite == 'L' || sprite == 'g' || sprite == 't'
+							|| sprite == 'd')
 						try {
-							//System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
-							aux.setImg(ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+sprite+".gif")));
+							// System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
+							aux.setImg(ImageIO.read(getClass().getResource(
+									"/imagenes" + nombre + "/" + sprite
+											+ ".gif")));
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
+
 							e.printStackTrace();
 						}
 				}
 			}
 		}
-		if(indMapaActual==0){
-			for(int i=0;i<16;i++){
+		if (indMapaActual == 0) {
+			for (int i = 0; i < 16; i++) {
 				try {
-					mapaActual.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
+					mapaActual.getCelda(0, i).setImg(
+							ImageIO.read(getClass().getResource(
+									"/imagenes/MapaTutorial/pared.gif")));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				try {
-					mapaActual.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/piso madera.gif")));
+					mapaActual.getCelda(1, i).setImg(
+							ImageIO.read(getClass().getResource(
+									"/imagenes/MapaTutorial/piso madera.gif")));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 			}
-		}else if(indMapaActual==1){
-			for(int i=0;i<16;i++){
+		} else if (indMapaActual == 1) {
+			for (int i = 0; i < 16; i++) {
 				try {
-					mapaActual.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+					mapaActual.getCelda(0, i).setImg(
+							ImageIO.read(getClass().getResource(
+									"/imagenes/MapaNivel1/1.gif")));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 				try {
-					mapaActual.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+					mapaActual.getCelda(1, i).setImg(
+							ImageIO.read(getClass().getResource(
+									"/imagenes/MapaNivel1/1.gif")));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
 
 			}
 		}
 		int cant = mapaActual.cantidadCeldasEsp();
-		for(int i=0;i<12;i++){
-			for(int j=0;j<16;j++){
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 16; j++) {
 				aux = mapas.get(indMapaActual).getCelda(i, j);
-				if(aux.getEspecial()==1 || aux.getEspecial() == -1){
+				if (aux.getEspecial() == 1 || aux.getEspecial() == -1) {
 					try {
-						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
+						mapaActual.getCelda(i, j).setImg(
+								ImageIO.read(getClass().getResource(
+										"/imagenes/sprite_azul.png")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}else if(aux.getEspecial()==2 || aux.getEspecial() == -2){
+				} else if (aux.getEspecial() == 2 || aux.getEspecial() == -2) {
 					try {
-						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_rojo.png")));
+						mapaActual.getCelda(i, j).setImg(
+								ImageIO.read(getClass().getResource(
+										"/imagenes/sprite_rojo.png")));
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
