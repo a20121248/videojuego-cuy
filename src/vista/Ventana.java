@@ -34,7 +34,11 @@ import java.awt.*;
 import javax.swing.*;
 public class Ventana extends JFrame {
 
-	private JPanel contentPane;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -8472914249245291228L;
+    private JPanel contentPane;
 	private JPanel panel,panel2;
 	int flag = 0;
 	Mapa m=null;
@@ -110,7 +114,12 @@ public class Ventana extends JFrame {
 	class PanelGraficos extends JPanel{
 		
 		
-		public void paint(Graphics g){
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 1065949227120247586L;
+
+        public void paint(Graphics g){
 			super.paint(g);
 			//System.out.println("topkek");
 			int aux = 10;			
@@ -143,7 +152,12 @@ public class Ventana extends JFrame {
 		
 	}
 	class PanelTexto extends JPanel implements KeyListener{
-		public void paint(Graphics g){
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -4712396594532659965L;
+
+        public void paint(Graphics g){
 			super.paint(g);
 			if(m!=null){
 				for(int i=0;i<m.getAltura();i++){
@@ -201,15 +215,19 @@ public class Ventana extends JFrame {
 				
 			}
 			if(flag == -6){ //ingresar nombre
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) nuevoNivel(mapaActual);
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				    nuevoNivel(mapaActual);
+				}
 				else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 					eliminarUltimo();
-					if(nombre.length()!=0) nombre= nombre.substring(0,nombre.length()-1);
+					if(!nombre.isEmpty()) {
+					    nombre = nombre.substring(0,nombre.length()-1);
+					}
 					dibujarExtra();
 				}
 				else{
 					char c = e.getKeyChar();
-					if((c>='a' && c<='z')||(c>='A' && c<='Z')){
+					if (Character.isAlphabetic(c)) {
 						anadirUltimo(c);
 						nombre += c;
 						dibujarExtra();
@@ -438,7 +456,7 @@ public class Ventana extends JFrame {
 	 */
 	public Ventana() {
 		flag = -5;
-		 JLabel label;
+		JLabel label;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1324, 768);
 		contentPane = new JPanel();
