@@ -358,16 +358,12 @@ public class GestorMapas {
 		for (int i = 0; i < 16; i++) {
 			try {
 				nuevoMapa.getCelda(0, i).setImg(
-						ImageIO.read(getClass().getResource(
-								"/imagenes/MapaTutorial/pared.gif")));
+						ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 			try {
-				nuevoMapa.getCelda(1, i).setImg(
-						ImageIO.read(getClass().getResource(
-								"/imagenes/MapaTutorial/piso madera.gif")));
+				nuevoMapa.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/piso madera.gif")));
 			} catch (IOException e) {
 
 				e.printStackTrace();
@@ -514,7 +510,6 @@ public class GestorMapas {
 		//Verificar si el movimiento es Valido
 		boolean esMovimientoValido = true;
 		
-		
 		if (mov == 0) esMovimientoValido = jugador1.verificarPosX(false, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_A);
 		else if (mov == 1) esMovimientoValido = jugador1.verificarPosY(false, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_A);
 		else if (mov == 2) esMovimientoValido = jugador1.verificarPosX(true, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_A);
@@ -531,17 +526,13 @@ public class GestorMapas {
 		if (esMovJug1) {
 			celdaOriginal0 = celdaDespues.copy();
 			fin1 = false;
-			if (tipoDual == 0)
-				dual = -1;
-			mapaActual.modificarPosJugador(0, jugador1.getPosX(),
-					jugador1.getPosY());
+			if (tipoDual == 0) dual = -1;
+			mapaActual.modificarPosJugador(0, jugador1.getPosX(),jugador1.getPosY());
 		} else {
 			celdaOriginal1 = celdaDespues.copy();
 			fin2 = false;
-			if (tipoDual == 1)
-				dual = -1;
-			mapaActual.modificarPosJugador(1, jugador2.getPosX(),
-					jugador2.getPosY());
+			if (tipoDual == 1) dual = -1;
+			mapaActual.modificarPosJugador(1, jugador2.getPosX(), jugador2.getPosY());
 		}
 	}
 
