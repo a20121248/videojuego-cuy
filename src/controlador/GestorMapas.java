@@ -104,8 +104,14 @@ public class GestorMapas {
 				char charAux = lineasMapaAux.get(i).charAt(j);
 				if (charAux == 'S') celda = new Celda(charAux, TipoCelda.TERRENO_A);
 				else if (charAux == 'N') celda = new Celda(charAux, TipoCelda.TERRENO_B);
-				else if (charAux == 'A') celda = new Celda('S', TipoCelda.TERRENO_A);
-				else if (charAux == 'B') celda = new Celda('N', TipoCelda.TERRENO_B);
+				else if (charAux == 'A'){
+					celda = new Celda('S', TipoCelda.TERRENO_A);
+					nuevoMapa.setPos1(i, j);
+				}
+				else if (charAux == 'B'){
+					celda = new Celda('N', TipoCelda.TERRENO_B);
+					nuevoMapa.setPos2(i, j);
+				}
 				else if (charAux == 'C' || charAux == 'D') celda = new Celda(charAux,TipoCelda.TERRENO_AMBOS);
 				else celda = new Celda(charAux,TipoCelda.IMPASABLE);
 				fila.add(celda);
@@ -212,7 +218,7 @@ public class GestorMapas {
 			}
 		}
 		
-		//Contar las Celdas Especiales para de ahí agregarlas al arreglo de CeldasEspeciales
+		//Contar las Celdas Especiales para de ahï¿½ agregarlas al arreglo de CeldasEspeciales
 		int cantCeldasEspeciales = 0;
 		try {
 			while ((linea = inputStream.readLine()) != null) {
@@ -236,12 +242,12 @@ public class GestorMapas {
 				esp = Integer.parseInt(inputStream.readLine());
 				celdaAux.setEspecial(esp);
 				
-				//En base al tipo de celda Especial se le va a asignar un tipo de Acción
+				//En base al tipo de celda Especial se le va a asignar un tipo de Acciî‰¢
 				boolean esAccionSolo = esp == SOLOACTIVADO || esp == SOLODESACTIVADO;
 				if (esAccionSolo) celdaEsp = new AccionSimple();
 				else celdaEsp = new AccionDual();
 				
-				//Y también un tipo de Imagen
+				//Y tambié§­ un tipo de Imagen
 				if (esAccionSolo)
 					try {
 						celdaAux.setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
@@ -258,7 +264,7 @@ public class GestorMapas {
 				if (esAccionSolo) celdaAux.setSprite('C');
 				else celdaAux.setSprite('D');
 
-				//Se va a leer los diferentes movimientos que se haran por acción en cada nivel
+				//Se va a leer los diferentes movimientos que se haran por acciî‰¢ en cada nivel
 				celdaAux.setIndiceEspecial(Integer.parseInt(inputStream.readLine()));
 				celdaEsp.setComandoEspecial(inputStream.readLine());
 				direccion = new ArrayList<Integer>();

@@ -24,6 +24,15 @@ public class Mapa {
 		this.posY1 = posY1;
 		this.posY2 = posY2;
 	}
+	
+	public void setPos1(int posX1,int posY1){
+		this.posX1 = posX1;
+		this.posY1 = posY1;
+	}
+	public void setPos2(int posX2,int posY2){
+		this.posX2 = posX2;
+		this.posY2 = posY2;
+	}
 
 	public void addFila(List<Celda> l) {
 		map.add(l);
