@@ -95,7 +95,7 @@ public class Ventana extends JFrame {
 		vidaActual -= val;
 		textos.set(3, "Vida: "+vidaActual);
 	}
-	public void añadirUltimo(char c){
+	public void anadirUltimo(char c){
 		String aux = textos.get(textos.size()-1);
 		aux += c;
 		textos.set(textos.size()-1, aux);
@@ -197,7 +197,7 @@ public class Ventana extends JFrame {
 				else{
 					char c = e.getKeyChar();
 					if((c>='a' && c<='z')||(c>='A' && c<='Z')){
-						añadirUltimo(c);
+						anadirUltimo(c);
 						nombre += c;
 						dibujarExtra();
 					}
@@ -324,7 +324,7 @@ public class Ventana extends JFrame {
 				if(perdioVida) removeTexto();
 				if(interp.interpretarEspecial(str,comando.charAt(indiceComando))){
 					perdioVida = false;
-					añadirUltimo(str.charAt(0));
+					anadirUltimo(str.charAt(0));
 					indiceComando++;
 					if(indiceComando == comando.length()){
 						flag = 3;
