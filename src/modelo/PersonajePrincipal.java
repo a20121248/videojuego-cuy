@@ -22,24 +22,21 @@ public class PersonajePrincipal extends Personaje {
 		int aux = posX;
 		if (abajo) aux++;
 		else aux--;
-		if (aux < bound1 || aux >= bound2)
-			return false;
+		if (aux < bound1 || aux >= bound2) return false;
 		Celda c = mapaActual.getCelda(aux, posY);
-		if (!c.verificarMovimientoPosible(tipo))
-			return false;
+		if (!c.verificarMovimientoPosible(tipo)) return false;
 		posX = aux;
 		return true;
 	}
 
 	public boolean verificarPosY(boolean derecha, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
+		
 		int aux = posY;
 		if (derecha) aux++;
 		else aux--;
-		if (aux < bound1 || aux >= bound2)
-			return false;
+		if (aux < bound1 || aux >= bound2) return false;
 		Celda c = mapaActual.getCelda(posX, aux);
-		if (!c.verificarMovimientoPosible(tipo))
-			return false;
+		if (!c.verificarMovimientoPosible(tipo)) return false;
 		posY = aux;
 		return true;
 	}
