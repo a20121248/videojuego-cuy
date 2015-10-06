@@ -233,150 +233,8 @@
       </list>
       <list>
         <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite> </sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-      </list>
-      <list>
-        <modelo.Celda>
           <sprite>S</sprite>
           <tipo>TERRENO_A</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>S</sprite>
-          <tipo>TERRENO_A</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>S</sprite>
-          <tipo>TERRENO_A</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>S</sprite>
-          <tipo>TERRENO_A</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>t</sprite>
-          <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -410,56 +268,12 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-      </list>
-      <list>
         <modelo.Celda>
           <sprite>S</sprite>
           <tipo>TERRENO_A</tipo>
@@ -478,18 +292,18 @@
           <sprite>C</sprite>
           <tipo>TERRENO_AMBOS</tipo>
           <jugador>-1</jugador>
-          <especial>0</especial>
+          <especial>1</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>S</sprite>
-          <tipo>TERRENO_A</tipo>
+          <sprite>d</sprite>
+          <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>t</sprite>
+          <sprite>d</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
@@ -524,50 +338,8 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -596,14 +368,14 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>S</sprite>
-          <tipo>TERRENO_A</tipo>
+          <sprite>m</sprite>
+          <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>t</sprite>
+          <sprite>m</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
@@ -638,50 +410,50 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>d</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>d</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -710,6 +482,20 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
+          <sprite>m</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>m</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
           <sprite>S</sprite>
           <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
@@ -717,8 +503,22 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>t</sprite>
+          <sprite>j</sprite>
           <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>j</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -746,56 +546,142 @@
         </modelo.Celda>
         <modelo.Celda>
           <sprite>A</sprite>
-          <tipo>TERRENO_AMBOS</tipo>
+          <tipo>TERRENO_A</tipo>
           <jugador>0</jugador>
-          <especial>2</especial>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+      </list>
+      <list>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>j</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>j</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>D</sprite>
+          <tipo>TERRENO_AMBOS</tipo>
+          <jugador>-1</jugador>
+          <especial>-2</especial>
           <indiceEspecial>1</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>S</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>o</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>3</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -803,113 +689,227 @@
       </list>
       <list>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>g</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>o</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>3</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+      </list>
+      <list>
+        <modelo.Celda>
+          <sprite>a</sprite>
           <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>a</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>o</sprite>
+          <tipo>TERRENO_A</tipo>
           <jugador>-1</jugador>
           <especial>3</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -938,8 +938,43 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>p</sprite>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>m</sprite>
           <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>m</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -976,54 +1011,133 @@
           <sprite>D</sprite>
           <tipo>TERRENO_AMBOS</tipo>
           <jugador>-1</jugador>
-          <especial>2</especial>
+          <especial>-2</especial>
           <indiceEspecial>2</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>o</sprite>
+          <tipo>TERRENO_A</tipo>
+          <jugador>-1</jugador>
+          <especial>3</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+      </list>
+      <list>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>m</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>m</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -1052,13 +1166,6 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>p</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
           <sprite>N</sprite>
           <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
@@ -1094,50 +1201,57 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>j</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>j</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>j</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
+          <sprite>j</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
@@ -1166,99 +1280,6 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>p</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>N</sprite>
-          <tipo>TERRENO_B</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>h</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>h</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>N</sprite>
-          <tipo>TERRENO_B</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>N</sprite>
-          <tipo>TERRENO_B</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-      </list>
-      <list>
-        <modelo.Celda>
           <sprite>N</sprite>
           <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
@@ -1294,14 +1315,35 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>h</sprite>
+          <sprite>j</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>h</sprite>
+          <sprite>j</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>j</sprite>
+          <tipo>IMPASABLE</tipo>
+          <jugador>-1</jugador>
+          <especial>0</especial>
+          <indiceEspecial>0</indiceEspecial>
+        </modelo.Celda>
+        <modelo.Celda>
+          <sprite>j</sprite>
           <tipo>IMPASABLE</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
@@ -1322,117 +1364,103 @@
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
-          <jugador>-1</jugador>
-          <especial>0</especial>
-          <indiceEspecial>0</indiceEspecial>
-        </modelo.Celda>
-        <modelo.Celda>
-          <sprite>L</sprite>
-          <tipo>IMPASABLE</tipo>
+          <sprite>N</sprite>
+          <tipo>TERRENO_B</tipo>
           <jugador>-1</jugador>
           <especial>0</especial>
           <indiceEspecial>0</indiceEspecial>
         </modelo.Celda>
       </list>
     </map>
-    <posX1>5</posX1>
-    <posX2>10</posX2>
+    <posX1>2</posX1>
+    <posX2>11</posX2>
     <posY1>0</posY1>
     <posY2>0</posY2>
     <obstaculos>
       <modelo.Objeto>
-        <sprite>t</sprite>
-        <posX>3</posX>
-        <posY>4</posY>
-        <ancho>1</ancho>
-        <altura>4</altura>
-      </modelo.Objeto>
-      <modelo.Objeto>
-        <sprite>L</sprite>
-        <posX>3</posX>
+        <sprite>d</sprite>
+        <posX>2</posX>
         <posY>9</posY>
-        <ancho>7</ancho>
-        <altura>9</altura>
+        <ancho>2</ancho>
+        <altura>2</altura>
       </modelo.Objeto>
       <modelo.Objeto>
-        <sprite>g</sprite>
-        <posX>7</posX>
-        <posY>0</posY>
-        <ancho>9</ancho>
+        <sprite>m</sprite>
+        <posX>3</posX>
+        <posY>3</posY>
+        <ancho>2</ancho>
+        <altura>2</altura>
+      </modelo.Objeto>
+      <modelo.Objeto>
+        <sprite>j</sprite>
+        <posX>4</posX>
+        <posY>6</posY>
+        <ancho>2</ancho>
+        <altura>2</altura>
+      </modelo.Objeto>
+      <modelo.Objeto>
+        <sprite>o</sprite>
+        <posX>5</posX>
+        <posY>15</posY>
+        <ancho>1</ancho>
         <altura>1</altura>
       </modelo.Objeto>
       <modelo.Objeto>
-        <sprite>p</sprite>
-        <posX>8</posX>
-        <posY>3</posY>
-        <ancho>1</ancho>
-        <altura>3</altura>
+        <sprite>a</sprite>
+        <posX>6</posX>
+        <posY>0</posY>
+        <ancho>16</ancho>
+        <altura>2</altura>
       </modelo.Objeto>
       <modelo.Objeto>
-        <sprite>h</sprite>
+        <sprite>m</sprite>
+        <posX>8</posX>
+        <posY>4</posY>
+        <ancho>2</ancho>
+        <altura>2</altura>
+      </modelo.Objeto>
+      <modelo.Objeto>
+        <sprite>o</sprite>
+        <posX>8</posX>
+        <posY>15</posY>
+        <ancho>1</ancho>
+        <altura>1</altura>
+      </modelo.Objeto>
+      <modelo.Objeto>
+        <sprite>j</sprite>
         <posX>10</posX>
-        <posY>5</posY>
+        <posY>8</posY>
+        <ancho>2</ancho>
+        <altura>2</altura>
+      </modelo.Objeto>
+      <modelo.Objeto>
+        <sprite>j</sprite>
+        <posX>10</posX>
+        <posY>11</posY>
         <ancho>2</ancho>
         <altura>2</altura>
       </modelo.Objeto>
     </obstaculos>
     <celdasEspeciales>
       <modelo.AccionSimple>
-        <comandoEspecial>SDEWD</comandoEspecial>
+        <comandoEspecial>WDEQ</comandoEspecial>
         <direccionX>
-          <int>4</int>
-          <int>4</int>
-          <int>4</int>
+          <int>2</int>
+          <int>2</int>
+          <int>2</int>
         </direccionX>
         <direccionY>
-          <int>3</int>
-          <int>4</int>
-          <int>5</int>
+          <int>9</int>
+          <int>10</int>
+          <int>11</int>
         </direccionY>
         <liberaX>
-          <int>6</int>
+          <int>5</int>
           <int>8</int>
         </liberaX>
         <liberaY>
-          <int>8</int>
-          <int>8</int>
+          <int>13</int>
+          <int>13</int>
         </liberaY>
         <valorLiberacion>
           <int>2</int>
@@ -1441,16 +1469,16 @@
         <dualOpuesto>-1</dualOpuesto>
       </modelo.AccionSimple>
       <modelo.AccionDual>
-        <comandoEspecial>SIQEUOKLSD</comandoEspecial>
+        <comandoEspecial>SDKIQEUO</comandoEspecial>
         <direccionX>
           <int>6</int>
-          <int>5</int>
+          <int>6</int>
           <int>6</int>
         </direccionX>
         <direccionY>
-          <int>9</int>
-          <int>12</int>
-          <int>12</int>
+          <int>13</int>
+          <int>14</int>
+          <int>15</int>
         </direccionY>
         <liberaX/>
         <liberaY/>
@@ -1458,16 +1486,16 @@
         <dualOpuesto>2</dualOpuesto>
       </modelo.AccionDual>
       <modelo.AccionDual>
-        <comandoEspecial>SIQEUOKLSD</comandoEspecial>
+        <comandoEspecial>SDKIQEUO</comandoEspecial>
         <direccionX>
-          <int>8</int>
-          <int>8</int>
+          <int>7</int>
+          <int>7</int>
           <int>7</int>
         </direccionX>
         <direccionY>
-          <int>9</int>
-          <int>12</int>
-          <int>12</int>
+          <int>13</int>
+          <int>14</int>
+          <int>15</int>
         </direccionY>
         <liberaX/>
         <liberaY/>
@@ -1478,30 +1506,29 @@
   </mapaActual>
   <jugador1>
     <sprite></sprite>
-    <posX>6</posX>
-    <posY>8</posY>
+    <posX>4</posX>
+    <posY>12</posY>
     <ancho>0</ancho>
     <altura>0</altura>
   </jugador1>
   <jugador2>
     <sprite></sprite>
-    <posX>10</posX>
+    <posX>11</posX>
     <posY>0</posY>
     <ancho>0</ancho>
     <altura>0</altura>
   </jugador2>
   <fin1>false</fin1>
-  <fin2>true</fin2>
-  <indMapaActual>2</indMapaActual>
+  <fin2>false</fin2>
+  <indMapaActual>0</indMapaActual>
   <cant>3</cant>
-  <comandoActual>SDEWD</comandoActual>
-  <celdaDual reference="../mapaActual/map/list[7]/modelo.Celda[9]"/>
+  <jugador__nombre>theblitz</jugador__nombre>
   <celdaOriginal0>
-    <sprite>D</sprite>
-    <tipo>TERRENO_AMBOS</tipo>
+    <sprite>S</sprite>
+    <tipo>TERRENO_A</tipo>
     <jugador>-1</jugador>
-    <especial>2</especial>
-    <indiceEspecial>1</indiceEspecial>
+    <especial>0</especial>
+    <indiceEspecial>0</indiceEspecial>
   </celdaOriginal0>
   <celdaOriginal1>
     <sprite>N</sprite>
@@ -1510,9 +1537,8 @@
     <especial>0</especial>
     <indiceEspecial>0</indiceEspecial>
   </celdaOriginal1>
-  <dual>1</dual>
+  <dual>-1</dual>
   <tipoDual>0</tipoDual>
   <indMovimientoEspecial>0</indMovimientoEspecial>
-  <vida>4</vida>
-  <espAux class="modelo.AccionSimple" reference="../mapaActual/celdasEspeciales/modelo.AccionSimple"/>
+  <vida>10</vida>
 </controlador.GestorMapas>

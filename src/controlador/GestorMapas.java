@@ -20,6 +20,7 @@ public class GestorMapas {
 	private boolean fin1, fin2;
 	private int indMapaActual;
 	private int cant;
+	private String jugador_nombre;
 	private String comandoActual;
 	private Celda celdaDual, celdaOriginal0, celdaOriginal1;
 	private int dual;
@@ -27,6 +28,7 @@ public class GestorMapas {
 	private int indMovimientoEspecial;
 	private int vida;
 	private CeldaEspecial espAux;
+<<<<<<< HEAD
 	
 	//Constantes
 	public static final int MAXY = 12;
@@ -52,6 +54,13 @@ public class GestorMapas {
 	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
 		
 		//Se va a crear una matriz auxiliar para verificar donde estan los obstaculos
+=======
+	public String Get_nombre(){
+		return jugador_nombre;
+	}
+
+	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapa0, String nombre) {
+>>>>>>> origin/master
 		boolean[][] visit = new boolean[20][20];
 		for (int i = 0; i < MAXY; i++) {
 			for (int j = 0; j < MAXX; j++) {
@@ -433,12 +442,30 @@ public class GestorMapas {
 
 	}
 
+<<<<<<< HEAD
 	public void cargarMapa(int index) {
+=======
+	public GestorMapas() {
+		mapas = new ArrayList<Mapa>();
+		vida = 10;
+		try {
+			anadirMapas();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		cant = mapas.size();
+		fin1 = false;
+		fin2 = false;
+	}
+
+	public void cargarMapa(int index,String nombre_j) {
+>>>>>>> origin/master
 		if (index > cant)
 			return;
 		mapaActual = mapas.get(index).copy();
 		indMapaActual = index;
-
+		jugador_nombre= nombre_j;
 		jugador1 = new PersonajePrincipal(mapaActual.posX1, mapaActual.posY1);
 		Celda c = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
 		celdaOriginal0 = c.copy();
