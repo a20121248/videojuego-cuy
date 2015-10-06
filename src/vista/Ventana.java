@@ -9,6 +9,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.*;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -185,7 +187,18 @@ public class Ventana extends JFrame {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-				System.exit(0);
+				Object[] options = {"Si","No"};
+				
+				int n = JOptionPane.showOptionDialog(this,
+				    "¿Seguro que desea salir?",
+				    "A Silly Question",
+				    JOptionPane.YES_OPTION,
+				    JOptionPane.NO_OPTION,
+				    null,
+				    options,
+				    options[0]);
+				if(n==JOptionPane.YES_OPTION) System.exit(0);
+				
 			}
 			if(flag == -6){ //ingresar nombre
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) nuevoNivel(mapaActual);
@@ -442,15 +455,26 @@ public class Ventana extends JFrame {
 		panel2.setBounds(1024,0,200,768);
 		contentPane.add(panel2);
 		this.addFocusListener(new FocusAdapter() {
-
-	        /**
-	         * {@inheritDoc}
-	         */
 	        @Override
 	        public void focusGained(FocusEvent aE) {
 	            panel.requestFocusInWindow();
 	        }
 	    });
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				Object[] options = {"Si","No"};
+				
+				int n = JOptionPane.showOptionDialog(Ventana.this,
+				    "¿Seguro que desea salir?",
+				    "A Silly Question",
+				    JOptionPane.YES_OPTION,
+				    JOptionPane.NO_OPTION,
+				    null,
+				    options,
+				    options[0]);
+				if(n==JOptionPane.YES_OPTION) System.exit(0);
+			}
+		});
 		interp = new InterpreteComandos();
 		gestor = new GestorMapas();
 		rend = new Renderizador();
