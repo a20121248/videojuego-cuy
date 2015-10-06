@@ -460,10 +460,4 @@ public class Ventana extends JFrame {
 		addTexto("b. Salir del juego");
 		addTexto("c. Cargar partida");
 	}
-	
-	public static void main(String[] args) {
-		Ventana v = new Ventana();
-		v.setVisible(true);
-		v.dibujarExtra();
-	}
 }
