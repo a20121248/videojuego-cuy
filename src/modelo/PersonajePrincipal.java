@@ -17,13 +17,11 @@ public class PersonajePrincipal extends Personaje {
 		this.posY = posY;
 	}
 
-	public boolean verificarPosX(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
+	public boolean verificarPosX(boolean abajo, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
 
 		int aux = posX;
-		if (dir == 0)
-			aux++;
-		else
-			aux--;
+		if (abajo) aux++;
+		else aux--;
 		if (aux < bound1 || aux >= bound2)
 			return false;
 		Celda c = mapaActual.getCelda(aux, posY);
@@ -33,12 +31,10 @@ public class PersonajePrincipal extends Personaje {
 		return true;
 	}
 
-	public boolean verificarPosY(int dir, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
+	public boolean verificarPosY(boolean derecha, int bound1, int bound2, Mapa mapaActual, TipoCelda tipo) {
 		int aux = posY;
-		if (dir == 0)
-			aux++;
-		else
-			aux--;
+		if (derecha) aux++;
+		else aux--;
 		if (aux < bound1 || aux >= bound2)
 			return false;
 		Celda c = mapaActual.getCelda(posX, aux);

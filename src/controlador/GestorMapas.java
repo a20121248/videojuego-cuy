@@ -33,10 +33,13 @@ public class GestorMapas {
 	public static final int MAXALTURA = 12;
 	public static final int MAXANCHO = 16;
 	public static final int VIDAINICIAL = 10;
+	
 	public static final int SOLODESACTIVADO = -1;
 	public static final int SOLOACTIVADO = 1;
 	public static final int DUODESACTIVADO = -2;
 	public static final int DUOACTIVADO = 2;
+	public static final int FINNIVEL=3;
+	
 	public static final int ARRIBAJ1 = 0;
 	public static final int IZQUIERDAJ1 = 1;
 	public static final int ABAJOJ1 = 2;
@@ -393,8 +396,7 @@ public class GestorMapas {
 		for (int i = 0; i < 16; i++) {
 			try {
 				nuevoMapa.getCelda(0, i).setImg(
-						ImageIO.read(getClass().getResource(
-								"/imagenes/MapaNivel1/1.gif")));
+						ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
 			} catch (IOException e) {
 
 				e.printStackTrace();
@@ -436,21 +438,17 @@ public class GestorMapas {
 		for (int i = 0; i < 8; i++) {
 			try {
 				nuevoMapa.getCelda(0, i*2).setImg(
-						ImageIO.read(getClass().getResource(
-								"/imagenes/MapaNivel2/fondo.png")));
+						ImageIO.read(getClass().getResource("/imagenes/MapaNivel2/fondo.png")));
 			} catch (IOException e) {
 
 				e.printStackTrace();
 			}
 			try {
-				nuevoMapa.getCelda(1, i*2).setImg(
-						ImageIO.read(getClass().getResource(
-								"/imagenes/MapaNivel2/fondo.png")));
+				nuevoMapa.getCelda(1, i*2).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel2/fondo.png")));
 			} catch (IOException e) {
 
 				e.printStackTrace();
 			}
-
 		}
 
 		mapas.add(nuevoMapa);
@@ -516,14 +514,15 @@ public class GestorMapas {
 		//Verificar si el movimiento es Valido
 		boolean esMovimientoValido = true;
 		
-		if (mov == 0) esMovimientoValido = jugador1.verificarPosX(1, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_A);
-		else if (mov == 1) esMovimientoValido = jugador1.verificarPosY(1, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_A);
-		else if (mov == 2) esMovimientoValido = jugador1.verificarPosX(0, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_A);
-		else if (mov == 3) esMovimientoValido = jugador1.verificarPosY(0, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_A);
-		else if (mov == 4) esMovimientoValido = jugador2.verificarPosX(1, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_B);
-		else if (mov == 5) esMovimientoValido = jugador2.verificarPosY(1, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_B);
-		else if (mov == 6) esMovimientoValido = jugador2.verificarPosX(0, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_B);
-		else if (mov == 7) esMovimientoValido = jugador2.verificarPosY(0, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_B);
+		
+		if (mov == 0) esMovimientoValido = jugador1.verificarPosX(false, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_A);
+		else if (mov == 1) esMovimientoValido = jugador1.verificarPosY(false, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_A);
+		else if (mov == 2) esMovimientoValido = jugador1.verificarPosX(true, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_A);
+		else if (mov == 3) esMovimientoValido = jugador1.verificarPosY(true, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_A);
+		else if (mov == 4) esMovimientoValido = jugador2.verificarPosX(false, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_B);
+		else if (mov == 5) esMovimientoValido = jugador2.verificarPosY(false, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_B);
+		else if (mov == 6) esMovimientoValido = jugador2.verificarPosX(true, 0, mapaActual.getAltura(),mapaActual, TipoCelda.TERRENO_B);
+		else if (mov == 7) esMovimientoValido = jugador2.verificarPosY(true, 0, mapaActual.getAncho(),mapaActual, TipoCelda.TERRENO_B);
 		
 		if (!esMovimientoValido)return;
 
@@ -547,18 +546,18 @@ public class GestorMapas {
 	}
 
 	public String realizarMovimientoEspecial(int mov) {
-		Celda c;
-		if (mov == -1)
-			return "";
-		if (mov < 4)
-			c = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
-		else
-			c = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
-		int especial = c.getEspecial();
-		int ind = c.getIndiceEspecial();
-		if (especial == 0)
-			return "";
-		else if (especial == 1) { // comando solo
+		Celda celdaAux;
+		boolean esComandoConocido = mov == -1;
+		if (esComandoConocido)return "";
+		
+		boolean esMovJ1 = mov < ARRIBAJ2;
+		if (esMovJ1) celdaAux = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
+		else celdaAux = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
+		
+		int especial = celdaAux.getEspecial();
+		int ind = celdaAux.getIndiceEspecial();
+		if (especial == 0) return "";
+		else if (especial == SOLOACTIVADO) { // comando solo
 			indMovimientoEspecial = 0;
 			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
 			comandoActual = celdaEsp.getComandoEspecial();
@@ -570,19 +569,18 @@ public class GestorMapas {
 				Celda c2 = mapaActual.getCelda(liberaX.get(i), liberaY.get(i));
 				c2.setEspecial(valorLiberacion.get(i));
 			}
-			if (mov < 4)
+			if (esMovJ1)
 				realizarMovimientoEspecial(4); // se verifica si el otro
 												// personaje ya esta en un dual
 			else
 				realizarMovimientoEspecial(0); // que se activo ahora
-			c.setEspecial(0);
-			if (mov < 4)
-				celdaOriginal0.setEspecial(0);
-			else
-				celdaOriginal1.setEspecial(0);
+			
+			celdaAux.setEspecial(0);
+			if (esMovJ1) celdaOriginal0.setEspecial(0);
+			else celdaOriginal1.setEspecial(0);
 
 			return comandoActual;
-		} else if (especial == 2) { // comando dual
+		} else if (especial == DUOACTIVADO) { // comando dual
 
 			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
 			int dualOpuesto = celdaEsp.getDualOpuesto();
@@ -590,30 +588,25 @@ public class GestorMapas {
 				comandoActual = celdaEsp.getComandoEspecial();
 				celdaOriginal0.setEspecial(0);
 				celdaOriginal1.setEspecial(0);
-				c.setEspecial(0);
+				celdaAux.setEspecial(0);
 				celdaDual.setEspecial(0);
 			} else {
 				indMovimientoEspecial = 0;
 				dual = ind;
-				celdaDual = c;
-				if (mov < 4)
-					tipoDual = 0;
-				else
-					tipoDual = 1;
+				celdaDual = celdaAux;
+				if (esMovJ1) tipoDual = 0;
+				else tipoDual = 1;
 				return "";
 			}
 			return comandoActual;
-		} else if (especial == 3) { // llego a fin de mapa
-			if (mov < 4) {
-				if (fin2)
-					return "F";
-				else
-					fin1 = true;
+			
+		} else if (especial == FINNIVEL) { // llego a fin de mapa
+			if (esMovJ1) {
+				if (fin2) return "F";
+				else fin1 = true;
 			} else {
-				if (fin1)
-					return "F";
-				else
-					fin2 = true;
+				if (fin1) return "F";
+				else fin2 = true;
 			}
 		}
 		return "";
@@ -669,13 +662,14 @@ public class GestorMapas {
 	}
 
 	public void recargarImagenes() {
-		Celda aux;
+		Celda celdaAux;
 		mapas = new ArrayList<Mapa>();
 		try {
 			anadirMapas();
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
+		
 		String nombre;
 		if (indMapaActual == 0) nombre = "/MapaTutorial";
 		else nombre = "/MapaNivel" + indMapaActual;
@@ -718,17 +712,17 @@ public class GestorMapas {
 			}
 		}
 		for (int i = 0; i < mapaActual.cantidadObstaculos(); i++) {
-			Objeto bb = mapaActual.getObstaculo(i);
-			int altura = bb.getAltura();
-			int ancho = bb.getAncho();
-			int posX = bb.getPosX();
-			int posY = bb.getPosY();
-			char sprite = bb.getSprite();
+			Objeto objetoAux = mapaActual.getObstaculo(i);
+			int altura = objetoAux.getAltura();
+			int ancho = objetoAux.getAncho();
+			int posX = objetoAux.getPosX();
+			int posY = objetoAux.getPosY();
+			char sprite = objetoAux.getSprite();
 			if (sprite != 'a' && sprite != 'p' && sprite != 'o'
 					&& sprite != 'L' && sprite != 'g' & sprite != 't'
 					&& sprite != 'd')
 				try {
-					bb.setImg(ImageIO.read(getClass().getResource(
+					objetoAux.setImg(ImageIO.read(getClass().getResource(
 							"/imagenes" + nombre + "/" + sprite + ".gif")));
 				} catch (IOException e1) {
 
@@ -736,14 +730,14 @@ public class GestorMapas {
 				}
 			for (int j = 0; j < altura; j++) {
 				for (int k = 0; k < ancho; k++) {
-					aux = mapaActual.getCelda(posX + j, posY + k);
-					aux.setTipo(TipoCelda.IMPASABLE);
-					aux.setSprite(sprite);
+					celdaAux = mapaActual.getCelda(posX + j, posY + k);
+					celdaAux.setTipo(TipoCelda.IMPASABLE);
+					celdaAux.setSprite(sprite);
 					if (sprite == 'a' || sprite == 'p' || sprite == 'o'
 							|| sprite == 'L' || sprite == 'g' || sprite == 't'
 							|| sprite == 'd')
 						try {
-							aux.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/" + sprite+ ".gif")));
+							celdaAux.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/" + sprite+ ".gif")));
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -794,14 +788,14 @@ public class GestorMapas {
 		int cant = mapaActual.cantidadCeldasEsp();
 		for (int i = 0; i < MAXALTURA; i++) {
 			for (int j = 0; j < MAXANCHO; j++) {
-				aux = mapas.get(indMapaActual).getCelda(i, j);
-				if (aux.getEspecial() == 1 || aux.getEspecial() == -1) {
+				celdaAux = mapas.get(indMapaActual).getCelda(i, j);
+				if (celdaAux.getEspecial() == 1 || celdaAux.getEspecial() == -1) {
 					try {
 						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				} else if (aux.getEspecial() == 2 || aux.getEspecial() == -2) {
+				} else if (celdaAux.getEspecial() == 2 || celdaAux.getEspecial() == -2) {
 					try {
 						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_rojo.png")));
 					} catch (IOException e) {
