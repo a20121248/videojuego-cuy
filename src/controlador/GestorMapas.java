@@ -819,5 +819,23 @@ public class GestorMapas {
 				}
 			}
 		}
+		for (int j = 12; j < 16; j++) {
+			Celda aux2 = mapaActual.getCelda(6, j);
+			aux2.setTipo(TipoCelda.TERRENO_A);
+			aux2.setEspecial(0);
+			aux2.setSprite('o');
+			aux2 = mapaActual.getCelda(7, j);
+			aux2.setTipo(TipoCelda.TERRENO_B);
+			aux2.setEspecial(0);
+			aux2.setSprite('o');
+		}
+
+		Celda aux2 = mapaActual.getCelda(6, 15);
+		aux2.setEspecial(3);
+		aux2 = mapaActual.getCelda(7, 15);
+		aux2.setEspecial(3);
+		
+		mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY()).setSprite('A');
+		mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY()).setSprite('B');
 	}
 }
