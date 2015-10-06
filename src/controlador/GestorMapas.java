@@ -27,11 +27,34 @@ public class GestorMapas {
 	private int indMovimientoEspecial;
 	private int vida;
 	private CeldaEspecial espAux;
-
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapa0, String nombre) {
+	
+	//Constantes
+	public static final int MAXY = 12;
+	public static final int MAXX = 16;
+	public static final int VIDAINICIAL = 10;
+	
+	//Constructor
+	public GestorMapas() {
+		mapas = new ArrayList<Mapa>();
+		vida = VIDAINICIAL;
+		
+		try {
+			anadirMapas();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		cant = mapas.size();
+		fin1 = false;
+		fin2 = false;
+	}
+	
+	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
+		
+		//Se va a crear una matriz auxiliar para verificar donde estan los obstaculos
 		boolean[][] visit = new boolean[20][20];
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 16; j++) {
+		for (int i = 0; i < MAXY; i++) {
+			for (int j = 0; j < MAXX; j++) {
 				visit[i][j] = false;
 			}
 		}
@@ -44,48 +67,50 @@ public class GestorMapas {
 		try {
 			while ((linea = inputStream.readLine()) != null) {
 				if (linea.equals("")) break;
-				lineasMapa0.add(linea);
+				lineasMapaAux.add(linea);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		Mapa m = new Mapa(lineasMapa0.get(0).length(), lineasMapa0.size(), i1,
-				j1, i2, j2);
+		int tamX = lineasMapaAux.get(0).length();
+		int tamY = lineasMapaAux.size();
+		
+		Mapa nuevoMapa = new Mapa(tamX, tamY, i1, j1, i2, j2);
 
-		for (int i = 0; i < lineasMapa0.size(); i++) {
+		for (int i = 0; i < tamY; i++) {
 			ArrayList<Celda> fila = new ArrayList<Celda>();
-			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
+			for (int j = 0; j < tamX; j++) {
 				
 				Celda celda;
+				char charAux = lineasMapaAux.get(i).charAt(j);
 				
-				if (lineasMapa0.get(i).charAt(j) == 'S') celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.TERRENO_A);
-				else if (lineasMapa0.get(i).charAt(j) == 'N') celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.TERRENO_B);
-				else if (lineasMapa0.get(i).charAt(j) == 'A') celda = new Celda('S', TipoCelda.TERRENO_A);
-				else if (lineasMapa0.get(i).charAt(j) == 'B') celda = new Celda('N', TipoCelda.TERRENO_B);
-				else if (lineasMapa0.get(i).charAt(j) == 'C' || lineasMapa0.get(i).charAt(j) == 'D') 
-					celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
-				else celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
-			
+				if (charAux == 'S') celda = new Celda(charAux, TipoCelda.TERRENO_A);
+				else if (charAux == 'N') celda = new Celda(charAux, TipoCelda.TERRENO_B);
+				else if (charAux == 'A') celda = new Celda('S', TipoCelda.TERRENO_A);
+				else if (charAux == 'B') celda = new Celda('N', TipoCelda.TERRENO_B);
+				else if (charAux == 'C' || charAux == 'D') celda = new Celda(charAux,TipoCelda.TERRENO_AMBOS);
+				else celda = new Celda(charAux,TipoCelda.IMPASABLE);
 				fila.add(celda);
 			}
-			m.addFila(fila);
+			nuevoMapa.addFila(fila);
 		}
+		
 		Celda aux;
 		Objeto b;
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 16; j++) {
-				aux = m.getCelda(i, j);
+				aux = nuevoMapa.getCelda(i, j);
 				char c = aux.getSprite();
 				if (visit[i][j] == false && c != ' ' && c != 'A' && c != 'B'
 						&& c != 'S' && c != 'N' && c != 'D' && c != 'C') {
 					int contF = 1, contC = 1; // contador filas contador
 												// columnas
 					while (i + contF < 12
-							&& m.getCelda(i + contF, j).getSprite() == c)
+							&& nuevoMapa.getCelda(i + contF, j).getSprite() == c)
 						contF++;
 					while (j + contC < 16
-							&& m.getCelda(i, contC + j).getSprite() == c)
+							&& nuevoMapa.getCelda(i, contC + j).getSprite() == c)
 						contC++;
 					for (int k = 0; k < contF; k++) {
 						for (int l = 0; l < contC; l++) {
@@ -101,31 +126,29 @@ public class GestorMapas {
 		for (int i = 0; i < 12; i++) {
 			int j;
 			for (j = 0; j < 16; j++) {
-				Celda c = m.getCelda(i, j);
+				Celda c = nuevoMapa.getCelda(i, j);
 				if (c.getSprite() == 'S' || c.getSprite() == 'A')
 					break;
 			}
 			if (j != 16) {
 				for (j = 0; j < 16; j++) {
-					Celda c = m.getCelda(i, j);
+					Celda c = nuevoMapa.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource(
-								"/imagenes" + nombre + "/piso1.gif")));
+						c.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/piso1.gif")));
 					} catch (IOException e) {
-
 						e.printStackTrace();
 					}
 				}
 			}
 
 			for (j = 0; j < 16; j++) {
-				Celda c = m.getCelda(i, j);
+				Celda c = nuevoMapa.getCelda(i, j);
 				if (c.getSprite() == 'N' || c.getSprite() == 'B')
 					break;
 			}
 			if (j != 16) {
 				for (j = 0; j < 16; j++) {
-					Celda c = m.getCelda(i, j);
+					Celda c = nuevoMapa.getCelda(i, j);
 					try {
 						c.setImg(ImageIO.read(getClass().getResource(
 								"/imagenes" + nombre + "/piso2.gif")));
@@ -137,7 +160,7 @@ public class GestorMapas {
 			}
 
 		}
-		m.setObstaculos(obstaculos);
+		nuevoMapa.setObstaculos(obstaculos);
 		for (int i = 0; i < obstaculos.size(); i++) {
 			Objeto bb = obstaculos.get(i);
 			int altura = bb.getAltura();
@@ -157,7 +180,7 @@ public class GestorMapas {
 				}
 			for (int j = 0; j < altura; j++) {
 				for (int k = 0; k < ancho; k++) {
-					aux = m.getCelda(posX + j, posY + k);
+					aux = nuevoMapa.getCelda(posX + j, posY + k);
 					aux.setTipo(TipoCelda.IMPASABLE);
 					aux.setSprite(sprite);
 					if (sprite == 'a' || sprite == 'p' || sprite == 'o'
@@ -188,10 +211,7 @@ public class GestorMapas {
 			e.printStackTrace();
 		}
 		List<CeldaEspecial> listaCeldaEsp = new ArrayList<CeldaEspecial>();
-		// System.out.println("KEK");
-		// System.out.println(cantCeldasEspeciales);
 		for (int i = 0; i < cantCeldasEspeciales; i++) {
-			// System.out.println(i);
 			int x, y, esp;
 			List<Integer> direccion;
 
@@ -199,7 +219,7 @@ public class GestorMapas {
 				CeldaEspecial celdaEsp;
 				x = Integer.parseInt(inputStream.readLine());
 				y = Integer.parseInt(inputStream.readLine());
-				aux = m.getCelda(x, y);
+				aux = nuevoMapa.getCelda(x, y);
 				esp = Integer.parseInt(inputStream.readLine());
 				aux.setEspecial(esp);
 				if (esp == 1 || esp == -1)
@@ -290,11 +310,11 @@ public class GestorMapas {
 				e.printStackTrace();
 			}
 		}
-		m.setListaEspecial(listaCeldaEsp);
+		nuevoMapa.setListaEspecial(listaCeldaEsp);
 		try {
 			try {
 				while ((linea = inputStream.readLine()) != null) {
-					lineasMapa0.add(linea);
+					lineasMapaAux.add(linea);
 					if (linea.equals(""))
 						break;
 				}
@@ -311,27 +331,26 @@ public class GestorMapas {
 					e.printStackTrace();
 				}
 		}
-		return m;
+		return nuevoMapa;
 	}
 
 	private void anadirMapas() throws IOException {
-		// 16 de ancho, 12 de altura
-		Mapa m;
+		Mapa nuevoMapa;
 		List<Objeto> obstaculos;
-		ArrayList<String> lineasMapa0 = new ArrayList<String>();
+		ArrayList<String> lineasMapaAux = new ArrayList<String>();
 		BufferedReader inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		m = Leer_Mapa(obstaculos, 2, 11, 0, 0, inputStream, lineasMapa0,
-				"/MapaTutorial.txt");
+		//TAMBIEN TIENE QUE LEER LAS POSICIONES
+		nuevoMapa = Leer_Mapa(obstaculos, 2, 11, 0, 0, inputStream, lineasMapaAux,"/MapaTutorial.txt");
 		for (int i = 5; i < 9; i++) {
-			Celda aux = m.getCelda(i, 15);
+			Celda aux = nuevoMapa.getCelda(i, 15);
 			aux.setTipo(TipoCelda.TERRENO_A);
 			aux.setEspecial(3);
 			aux.setSprite('o');
 		}
 		for (int i = 0; i < 16; i++) {
 			try {
-				m.getCelda(0, i).setImg(
+				nuevoMapa.getCelda(0, i).setImg(
 						ImageIO.read(getClass().getResource(
 								"/imagenes/MapaTutorial/pared.gif")));
 			} catch (IOException e) {
@@ -339,7 +358,7 @@ public class GestorMapas {
 				e.printStackTrace();
 			}
 			try {
-				m.getCelda(1, i).setImg(
+				nuevoMapa.getCelda(1, i).setImg(
 						ImageIO.read(getClass().getResource(
 								"/imagenes/MapaTutorial/piso madera.gif")));
 			} catch (IOException e) {
@@ -348,28 +367,28 @@ public class GestorMapas {
 			}
 		}
 
-		mapas.add(m);
+		mapas.add(nuevoMapa);
 
 		// Nivel 1
-		lineasMapa0 = new ArrayList<String>();
+		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		m = Leer_Mapa(obstaculos, 5, 9, 15, 15, inputStream, lineasMapa0,
+		nuevoMapa = Leer_Mapa(obstaculos, 5, 9, 15, 15, inputStream, lineasMapaAux,
 				"/MapaNivel1.txt");
 
 		for (int i = 3; i < 7; i++) {
-			Celda auxi = m.getCelda(i, 0);
+			Celda auxi = nuevoMapa.getCelda(i, 0);
 			auxi.setTipo(TipoCelda.TERRENO_A);
 			auxi.setEspecial(3);
 		}
 		for (int i = 8; i < 12; i++) {
-			Celda auxi = m.getCelda(i, 0);
+			Celda auxi = nuevoMapa.getCelda(i, 0);
 			auxi.setTipo(TipoCelda.TERRENO_B);
 			auxi.setEspecial(3);
 		}
 		for (int i = 0; i < 16; i++) {
 			try {
-				m.getCelda(0, i).setImg(
+				nuevoMapa.getCelda(0, i).setImg(
 						ImageIO.read(getClass().getResource(
 								"/imagenes/MapaNivel1/1.gif")));
 			} catch (IOException e) {
@@ -377,7 +396,7 @@ public class GestorMapas {
 				e.printStackTrace();
 			}
 			try {
-				m.getCelda(1, i).setImg(
+				nuevoMapa.getCelda(1, i).setImg(
 						ImageIO.read(getClass().getResource(
 								"/imagenes/MapaNivel1/1.gif")));
 			} catch (IOException e) {
@@ -386,46 +405,32 @@ public class GestorMapas {
 			}
 
 		}
-		mapas.add(m);
+		mapas.add(nuevoMapa);
 		// Nivel 2
-		lineasMapa0 = new ArrayList<String>();
+		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		m = Leer_Mapa(obstaculos, 5, 10, 0, 0, inputStream, lineasMapa0,
+		nuevoMapa = Leer_Mapa(obstaculos, 5, 10, 0, 0, inputStream, lineasMapaAux,
 				"/MapaNivel2.txt");
 
 		for (int j = 12; j < 16; j++) {
-			Celda aux2 = m.getCelda(6, j);
+			Celda aux2 = nuevoMapa.getCelda(6, j);
 			aux2.setTipo(TipoCelda.TERRENO_A);
 			aux2.setEspecial(0);
 			aux2.setSprite('o');
-			aux2 = m.getCelda(7, j);
+			aux2 = nuevoMapa.getCelda(7, j);
 			aux2.setTipo(TipoCelda.TERRENO_B);
 			aux2.setEspecial(0);
 			aux2.setSprite('o');
 		}
 
-		Celda aux2 = m.getCelda(6, 15);
+		Celda aux2 = nuevoMapa.getCelda(6, 15);
 		aux2.setEspecial(3);
-		aux2 = m.getCelda(7, 15);
+		aux2 = nuevoMapa.getCelda(7, 15);
 		aux2.setEspecial(3);
 
-		mapas.add(m);
+		mapas.add(nuevoMapa);
 
-	}
-
-	public GestorMapas() {
-		mapas = new ArrayList<Mapa>();
-		vida = 10;
-		try {
-			anadirMapas();
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		cant = mapas.size();
-		fin1 = false;
-		fin2 = false;
 	}
 
 	public void cargarMapa(int index) {
@@ -746,12 +751,8 @@ public class GestorMapas {
 							|| sprite == 'L' || sprite == 'g' || sprite == 't'
 							|| sprite == 'd')
 						try {
-							// System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
-							aux.setImg(ImageIO.read(getClass().getResource(
-									"/imagenes" + nombre + "/" + sprite
-											+ ".gif")));
+							aux.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/" + sprite+ ".gif")));
 						} catch (IOException e) {
-
 							e.printStackTrace();
 						}
 				}
@@ -764,7 +765,6 @@ public class GestorMapas {
 							ImageIO.read(getClass().getResource(
 									"/imagenes/MapaTutorial/pared.gif")));
 				} catch (IOException e) {
-
 					e.printStackTrace();
 				}
 				try {
@@ -772,7 +772,6 @@ public class GestorMapas {
 							ImageIO.read(getClass().getResource(
 									"/imagenes/MapaTutorial/piso madera.gif")));
 				} catch (IOException e) {
-
 					e.printStackTrace();
 				}
 			}
@@ -791,7 +790,6 @@ public class GestorMapas {
 							ImageIO.read(getClass().getResource(
 									"/imagenes/MapaNivel1/1.gif")));
 				} catch (IOException e) {
-
 					e.printStackTrace();
 				}
 
