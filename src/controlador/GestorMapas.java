@@ -28,15 +28,14 @@ public class GestorMapas {
 	private int vida;
 	private CeldaEspecial espAux;
 
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,
-			int j2, BufferedReader inputStream, ArrayList<String> lineasMapa0,
-			String nombre) {
+	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapa0, String nombre) {
 		boolean[][] visit = new boolean[20][20];
 		for (int i = 0; i < 12; i++) {
 			for (int j = 0; j < 16; j++) {
 				visit[i][j] = false;
 			}
 		}
+		
 		// Lectura de archivos de texto
 		InputStream in = getClass().getResourceAsStream(nombre);
 		inputStream = new BufferedReader(new InputStreamReader(in));
@@ -44,12 +43,10 @@ public class GestorMapas {
 		String linea;
 		try {
 			while ((linea = inputStream.readLine()) != null) {
-				if (linea.equals(""))
-					break;
+				if (linea.equals("")) break;
 				lineasMapa0.add(linea);
 			}
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		}
 
@@ -59,30 +56,18 @@ public class GestorMapas {
 		for (int i = 0; i < lineasMapa0.size(); i++) {
 			ArrayList<Celda> fila = new ArrayList<Celda>();
 			for (int j = 0; j < lineasMapa0.get(0).length(); j++) {
-				if (lineasMapa0.get(i).charAt(j) == 'S') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
-							TipoCelda.TERRENO_A);
-					fila.add(celda);
-				} else if (lineasMapa0.get(i).charAt(j) == 'N') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
-							TipoCelda.TERRENO_B);
-					fila.add(celda);
-				} else if (lineasMapa0.get(i).charAt(j) == 'A') {
-					Celda celda = new Celda('S', TipoCelda.TERRENO_A);
-					fila.add(celda);
-				} else if (lineasMapa0.get(i).charAt(j) == 'B') {
-					Celda celda = new Celda('N', TipoCelda.TERRENO_B);
-					fila.add(celda);
-				} else if (lineasMapa0.get(i).charAt(j) == 'C'
-						|| lineasMapa0.get(i).charAt(j) == 'D') {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
-							TipoCelda.TERRENO_AMBOS);
-					fila.add(celda);
-				} else {
-					Celda celda = new Celda(lineasMapa0.get(i).charAt(j),
-							TipoCelda.IMPASABLE);
-					fila.add(celda);
-				}
+				
+				Celda celda;
+				
+				if (lineasMapa0.get(i).charAt(j) == 'S') celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.TERRENO_A);
+				else if (lineasMapa0.get(i).charAt(j) == 'N') celda = new Celda(lineasMapa0.get(i).charAt(j), TipoCelda.TERRENO_B);
+				else if (lineasMapa0.get(i).charAt(j) == 'A') celda = new Celda('S', TipoCelda.TERRENO_A);
+				else if (lineasMapa0.get(i).charAt(j) == 'B') celda = new Celda('N', TipoCelda.TERRENO_B);
+				else if (lineasMapa0.get(i).charAt(j) == 'C' || lineasMapa0.get(i).charAt(j) == 'D') 
+					celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.TERRENO_AMBOS);
+				else celda = new Celda(lineasMapa0.get(i).charAt(j),TipoCelda.IMPASABLE);
+			
+				fila.add(celda);
 			}
 			m.addFila(fila);
 		}
@@ -686,50 +671,6 @@ public class GestorMapas {
 
 			e2.printStackTrace();
 		}
-		/*
-		 * for(int m=0;m<mapas.size();m++){
-		 * 
-		 * String nombre; if(m==0) nombre ="/MapaTutorial"; else nombre =
-		 * "/MapaNivel"+m; for(int i=0;i<12;i++){ int j; for(j=0;j<16;j++){
-		 * Celda c = mapas.get(m).getCelda(i, j); if(c.getSprite() == 'S' ||
-		 * c.getSprite()=='A') break; } if(j!=16){ for(j=0;j<16;j++){ Celda c =
-		 * mapas.get(m).getCelda(i, j); try {
-		 * c.setImg(ImageIO.read(getClass().getResource
-		 * ("/imagenes"+nombre+"/piso1.gif"))); } catch (IOException e) {
-		 * 
-		 * e.printStackTrace(); } } }
-		 * 
-		 * for(j=0;j<16;j++){ Celda c = mapas.get(m).getCelda(i, j);
-		 * if(c.getSprite() == 'N' || c.getSprite()=='B') break; } if(j!= 16){
-		 * for(j=0;j<16;j++){ Celda c = mapas.get(m).getCelda(i, j); try {
-		 * c.setImg
-		 * (ImageIO.read(getClass().getResource("/imagenes"+nombre+"/piso2.gif"
-		 * ))); } catch (IOException e) {
-		 * 
-		 * e.printStackTrace(); } } }
-		 * 
-		 * } for (int i = 0; i < mapas.get(m).cantidadObstaculos(); i++) {
-		 * Objeto bb = mapas.get(m).getObstaculo(i); int altura =
-		 * bb.getAltura(); int ancho = bb.getAncho(); int posX = bb.getPosX();
-		 * int posY = bb.getPosY(); char sprite = bb.getSprite(); if(sprite !=
-		 * 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite !=
-		 * 'g' & sprite != 't' && sprite != 'd') try {
-		 * bb.setImg(ImageIO.read(getClass
-		 * ().getResource("/imagenes"+nombre+"/"+sprite+".gif"))); } catch
-		 * (IOException e1) {
-		 * 
-		 * e1.printStackTrace(); } for (int j = 0; j < altura; j++) { for (int k
-		 * = 0; k < ancho; k++) { aux = mapas.get(m).getCelda(posX + j, posY +
-		 * k); aux.setTipo(TipoCelda.IMPASABLE); aux.setSprite(sprite);
-		 * if(sprite == 'a' || sprite == 'p' || sprite == 'o' || sprite == 'L'
-		 * || sprite == 'g' || sprite == 't' || sprite == 'd') try {
-		 * //System.out.println("/imagenes"+nombre+"/"+sprite+".gif");
-		 * aux.setImg
-		 * (ImageIO.read(getClass().getResource("/imagenes"+nombre+"/"+
-		 * sprite+".gif"))); } catch (IOException e) {
-		 * 
-		 * e.printStackTrace(); } } } } }
-		 */
 		String nombre;
 		if (indMapaActual == 0)
 			nombre = "/MapaTutorial";
