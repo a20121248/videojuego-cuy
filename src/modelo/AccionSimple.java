@@ -37,6 +37,7 @@ public class AccionSimple extends CeldaEspecial {
 							aux.setTipo(celdaReemplazar.getTipo());
 						}
 					}
+					mapaActual.eliminarObstaculo(indObst);
 				}
 			}
 		} 
