@@ -2,23 +2,26 @@ package controlador;
 
 public class InterpreteComandos {
 	public int interpretarMovimiento(String comando) {
-		if (comando.equals(""))
+		if (comando.isEmpty())
 			return -1;
-		if (comando.charAt(0) == 'W' || comando.charAt(0) == 'w')
+		
+		char c = comando.charAt(0);
+		
+		if (c == 'W' || c == 'w')
 			return 0;
-		else if (comando.charAt(0) == 'A' || comando.charAt(0) == 'a')
+		else if (c == 'A' || c == 'a')
 			return 1;
-		else if (comando.charAt(0) == 'S' || comando.charAt(0) == 's')
+		else if (c == 'S' || c == 's')
 			return 2;
-		else if (comando.charAt(0) == 'D' || comando.charAt(0) == 'd')
+		else if (c == 'D' || c == 'd')
 			return 3;
-		else if (comando.charAt(0) == 'I' || comando.charAt(0) == 'i')
+		else if (c == 'I' || c == 'i')
 			return 4;
-		else if (comando.charAt(0) == 'J' || comando.charAt(0) == 'j')
+		else if (c == 'J' || c == 'j')
 			return 5;
-		else if (comando.charAt(0) == 'K' || comando.charAt(0) == 'k')
+		else if (c == 'K' || c == 'k')
 			return 6;
-		else if (comando.charAt(0) == 'L' || comando.charAt(0) == 'l')
+		else if (c == 'L' || c == 'l')
 			return 7;
 		else
 			return -1;
