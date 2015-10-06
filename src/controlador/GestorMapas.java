@@ -19,8 +19,8 @@ public class GestorMapas {
 	private PersonajePrincipal jugador1, jugador2;
 	private boolean fin1, fin2;
 	private int indMapaActual;
-	private int cant;
-	private String jugador_nombre;
+	private int cantidadMapas;
+	private String nombreJugador;
 	private String comandoActual;
 	private Celda celdaDual, celdaOriginal0, celdaOriginal1;
 	private int dual;
@@ -45,6 +45,8 @@ public class GestorMapas {
 	public static final int IZQUIERDAJ2 = 5;
 	public static final int ABAJOJ2 = 6;
 	public static final int DERECHAJ2 = 7;
+	public static final int JUGADOR1 = 0;
+	public static final int JUGADOR2 = 1;
 	
 	//Constructor
 	public GestorMapas() {
@@ -57,13 +59,13 @@ public class GestorMapas {
 			e.printStackTrace();
 		}
 		
-		cant = mapas.size();
+		cantidadMapas = mapas.size();
 		fin1 = false;
 		fin2 = false;
 	}
 	
 	public String Get_nombre(){
-		return jugador_nombre;
+		return nombreJugador;
 	}
 	
 	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
@@ -449,23 +451,29 @@ public class GestorMapas {
 
 	}
 	
-	public void cargarMapa(int index,String nombre_j) {
+	public void cargarMapa(int index,String nuevoNombre) {
 
-		if (index > cant)
-			return;
+		if (index > cantidadMapas) return; // Existe el mapa
+		
+		//Se inicializan las Variables del Mapa
 		mapaActual = mapas.get(index).copy();
 		indMapaActual = index;
-		jugador_nombre= nombre_j;
+		nombreJugador= nuevoNombre;
+		
+		//Se Inicializan los dos Personajes
+		//Jugador 1
 		jugador1 = new PersonajePrincipal(mapaActual.posX1, mapaActual.posY1);
-		Celda c = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
-		celdaOriginal0 = c.copy();
-		c.setJugador(0);
-		c.setSprite('A');
+		Celda celdaAux = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
+		celdaOriginal0 = celdaAux.copy();
+		celdaAux.setJugador(JUGADOR1);
+		celdaAux.setSprite('A');
+		
+		//Jugador 2
 		jugador2 = new PersonajePrincipal(mapaActual.posX2, mapaActual.posY2);
-		c = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
-		celdaOriginal1 = c.copy();
-		c.setJugador(1);
-		c.setSprite('B');
+		celdaAux = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
+		celdaOriginal1 = celdaAux.copy();
+		celdaAux.setJugador(JUGADOR2);
+		celdaAux.setSprite('B');
 	}
 
 	public void realizarMovimiento(int mov) {
@@ -477,6 +485,7 @@ public class GestorMapas {
 		if (noEsComandoConocido) return;
 
 		boolean esMovJug1 = mov < ARRIBAJ2;
+		
 		if (esMovJug1) {
 			celdaAntes = celdaOriginal0;
 			posXAux = jugador1.getPosX();
@@ -605,37 +614,35 @@ public class GestorMapas {
 	}
 
 	public String ejecutarComando(int mov) {
-		Celda c;
-		if (mov < 4)
-			c = mapas.get(indMapaActual).getCelda(jugador1.getPosX(),
-					jugador1.getPosY());
-		else
-			c = mapas.get(indMapaActual).getCelda(jugador2.getPosX(),
-					jugador2.getPosY());
-		CeldaEspecial celdaEspp;
+		Celda celdaActual;
+		
+		boolean esMovJug1 = mov < ARRIBAJ2;
+		
+		if (esMovJug1) celdaActual = mapas.get(indMapaActual).getCelda(jugador1.getPosX(),jugador1.getPosY());
+		else celdaActual = mapas.get(indMapaActual).getCelda(jugador2.getPosX(),jugador2.getPosY());
+		
+		CeldaEspecial celdaEsp;
 		if (indMovimientoEspecial == 0) {
-			int ind = c.getIndiceEspecial();
-			celdaEspp = mapaActual.getEspecial(ind);
-			espAux = celdaEspp;
+			int ind = celdaActual.getIndiceEspecial();
+			celdaEsp = mapaActual.getEspecial(ind);
+			espAux = celdaEsp;
 		} else {
-			celdaEspp = espAux;
+			celdaEsp = espAux;
 		}
-		celdaEspp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2, celdaOriginal0, celdaOriginal1, indMovimientoEspecial);
+		celdaEsp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2, celdaOriginal0, celdaOriginal1, indMovimientoEspecial);
 		
 		indMovimientoEspecial += 1;
 		
-		if (celdaEspp.getDireccionX().size() == indMovimientoEspecial) {
-			if (realizarMovimientoEspecial(0).equals("F"))
-				return "F";
-			if (realizarMovimientoEspecial(4).equals("F"))
-				return "F";
+		if (celdaEsp.getDireccionX().size() == indMovimientoEspecial) {
+			if (realizarMovimientoEspecial(0).equals("F")) return "F";
+			if (realizarMovimientoEspecial(4).equals("F")) return "F";
 			return "Done";
 		}
 		return "";
 	}
 
 	public void reiniciarVida() {
-		vida = 10;
+		vida = VIDAINICIAL;
 	}
 
 	public boolean perderVida(int v) {
