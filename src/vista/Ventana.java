@@ -34,10 +34,8 @@ import java.awt.*;
 import javax.swing.*;
 public class Ventana extends JFrame {
 
-	/**
-     * 
-     */
     private static final long serialVersionUID = -8472914249245291228L;
+    
     private JPanel contentPane;
 	private JPanel panel,panel2;
 	int flag = 0;
@@ -113,10 +111,6 @@ public class Ventana extends JFrame {
 	}
 	class PanelGraficos extends JPanel{
 		
-		
-		/**
-         * 
-         */
         private static final long serialVersionUID = 1065949227120247586L;
 
         public void paint(Graphics g){
@@ -152,9 +146,7 @@ public class Ventana extends JFrame {
 		
 	}
 	class PanelTexto extends JPanel implements KeyListener{
-		/**
-         * 
-         */
+
         private static final long serialVersionUID = -4712396594532659965L;
 
         public void paint(Graphics g){
@@ -204,14 +196,16 @@ public class Ventana extends JFrame {
 				Object[] options = {"Si","No"};
 				
 				int n = JOptionPane.showOptionDialog(this,
-				    "Â¿Seguro que desea salir?",
+				    "¿Seguro que desea salir?",
 				    "A Silly Question",
 				    JOptionPane.YES_OPTION,
 				    JOptionPane.NO_OPTION,
 				    null,
 				    options,
 				    options[0]);
-				if(n==JOptionPane.YES_OPTION) System.exit(0);
+				if(n == JOptionPane.YES_OPTION) {
+				    System.exit(0);
+				}
 				
 			}
 			if(flag == -6){ //ingresar nombre
