@@ -67,7 +67,7 @@ public class Ventana extends JFrame {
 			"o	Para activar los terrenos con acciones especiales duo, tienen que estar sobre ellos Kiru y Milo al mismo tiempo, en los de acciones especiales solo con uno basta. ",
 
 			"o	En tu aventura, a veces te toparas con animales malos. " +
-			"o	Estos enemigos te bajaran�ｽ｣ puntos de vida, si tus puntos de vida llegan a 0, se acabara el juego. " +
+			"o	Estos enemigos te bajaran�ｿｽ�ｽｽ�ｽ｣ puntos de vida, si tus puntos de vida llegan a 0, se acabara el juego. " +
 			"o	Si un enemigo afecta a un personaje, este no se podra mover, tendra que usar a su amigo para ayudarlo. " 
 		};
 	
@@ -224,6 +224,7 @@ public class Ventana extends JFrame {
 					try {XStream xs = new XStream(new DomDriver());
 					
 						gestor = (GestorMapas)xs.fromXML(new FileInputStream("Savestate.xml"));
+						nombre=gestor.Get_nombre();
 						gestor.recargarImagenes();
 			           dibujar(gestor.getMapaActual());
 			           mapaActual = gestor.getIndMapaActual();
@@ -288,7 +289,7 @@ public class Ventana extends JFrame {
 			           FileWriter fw = new FileWriter("savestate.xml");
 			           fw.write(xs.toXML(gestor));
 			           fw.close();
-			           System.exit(0);
+			           //System.exit(0);
 			       } catch (IOException i) {
 			          System.out.println(i.toString());}
 			       }
@@ -396,7 +397,7 @@ public class Ventana extends JFrame {
 		}
 	}
 	public void nuevoNivel(int nivel){
-		gestor.cargarMapa(nivel);
+		gestor.cargarMapa(nivel,nombre);
 		dibujar(gestor.getMapaActual());
 		if(nivel==0){
 			inicializarTexto();
