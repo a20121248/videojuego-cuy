@@ -472,11 +472,11 @@ public class GestorMapas {
 
 		Celda celdaAntes, celdaDespues = null;
 		int posXAux, posYAux, posXNuevo, posYNuevo;
+		
 		boolean noEsComandoConocido = mov == -1;
 		if (noEsComandoConocido) return;
 
 		boolean esMovJug1 = mov < ARRIBAJ2;
-		
 		if (esMovJug1) {
 			celdaAntes = celdaOriginal0;
 			posXAux = jugador1.getPosX();
@@ -606,7 +606,6 @@ public class GestorMapas {
 
 	public String ejecutarComando(int mov) {
 		Celda c;
-		// Scanner scanner = new Scanner(System.in);
 		if (mov < 4)
 			c = mapas.get(indMapaActual).getCelda(jugador1.getPosX(),
 					jugador1.getPosY());
@@ -615,18 +614,16 @@ public class GestorMapas {
 					jugador2.getPosY());
 		CeldaEspecial celdaEspp;
 		if (indMovimientoEspecial == 0) {
-			// int especial = c.getEspecial();
 			int ind = c.getIndiceEspecial();
 			celdaEspp = mapaActual.getEspecial(ind);
 			espAux = celdaEspp;
 		} else {
 			celdaEspp = espAux;
 		}
-		celdaEspp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2,
-				celdaOriginal0, celdaOriginal1, indMovimientoEspecial);
+		celdaEspp.ejecutarEspecial(mov, mapaActual, jugador1, jugador2, celdaOriginal0, celdaOriginal1, indMovimientoEspecial);
+		
 		indMovimientoEspecial += 1;
-		// List<Integer> aux = celdaEspp.getDireccionX();
-		// List<Integer> auy = celdaEspp.getDireccionY();
+		
 		if (celdaEspp.getDireccionX().size() == indMovimientoEspecial) {
 			if (realizarMovimientoEspecial(0).equals("F"))
 				return "F";
@@ -664,53 +661,44 @@ public class GestorMapas {
 		try {
 			anadirMapas();
 		} catch (IOException e2) {
-
 			e2.printStackTrace();
 		}
 		String nombre;
-		if (indMapaActual == 0)
-			nombre = "/MapaTutorial";
-		else
-			nombre = "/MapaNivel" + indMapaActual;
+		if (indMapaActual == 0) nombre = "/MapaTutorial";
+		else nombre = "/MapaNivel" + indMapaActual;
 
-		celdaOriginal0.setImg(mapas.get(indMapaActual)
-				.getCelda(jugador1.getPosX(), jugador1.getPosY()).getImg());
-		celdaOriginal1.setImg(mapas.get(indMapaActual)
-				.getCelda(jugador2.getPosX(), jugador2.getPosY()).getImg());
+		celdaOriginal0.setImg(mapas.get(indMapaActual).getCelda(jugador1.getPosX(), jugador1.getPosY()).getImg());
+		celdaOriginal1.setImg(mapas.get(indMapaActual).getCelda(jugador2.getPosX(), jugador2.getPosY()).getImg());
 
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < MAXALTURA; i++) {
 			int j;
-			for (j = 0; j < 16; j++) {
+			for (j = 0; j < MAXANCHO; j++) {
 				Celda c = mapas.get(indMapaActual).getCelda(i, j);
 				if (c.getSprite() == 'S' || c.getSprite() == 'A')
 					break;
 			}
-			if (j != 16) {
-				for (j = 0; j < 16; j++) {
+			if (j != MAXANCHO) {
+				for (j = 0; j < MAXANCHO; j++) {
 					Celda c = mapaActual.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource(
-								"/imagenes" + nombre + "/piso1.gif")));
+						c.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/piso1.gif")));
 					} catch (IOException e) {
-
 						e.printStackTrace();
 					}
 				}
 			}
 
-			for (j = 0; j < 16; j++) {
+			for (j = 0; j < MAXANCHO; j++) {
 				Celda c = mapas.get(indMapaActual).getCelda(i, j);
 				if (c.getSprite() == 'N' || c.getSprite() == 'B')
 					break;
 			}
-			if (j != 16) {
-				for (j = 0; j < 16; j++) {
+			if (j != MAXANCHO) {
+				for (j = 0; j < MAXANCHO; j++) {
 					Celda c = mapaActual.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource(
-								"/imagenes" + nombre + "/piso2.gif")));
+						c.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/piso2.gif")));
 					} catch (IOException e) {
-
 						e.printStackTrace();
 					}
 				}
@@ -750,79 +738,59 @@ public class GestorMapas {
 			}
 		}
 		if (indMapaActual == 0) {
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < MAXANCHO; i++) {
 				try {
-					mapaActual.getCelda(0, i).setImg(
-							ImageIO.read(getClass().getResource(
-									"/imagenes/MapaTutorial/pared.gif")));
+					mapaActual.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				try {
-					mapaActual.getCelda(1, i).setImg(
-							ImageIO.read(getClass().getResource(
-									"/imagenes/MapaTutorial/piso madera.gif")));
+					mapaActual.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/piso madera.gif")));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		} else if (indMapaActual == 1) {
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0; i < MAXANCHO; i++) {
 				try {
-					mapaActual.getCelda(0, i).setImg(
-							ImageIO.read(getClass().getResource(
-									"/imagenes/MapaNivel1/1.gif")));
-				} catch (IOException e) {
-
-					e.printStackTrace();
-				}
-				try {
-					mapaActual.getCelda(1, i).setImg(
-							ImageIO.read(getClass().getResource(
-									"/imagenes/MapaNivel1/1.gif")));
+					mapaActual.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
+				try {
+					mapaActual.getCelda(1, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}else if(indMapaActual == 2){
 			for (int i = 0; i < 8; i++) {
 				try {
-					mapaActual.getCelda(0, i*2).setImg(
-							ImageIO.read(getClass().getResource(
-									"/imagenes/MapaNivel2/fondo.png")));
+					mapaActual.getCelda(0, i*2).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel2/fondo.png")));
 				} catch (IOException e) {
-
 					e.printStackTrace();
 				}
 				try {
-					mapaActual.getCelda(1, i*2).setImg(
-							ImageIO.read(getClass().getResource(
-									"/imagenes/MapaNivel2/fondo.png")));
+					mapaActual.getCelda(1, i*2).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel2/fondo.png")));
 				} catch (IOException e) {
-
 					e.printStackTrace();
 				}
 
 			}
 		}
 		int cant = mapaActual.cantidadCeldasEsp();
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 16; j++) {
+		for (int i = 0; i < MAXALTURA; i++) {
+			for (int j = 0; j < MAXANCHO; j++) {
 				aux = mapas.get(indMapaActual).getCelda(i, j);
 				if (aux.getEspecial() == 1 || aux.getEspecial() == -1) {
 					try {
-						mapaActual.getCelda(i, j).setImg(
-								ImageIO.read(getClass().getResource(
-										"/imagenes/sprite_azul.png")));
+						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				} else if (aux.getEspecial() == 2 || aux.getEspecial() == -2) {
 					try {
-						mapaActual.getCelda(i, j).setImg(
-								ImageIO.read(getClass().getResource(
-										"/imagenes/sprite_rojo.png")));
+						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_rojo.png")));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
