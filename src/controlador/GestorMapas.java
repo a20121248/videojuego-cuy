@@ -441,10 +441,22 @@ public class GestorMapas {
 			aux2.setTipo(TipoCelda.TERRENO_A);
 			aux2.setTipoCeldaEsp(0);
 			aux2.setSprite('o');
+			try {
+				aux2.setImg(ImageIO.read(getClass().getResource("/imagenes" + "/MapaNivel2" + "/" + aux2.getSprite()+ ".gif")));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			aux2 = nuevoMapa.getCelda(7, j);
 			aux2.setTipo(TipoCelda.TERRENO_B);
 			aux2.setTipoCeldaEsp(0);
 			aux2.setSprite('o');
+			try {
+				aux2.setImg(ImageIO.read(getClass().getResource("/imagenes" + "/MapaNivel2" + "/" + aux2.getSprite()+ ".gif")));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		Celda aux2 = nuevoMapa.getCelda(6, 15);
@@ -797,6 +809,33 @@ public class GestorMapas {
 				}
 
 			}
+			for (int j = 12; j < 16; j++) {
+				Celda aux2 = mapaActual.getCelda(6, j);
+				aux2.setTipo(TipoCelda.TERRENO_A);
+				aux2.setTipoCeldaEsp(0);
+				aux2.setSprite('o');
+				try {
+					aux2.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/" + aux2.getSprite()+ ".gif")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				aux2 = mapaActual.getCelda(7, j);
+				aux2.setTipo(TipoCelda.TERRENO_B);
+				aux2.setTipoCeldaEsp(0);
+				aux2.setSprite('o');
+				try {
+					aux2.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/" + aux2.getSprite()+ ".gif")));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			Celda aux2 = mapaActual.getCelda(6, 15);
+			aux2.setTipoCeldaEsp(3);
+			aux2 = mapaActual.getCelda(7, 15);
+			aux2.setTipoCeldaEsp(3);
 		}
 		int cant = mapaActual.cantidadCeldasEsp();
 		for (int i = 0; i < MAXALTURA; i++) {
@@ -817,21 +856,7 @@ public class GestorMapas {
 				}
 			}
 		}
-		for (int j = 12; j < 16; j++) {
-			Celda aux2 = mapaActual.getCelda(6, j);
-			aux2.setTipo(TipoCelda.TERRENO_A);
-			aux2.setTipoCeldaEsp(0);
-			aux2.setSprite('o');
-			aux2 = mapaActual.getCelda(7, j);
-			aux2.setTipo(TipoCelda.TERRENO_B);
-			aux2.setTipoCeldaEsp(0);
-			aux2.setSprite('o');
-		}
-
-		Celda aux2 = mapaActual.getCelda(6, 15);
-		aux2.setTipoCeldaEsp(3);
-		aux2 = mapaActual.getCelda(7, 15);
-		aux2.setTipoCeldaEsp(3);
+		
 		
 		mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY()).setSprite('A');
 		mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY()).setSprite('B');
