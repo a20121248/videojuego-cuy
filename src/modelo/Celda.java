@@ -1,6 +1,5 @@
 package modelo;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import com.thoughtworks.xstream.annotations.XStreamOmitField;

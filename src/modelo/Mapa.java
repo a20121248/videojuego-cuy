@@ -2,8 +2,6 @@ package modelo;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.awt.Graphics2D;
-import java.awt.image.*;
 
 public class Mapa {
 	private int ancho;
