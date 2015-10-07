@@ -68,7 +68,7 @@ public class Ventana extends JFrame implements KeyListener {
 			"o	Para activar los terrenos con acciones especiales duo, tienen que estar sobre ellos Kiru y Milo al mismo tiempo, en los de acciones especiales solo con uno basta. ",
 
 			"o	En tu aventura, a veces te toparas con animales malos. " +
-			"o	Estos enemigos te bajaran�ｿｽ�ｽｽ�ｽ｣ puntos de vida, si tus puntos de vida llegan a 0, se acabara el juego. " +
+			"o	Estos enemigos te bajaran 2 puntos de vida, si tus puntos de vida llegan a 0, se acabara el juego. " +
 			"o	Si un enemigo afecta a un personaje, este no se podra mover, tendra que usar a su amigo para ayudarlo. " 
 		};
 	
@@ -104,7 +104,7 @@ public class Ventana extends JFrame implements KeyListener {
 		flag = -5;
 		JLabel label;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1324, 768);
+		setBounds(100, 100, 1324, 806);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -112,11 +112,11 @@ public class Ventana extends JFrame implements KeyListener {
 		/*label = new JLabel();
 		label.setForeground(Color.GREEN);*/
 		panel = new PanelGraficos();
-		panel.setBounds(0, 0, 1024, 768);
+		panel.setBounds(0, 0, 1024, 806);
 		panel.setFocusable(false);
 		contentPane.add(panel);
 		panel2 = new PanelTexto();
-		panel2.setBounds(1024,0,200,768);
+		panel2.setBounds(1024,0,200,806);
 		panel2.setFocusable(false);
 		contentPane.add(panel2);
 		this.addWindowListener(new WindowAdapter(){

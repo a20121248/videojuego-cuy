@@ -428,7 +428,6 @@ public class GestorMapas {
 
 				e.printStackTrace();
 			}
-
 		}
 		mapas.add(nuevoMapa);
 		// Nivel 2
