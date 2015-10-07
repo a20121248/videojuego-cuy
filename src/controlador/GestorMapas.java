@@ -253,11 +253,12 @@ public class GestorMapas {
 		}
 		
 		
-		Celda celdaAux;
-		
 		List<CeldaEspecial> listaCeldaEsp = new ArrayList<CeldaEspecial>();
 		for (int i = 0; i < cantCeldasEspeciales; i++) {
 			int x, y, tipoCeldaEsp;
+			
+			Celda celdaAux;
+			
 			List<Integer> direccion;
 			try {
 				CeldaEspecial celdaEsp;
