@@ -36,7 +36,7 @@ public class Celda{
 	}
 	public void copy2(Celda c){
 		sprite = c.getSprite();
-		especial = c.getEspecial();
+		especial = c.getTipoCeldaEsp();
 		tipo = c.getTipo();
 		indiceDeListCeldaEsp = c.getIndiceListCeldaEsp();
 		jugador = c.getJugador();
@@ -48,7 +48,7 @@ public class Celda{
 	public void setSprite(char sprite){this.sprite = sprite;}
 	public TipoCelda getTipo(){return tipo;}
 	public int getIndiceListCeldaEsp(){return indiceDeListCeldaEsp;}
-	public int getEspecial(){return especial;}
+	public int getTipoCeldaEsp(){return especial;}
 	
 	public void setTipoCeldaEsp(int especial){this.especial = especial;}
 	public void setIndiceEspecial(int indiceEspecial){this.indiceDeListCeldaEsp = indiceEspecial;}

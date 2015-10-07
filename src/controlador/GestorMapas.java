@@ -261,19 +261,19 @@ public class GestorMapas {
 			
 			List<Integer> direccion;
 			try {
+				
+				//Crear nueva celda Especial
 				CeldaEspecial celdaEsp;
 				x = Integer.parseInt(inputStream.readLine());
 				y = Integer.parseInt(inputStream.readLine());
 				celdaAux = nuevoMapa.getCelda(x, y);
 				tipoCeldaEsp = Integer.parseInt(inputStream.readLine());
 				celdaAux.setTipoCeldaEsp(tipoCeldaEsp);
-				
 				//En base al tipo de celda Especial se le va a asignar un tipo de Acci
 				boolean esAccionSolo = tipoCeldaEsp == SOLOACTIVADO || tipoCeldaEsp == SOLODESACTIVADO;
 				if (esAccionSolo) celdaEsp = new AccionSimple();
 				else celdaEsp = new AccionDual();
-				
-				//Y tambi駭 un tipo de Imagen
+				//Y tambien un tipo de Imagen
 				if (esAccionSolo)
 					try {
 						celdaAux.setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
@@ -286,11 +286,11 @@ public class GestorMapas {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-
 				if (esAccionSolo) celdaAux.setSprite('C');
 				else celdaAux.setSprite('D');
 
-				//Se va a leer los diferentes movimientos que se haran por acci en cada nivel
+				
+				//Se le va a asignar los movimientos que se ejecutarán en la Acción
 				celdaAux.setIndiceEspecial(Integer.parseInt(inputStream.readLine()));
 				celdaEsp.setComandoEspecial(inputStream.readLine());
 				direccion = new ArrayList<Integer>();
@@ -301,10 +301,12 @@ public class GestorMapas {
 				for (int j = 0; j < cantMov; j++) direccion.add(Integer.parseInt(inputStream.readLine()));
 				celdaEsp.setDireccionY(direccion);
 
+				
+				//Se le va a asignar las nuevas acciones a liberarse una vez se completa la Acción
 				List<Integer> liberaX = new ArrayList<Integer>();
 				List<Integer> liberaY = new ArrayList<Integer>();
 				List<Integer> valorLiberacion = new ArrayList<Integer>();
-
+				
 				int cantLibera = Integer.parseInt(inputStream.readLine());
 
 				for (int j = 0; j < cantLibera; j++)liberaX.add(Integer.parseInt(inputStream.readLine()));
@@ -315,6 +317,8 @@ public class GestorMapas {
 				celdaEsp.setLiberaY(liberaY);
 				celdaEsp.setValorLiberacion(valorLiberacion);
 
+				
+				// Para los casos en donde se necesite romper un objeto se va a implementar una forma de reemplazarlo
 				int cantDestruye = Integer.parseInt(inputStream.readLine());
 
 				if (cantDestruye == 1) {
@@ -342,6 +346,7 @@ public class GestorMapas {
 			}
 		}
 		
+		//Se le asigna los eventos de las Celdas Especiales al Mapa
 		nuevoMapa.setListaEspecial(listaCeldaEsp);
 		try {
 			try {
@@ -564,7 +569,7 @@ public class GestorMapas {
 		else celdaActual = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
 		
 		//Verificar el tipo de accion y si se encuentra activado
-		int tipoCeldaEsp = celdaActual.getEspecial();
+		int tipoCeldaEsp = celdaActual.getTipoCeldaEsp();
 		int indiceListCeldaEsp = celdaActual.getIndiceListCeldaEsp();
 		if (tipoCeldaEsp == SINACCION) return "";
 		else if (tipoCeldaEsp == SOLOACTIVADO) { // comando solo
@@ -798,13 +803,13 @@ public class GestorMapas {
 		for (int i = 0; i < MAXALTURA; i++) {
 			for (int j = 0; j < MAXANCHO; j++) {
 				celdaAux = mapas.get(indMapaActual).getCelda(i, j);
-				if (celdaAux.getEspecial() == 1 || celdaAux.getEspecial() == -1) {
+				if (celdaAux.getTipoCeldaEsp() == 1 || celdaAux.getTipoCeldaEsp() == -1) {
 					try {
 						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_azul.png")));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				} else if (celdaAux.getEspecial() == 2 || celdaAux.getEspecial() == -2) {
+				} else if (celdaAux.getTipoCeldaEsp() == 2 || celdaAux.getTipoCeldaEsp() == -2) {
 					try {
 						mapaActual.getCelda(i, j).setImg(ImageIO.read(getClass().getResource("/imagenes/sprite_rojo.png")));
 					} catch (IOException e) {
