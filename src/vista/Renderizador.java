@@ -127,13 +127,13 @@ class PanelGraficos extends JPanel{
 			}
 		}
 	}
+    
     public PanelGraficos(){
     	m = null;
     	try {
 			imgCuy = (ImageIO.read(getClass().getResource("/imagenes/sprite_cuy.gif")));
 			imgPerro = (ImageIO.read(getClass().getResource("/imagenes/sprite_perro.gif")));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
