@@ -13,6 +13,14 @@ public class Mapa {
 	private List<Objeto> obstaculos;
 	private List<CeldaEspecial> celdasEspeciales;
 
+	public Mapa(int ancho, int altura) {
+		obstaculos = new ArrayList<Objeto>();
+		map = new ArrayList<List<Celda>>();
+		celdasEspeciales = new ArrayList<CeldaEspecial>();
+		this.ancho = ancho;
+		this.altura = altura;
+	}
+	
 	public Mapa(int ancho, int altura, int posX1, int posX2, int posY1, int posY2) {
 		obstaculos = new ArrayList<Objeto>();
 		map = new ArrayList<List<Celda>>();
@@ -22,6 +30,15 @@ public class Mapa {
 		this.posX1 = posX1;
 		this.posX2 = posX2;
 		this.posY1 = posY1;
+		this.posY2 = posY2;
+	}
+	
+	public void setPos1(int posX1,int posY1){
+		this.posX1 = posX1;
+		this.posY1 = posY1;
+	}
+	public void setPos2(int posX2,int posY2){
+		this.posX2 = posX2;
 		this.posY2 = posY2;
 	}
 
@@ -74,7 +91,7 @@ public class Mapa {
 		this.celdasEspeciales = celdasEspeciales;
 	}
 
-	public CeldaEspecial getEspecial(int index) {
+	public CeldaEspecial getCeldaEspEnLista(int index) {
 		return celdasEspeciales.get(index);
 	}
 

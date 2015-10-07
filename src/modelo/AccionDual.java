@@ -7,7 +7,7 @@ public class AccionDual extends CeldaEspecial {
 			Celda celdaOriginal0, Celda celdaOriginal1, int i) {
 		CeldaEspecial celdaEsp = this;
 		int dualOpuesto = celdaEsp.getDualOpuesto();
-		CeldaEspecial celdaEsp2 = mapaActual.getEspecial(dualOpuesto);
+		CeldaEspecial celdaEsp2 = mapaActual.getCeldaEspEnLista(dualOpuesto);
 		List<Integer> movX1;
 		List<Integer> movY1;
 		List<Integer> movX2;
