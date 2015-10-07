@@ -43,7 +43,7 @@ public class Ventana extends JFrame implements KeyListener {
 	InterpreteComandos interp;
 	GestorMapas gestor;
 	String comando;
-	String nombre="Kek";
+	String nombre="";
 	int mapaActual = 0;
 	int cantMapas = 3;
 	int indiceComando;
@@ -125,7 +125,7 @@ public class Ventana extends JFrame implements KeyListener {
 				
 				int n = JOptionPane.showOptionDialog(Ventana.this,
 				    "¿Seguro que desea salir?",
-				    "A Silly Question",
+				    "Mensaje de confirmacion",
 				    JOptionPane.YES_OPTION,
 				    JOptionPane.NO_OPTION,
 				    null,
@@ -145,13 +145,12 @@ public class Ventana extends JFrame implements KeyListener {
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("kek");
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 			Object[] options = {"Si","No"};
 			
 			int n = JOptionPane.showOptionDialog(this,
 			    "¿Seguro que desea salir?",
-			    "A Silly Question",
+			    "Mensaje de confirmacion",
 			    JOptionPane.YES_OPTION,
 			    JOptionPane.NO_OPTION,
 			    null,
