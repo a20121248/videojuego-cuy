@@ -176,49 +176,22 @@ public class GestorMapas {
 		}
 	}
 	
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
-		
-		// Lectura de archivos de texto
-		InputStream in = getClass().getResourceAsStream(nombre);
-		inputStream = new BufferedReader(new InputStreamReader(in));
-		
-		String linea;
-		try {
-			while ((linea = inputStream.readLine()) != null) {
-				if (linea.equals("")) break;
-				lineasMapaAux.add(linea);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		int tamX = lineasMapaAux.get(0).length();
-		int tamY = lineasMapaAux.size();
-		Mapa nuevoMapa = new Mapa(tamX, tamY);
-		
-		asignarTipoTerrenoAlMapa(lineasMapaAux, nuevoMapa,tamX,tamY);
-		lecturaDeObstaculosAlMapa(nuevoMapa,obstaculos);
-		
-		
-		//Lectura de imagenes
-		nombre = nombre.replace(".txt", "");
-		
-		asignarPisosAlMapa(nuevoMapa, nombre);
-		
+	private void asignarImagenesAlMapa(List<Objeto> obstaculos, Mapa nuevoMapa, String nombre){
 		Celda celdaAux;
-		//Primero los Impasables
+		
 		for (int i = 0; i < obstaculos.size(); i++) {
-			Objeto bb = obstaculos.get(i);
-			int altura = bb.getAltura();
-			int ancho = bb.getAncho();
-			int posX = bb.getPosX();
-			int posY = bb.getPosY();
-			char sprite = bb.getSprite();
+			Objeto objetoAux = obstaculos.get(i);
+			int altura = objetoAux.getAltura();
+			int ancho = objetoAux.getAncho();
+			int posX = objetoAux.getPosX();
+			int posY = objetoAux.getPosY();
+			char sprite = objetoAux.getSprite();
 			boolean esImpasable = sprite != 'a' && sprite != 'p' && sprite != 'o' && sprite != 'L' && sprite != 'g' & sprite != 't'&& sprite != 'd';
 			
+			//Primero los Impasables
 			if (esImpasable)
 				try {
-					bb.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/" + sprite + ".gif")));
+					objetoAux.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/" + sprite + ".gif")));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -238,8 +211,37 @@ public class GestorMapas {
 				}
 			}
 		}
+	}
+	
+	private Mapa Leer_Mapa(List<Objeto> obstaculos, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
 		
-		//Contar las Celdas Especiales para de ah� agregarlas al arreglo de CeldasEspeciales
+		// Lectura de archivos de texto
+		InputStream in = getClass().getResourceAsStream(nombre);
+		inputStream = new BufferedReader(new InputStreamReader(in));
+		String linea;
+		try {
+			while ((linea = inputStream.readLine()) != null) {
+				if (linea.equals("")) break;
+				lineasMapaAux.add(linea);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int tamX = lineasMapaAux.get(0).length();
+		int tamY = lineasMapaAux.size();
+		Mapa nuevoMapa = new Mapa(tamX, tamY);
+		asignarTipoTerrenoAlMapa(lineasMapaAux, nuevoMapa,tamX,tamY);
+		lecturaDeObstaculosAlMapa(nuevoMapa,obstaculos);
+		
+		
+		//Lectura de imagenes
+		nombre = nombre.replace(".txt", "");
+		asignarPisosAlMapa(nuevoMapa, nombre);
+		asignarImagenesAlMapa(obstaculos, nuevoMapa, nombre);
+		
+		
+		//Asignar Eventos
+		//Leer la cantidad de Celdas Especiales
 		int cantCeldasEspeciales = 0;
 		try {
 			while ((linea = inputStream.readLine()) != null) {
@@ -251,20 +253,22 @@ public class GestorMapas {
 		}
 		
 		
+		Celda celdaAux;
+		
 		List<CeldaEspecial> listaCeldaEsp = new ArrayList<CeldaEspecial>();
 		for (int i = 0; i < cantCeldasEspeciales; i++) {
-			int x, y, esp;
+			int x, y, tipoCeldaEsp;
 			List<Integer> direccion;
 			try {
 				CeldaEspecial celdaEsp;
 				x = Integer.parseInt(inputStream.readLine());
 				y = Integer.parseInt(inputStream.readLine());
 				celdaAux = nuevoMapa.getCelda(x, y);
-				esp = Integer.parseInt(inputStream.readLine());
-				celdaAux.setEspecial(esp);
+				tipoCeldaEsp = Integer.parseInt(inputStream.readLine());
+				celdaAux.setTipoCeldaEsp(tipoCeldaEsp);
 				
 				//En base al tipo de celda Especial se le va a asignar un tipo de Acci
-				boolean esAccionSolo = esp == SOLOACTIVADO || esp == SOLODESACTIVADO;
+				boolean esAccionSolo = tipoCeldaEsp == SOLOACTIVADO || tipoCeldaEsp == SOLODESACTIVADO;
 				if (esAccionSolo) celdaEsp = new AccionSimple();
 				else celdaEsp = new AccionDual();
 				
@@ -327,7 +331,7 @@ public class GestorMapas {
 					celdaEsp.setReemplazarObstaculo(reemplazarObstaculo);
 				}
 
-				if (esp == DUOACTIVADO || esp == DUODESACTIVADO) celdaEsp.setDualOpuesto(Integer.parseInt(inputStream.readLine()));
+				if (tipoCeldaEsp == DUOACTIVADO || tipoCeldaEsp == DUODESACTIVADO) celdaEsp.setDualOpuesto(Integer.parseInt(inputStream.readLine()));
 				
 				listaCeldaEsp.add(celdaEsp);
 				inputStream.readLine();
@@ -355,6 +359,7 @@ public class GestorMapas {
 					e.printStackTrace();
 				}
 		}
+		
 		return nuevoMapa;
 	}
 
@@ -364,12 +369,11 @@ public class GestorMapas {
 		ArrayList<String> lineasMapaAux = new ArrayList<String>();
 		BufferedReader inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		//TAMBIEN TIENE QUE LEER LAS POSICIONES
-		nuevoMapa = Leer_Mapa(obstaculos, 2, 11, 0, 0, inputStream, lineasMapaAux,"/MapaTutorial.txt");
+		nuevoMapa = Leer_Mapa(obstaculos, inputStream, lineasMapaAux,"/MapaTutorial.txt");
 		for (int i = 5; i < 9; i++) {
 			Celda aux = nuevoMapa.getCelda(i, 15);
 			aux.setTipo(TipoCelda.TERRENO_A);
-			aux.setEspecial(3);
+			aux.setTipoCeldaEsp(3);
 			aux.setSprite('o');
 		}
 		for (int i = 0; i < 16; i++) {
@@ -392,30 +396,28 @@ public class GestorMapas {
 		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		nuevoMapa = Leer_Mapa(obstaculos, 5, 9, 15, 15, inputStream, lineasMapaAux,"/MapaNivel1.txt");
+		nuevoMapa = Leer_Mapa(obstaculos, inputStream, lineasMapaAux,"/MapaNivel1.txt");
 
 		for (int i = 3; i < 7; i++) {
 			Celda auxi = nuevoMapa.getCelda(i, 0);
 			auxi.setTipo(TipoCelda.TERRENO_A);
-			auxi.setEspecial(3);
+			auxi.setTipoCeldaEsp(3);
 		}
 		for (int i = 8; i < 12; i++) {
 			Celda auxi = nuevoMapa.getCelda(i, 0);
 			auxi.setTipo(TipoCelda.TERRENO_B);
-			auxi.setEspecial(3);
+			auxi.setTipoCeldaEsp(3);
 		}
 		for (int i = 0; i < 16; i++) {
 			try {
-				nuevoMapa.getCelda(0, i).setImg(
-						ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
+				nuevoMapa.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
 			} catch (IOException e) {
 
 				e.printStackTrace();
 			}
 			try {
 				nuevoMapa.getCelda(1, i).setImg(
-						ImageIO.read(getClass().getResource(
-								"/imagenes/MapaNivel1/1.gif")));
+						ImageIO.read(getClass().getResource("/imagenes/MapaNivel1/1.gif")));
 			} catch (IOException e) {
 
 				e.printStackTrace();
@@ -427,23 +429,23 @@ public class GestorMapas {
 		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		nuevoMapa = Leer_Mapa(obstaculos, 5, 10, 0, 0, inputStream, lineasMapaAux,"/MapaNivel2.txt");
+		nuevoMapa = Leer_Mapa(obstaculos, inputStream, lineasMapaAux,"/MapaNivel2.txt");
 
 		for (int j = 12; j < 16; j++) {
 			Celda aux2 = nuevoMapa.getCelda(6, j);
 			aux2.setTipo(TipoCelda.TERRENO_A);
-			aux2.setEspecial(0);
+			aux2.setTipoCeldaEsp(0);
 			aux2.setSprite('o');
 			aux2 = nuevoMapa.getCelda(7, j);
 			aux2.setTipo(TipoCelda.TERRENO_B);
-			aux2.setEspecial(0);
+			aux2.setTipoCeldaEsp(0);
 			aux2.setSprite('o');
 		}
 
 		Celda aux2 = nuevoMapa.getCelda(6, 15);
-		aux2.setEspecial(3);
+		aux2.setTipoCeldaEsp(3);
 		aux2 = nuevoMapa.getCelda(7, 15);
-		aux2.setEspecial(3);
+		aux2.setTipoCeldaEsp(3);
 		
 		for (int i = 0; i < 8; i++) {
 			try {
@@ -575,7 +577,7 @@ public class GestorMapas {
 
 			for (int i = 0; i < liberaX.size(); i++) {
 				Celda c2 = mapaActual.getCelda(liberaX.get(i), liberaY.get(i));
-				c2.setEspecial(valorLiberacion.get(i));
+				c2.setTipoCeldaEsp(valorLiberacion.get(i));
 			}
 			
 			if (esMovJ1)
@@ -584,9 +586,9 @@ public class GestorMapas {
 			else
 				realizarMovimientoEspecial(0); // que se activo ahora
 			
-			celdaActual.setEspecial(0);
-			if (esMovJ1) celdaOriginal0.setEspecial(0);
-			else celdaOriginal1.setEspecial(0);
+			celdaActual.setTipoCeldaEsp(0);
+			if (esMovJ1) celdaOriginal0.setTipoCeldaEsp(0);
+			else celdaOriginal1.setTipoCeldaEsp(0);
 
 			return comandoActual;
 		} else if (tipoCeldaEsp == DUOACTIVADO) { // comando dual
@@ -595,10 +597,10 @@ public class GestorMapas {
 			int dualOpuesto = celdaEsp.getDualOpuesto();
 			if (dual == dualOpuesto) {
 				comandoActual = celdaEsp.getComandoEspecial();
-				celdaOriginal0.setEspecial(0);
-				celdaOriginal1.setEspecial(0);
-				celdaActual.setEspecial(0);
-				celdaDual.setEspecial(0);
+				celdaOriginal0.setTipoCeldaEsp(0);
+				celdaOriginal1.setTipoCeldaEsp(0);
+				celdaActual.setTipoCeldaEsp(0);
+				celdaDual.setTipoCeldaEsp(0);
 			} else {
 				indMovimientoEspecial = 0;
 				dual = indiceListCeldaEsp;
@@ -813,18 +815,18 @@ public class GestorMapas {
 		for (int j = 12; j < 16; j++) {
 			Celda aux2 = mapaActual.getCelda(6, j);
 			aux2.setTipo(TipoCelda.TERRENO_A);
-			aux2.setEspecial(0);
+			aux2.setTipoCeldaEsp(0);
 			aux2.setSprite('o');
 			aux2 = mapaActual.getCelda(7, j);
 			aux2.setTipo(TipoCelda.TERRENO_B);
-			aux2.setEspecial(0);
+			aux2.setTipoCeldaEsp(0);
 			aux2.setSprite('o');
 		}
 
 		Celda aux2 = mapaActual.getCelda(6, 15);
-		aux2.setEspecial(3);
+		aux2.setTipoCeldaEsp(3);
 		aux2 = mapaActual.getCelda(7, 15);
-		aux2.setEspecial(3);
+		aux2.setTipoCeldaEsp(3);
 		
 		mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY()).setSprite('A');
 		mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY()).setSprite('B');

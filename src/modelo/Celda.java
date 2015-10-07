@@ -29,7 +29,7 @@ public class Celda{
 	public Celda copy(){
 		Celda c = new Celda(sprite,tipo);
 		c.setJugador(jugador);
-		c.setEspecial(especial);
+		c.setTipoCeldaEsp(especial);
 		c.setIndiceEspecial(indiceDeListCeldaEsp);
 		c.setImg(img);
 		return c;
@@ -50,7 +50,7 @@ public class Celda{
 	public int getIndiceListCeldaEsp(){return indiceDeListCeldaEsp;}
 	public int getEspecial(){return especial;}
 	
-	public void setEspecial(int especial){this.especial = especial;}
+	public void setTipoCeldaEsp(int especial){this.especial = especial;}
 	public void setIndiceEspecial(int indiceEspecial){this.indiceDeListCeldaEsp = indiceEspecial;}
 	
 	public void setImg(BufferedImage img){this.img = img;}
