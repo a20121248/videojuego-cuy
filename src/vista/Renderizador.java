@@ -99,6 +99,7 @@ class PanelGraficos extends JPanel{
     private static final long serialVersionUID = -4712396594532659965L;
 
     Mapa m;
+    BufferedImage imgCuy,imgPerro;
     public void paint(Graphics g){
 		super.paint(g);
 		if(m!=null){
@@ -116,21 +117,11 @@ class PanelGraficos extends JPanel{
 			for(int i=0;i<m.getAltura();i++){
 				for(int j=0;j<m.getAncho();j++){
 					if(m.getCelda(i, j).getSprite() == 'A'){
-						try {
-							b = (ImageIO.read(getClass().getResource("/imagenes/sprite_cuy.png")));
-							g.drawImage(b,j*64,i*64,null);
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						b = imgCuy;
+						g.drawImage(b,j*64,i*64,null);
 					}else if(m.getCelda(i, j).getSprite() == 'B'){
-						try {
-							b = (ImageIO.read(getClass().getResource("/imagenes/sprite_perro.png")));
-							g.drawImage(b,j*64,i*64,null);
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						b = imgPerro;
+						g.drawImage(b,j*64,i*64,null);
 					}
 				}
 			}
@@ -138,6 +129,13 @@ class PanelGraficos extends JPanel{
 	}
     public PanelGraficos(){
     	m = null;
+    	try {
+			imgCuy = (ImageIO.read(getClass().getResource("/imagenes/sprite_cuy.gif")));
+			imgPerro = (ImageIO.read(getClass().getResource("/imagenes/sprite_perro.gif")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 	
 }
