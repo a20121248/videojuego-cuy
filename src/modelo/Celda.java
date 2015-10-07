@@ -13,7 +13,7 @@ public class Celda{
 	private int jugador; // -1 = nadie, 0 = jugador A, 1 = jugador B
 	private int especial; // 0 = no 1 = solo activado 2 = ambos activado 3 = fin de nivel
 					//-1 = solo desactivado -2 = ambos desactivado
-	private int indiceEspecial;
+	private int indiceDeListCeldaEsp;
 	
 	public char getSprite(){
 		return sprite;
@@ -30,7 +30,7 @@ public class Celda{
 		Celda c = new Celda(sprite,tipo);
 		c.setJugador(jugador);
 		c.setEspecial(especial);
-		c.setIndiceEspecial(indiceEspecial);
+		c.setIndiceEspecial(indiceDeListCeldaEsp);
 		c.setImg(img);
 		return c;
 	}
@@ -38,7 +38,7 @@ public class Celda{
 		sprite = c.getSprite();
 		especial = c.getEspecial();
 		tipo = c.getTipo();
-		indiceEspecial = c.getIndiceEspecial();
+		indiceDeListCeldaEsp = c.getIndiceListCeldaEsp();
 		jugador = c.getJugador();
 		img = c.getImg();
 	}
@@ -47,11 +47,11 @@ public class Celda{
 	public void setTipo(TipoCelda tipo){this.tipo = tipo;}
 	public void setSprite(char sprite){this.sprite = sprite;}
 	public TipoCelda getTipo(){return tipo;}
-	public int getIndiceEspecial(){return indiceEspecial;}
+	public int getIndiceListCeldaEsp(){return indiceDeListCeldaEsp;}
 	public int getEspecial(){return especial;}
 	
 	public void setEspecial(int especial){this.especial = especial;}
-	public void setIndiceEspecial(int indiceEspecial){this.indiceEspecial = indiceEspecial;}
+	public void setIndiceEspecial(int indiceEspecial){this.indiceDeListCeldaEsp = indiceEspecial;}
 	
 	public void setImg(BufferedImage img){this.img = img;}
 	public BufferedImage getImg(){return img;}

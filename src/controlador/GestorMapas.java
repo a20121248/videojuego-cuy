@@ -34,6 +34,7 @@ public class GestorMapas {
 	public static final int MAXANCHO = 16;
 	public static final int VIDAINICIAL = 10;
 	
+	public static final int SINACCION = 0;
 	public static final int SOLODESACTIVADO = -1;
 	public static final int SOLOACTIVADO = 1;
 	public static final int DUODESACTIVADO = -2;
@@ -50,6 +51,10 @@ public class GestorMapas {
 	public static final int DERECHAJ2 = 7;
 	public static final int JUGADOR1 = 0;
 	public static final int JUGADOR2 = 1;
+	
+	public static final int TUTORIAL = 0;
+	public static final int NIVEL1 = 1;
+	public static final int NIVEL2 = 2;
 	
 	//Constructor
 	public GestorMapas() {
@@ -71,35 +76,7 @@ public class GestorMapas {
 		return nombreJugador;
 	}
 	
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
-	
-      //Se va a crear una matriz auxiliar para verificar donde estan los obstaculos
-		boolean[][] visit = new boolean[20][20];
-		for (int i = 0; i < MAXALTURA; i++) {
-			for (int j = 0; j < MAXANCHO; j++) {
-				visit[i][j] = false;
-			}
-		}
-		
-		// Lectura de archivos de texto
-		InputStream in = getClass().getResourceAsStream(nombre);
-		inputStream = new BufferedReader(new InputStreamReader(in));
-
-		String linea;
-		try {
-			while ((linea = inputStream.readLine()) != null) {
-				if (linea.equals("")) break;
-				lineasMapaAux.add(linea);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		int tamX = lineasMapaAux.get(0).length();
-		int tamY = lineasMapaAux.size();
-		
-		Mapa nuevoMapa = new Mapa(tamX, tamY, i1, j1, i2, j2);
-
+	private void asignarTipoTerrenoAlMapa(ArrayList<String> lineasMapaAux,Mapa nuevoMapa,int tamX, int tamY){
 		for (int i = 0; i < tamY; i++) {
 			ArrayList<Celda> fila = new ArrayList<Celda>();
 			for (int j = 0; j < tamX; j++) {
@@ -121,8 +98,18 @@ public class GestorMapas {
 			}
 			nuevoMapa.addFila(fila);
 		}
+	}
+	
+	private void lecturaDeObstaculosAlMapa(Mapa nuevoMapa, List<Objeto> obstaculos){
+	    
+		//Se va a crear una matriz auxiliar para verificar donde estan los obstaculos
+		boolean[][] visit = new boolean[20][20];
+		for (int i = 0; i < MAXALTURA; i++) {
+			for (int j = 0; j < MAXANCHO; j++) {
+				visit[i][j] = false;
+			}
+		}
 		
-		//Lectura de Obstaculos
 		Celda celdaAux;
 		Objeto objAux;
 		for (int i = 0; i < MAXALTURA; i++) {
@@ -145,22 +132,25 @@ public class GestorMapas {
 			}
 		}
 		
-		//Lectura de imagenes
-		nombre = nombre.replace(".txt", "");
+		//Colocar los obstaculos en la lista de obstaculos
+		nuevoMapa.setObstaculos(obstaculos);
+	}
+
+	private void asignarPisosAlMapa(Mapa nuevoMapa,String nombre){
 		
 		for (int i = 0; i < MAXALTURA; i++) {
 			int j;
 			
 			//Lectura de piso1 para el personaje A
 			for (j = 0; j < MAXANCHO; j++) {
-				Celda c = nuevoMapa.getCelda(i, j);
-				if (c.getSprite() == 'S' || c.getSprite() == 'A') break;
+				Celda celdaAux = nuevoMapa.getCelda(i, j);
+				if (celdaAux.getSprite() == 'S' || celdaAux.getSprite() == 'A') break;
 			}
 			if (j != MAXANCHO) {
 				for (j = 0; j < MAXANCHO; j++) {
-					Celda c = nuevoMapa.getCelda(i, j);
+					Celda celdaAux = nuevoMapa.getCelda(i, j);
 					try {
-						c.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/piso1.gif")));
+						celdaAux.setImg(ImageIO.read(getClass().getResource("/imagenes" + nombre + "/piso1.gif")));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -169,8 +159,8 @@ public class GestorMapas {
 
 			//Lectura de piso2 para el personaje B
 			for (j = 0; j < MAXANCHO; j++) {
-				Celda c = nuevoMapa.getCelda(i, j);
-				if (c.getSprite() == 'N' || c.getSprite() == 'B') break;
+				Celda celdaAux = nuevoMapa.getCelda(i, j);
+				if (celdaAux.getSprite() == 'N' || celdaAux.getSprite() == 'B') break;
 			}
 			if (j != MAXANCHO) {
 				for (j = 0; j < MAXANCHO; j++) {
@@ -184,10 +174,38 @@ public class GestorMapas {
 			}
 
 		}
+	}
+	
+	private Mapa Leer_Mapa(List<Objeto> obstaculos, int i1, int j1, int i2,int j2, BufferedReader inputStream, ArrayList<String> lineasMapaAux, String nombre) {
 		
-		//Colocar los obstaculos en la lista de obstaculos
-		nuevoMapa.setObstaculos(obstaculos);
+		// Lectura de archivos de texto
+		InputStream in = getClass().getResourceAsStream(nombre);
+		inputStream = new BufferedReader(new InputStreamReader(in));
 		
+		String linea;
+		try {
+			while ((linea = inputStream.readLine()) != null) {
+				if (linea.equals("")) break;
+				lineasMapaAux.add(linea);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		int tamX = lineasMapaAux.get(0).length();
+		int tamY = lineasMapaAux.size();
+		Mapa nuevoMapa = new Mapa(tamX, tamY);
+		
+		asignarTipoTerrenoAlMapa(lineasMapaAux, nuevoMapa,tamX,tamY);
+		lecturaDeObstaculosAlMapa(nuevoMapa,obstaculos);
+		
+		
+		//Lectura de imagenes
+		nombre = nombre.replace(".txt", "");
+		
+		asignarPisosAlMapa(nuevoMapa, nombre);
+		
+		Celda celdaAux;
 		//Primero los Impasables
 		for (int i = 0; i < obstaculos.size(); i++) {
 			Objeto bb = obstaculos.get(i);
@@ -310,12 +328,11 @@ public class GestorMapas {
 				}
 
 				if (esp == DUOACTIVADO || esp == DUODESACTIVADO) celdaEsp.setDualOpuesto(Integer.parseInt(inputStream.readLine()));
-
+				
 				listaCeldaEsp.add(celdaEsp);
 				inputStream.readLine();
-
+				
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 		}
@@ -357,8 +374,7 @@ public class GestorMapas {
 		}
 		for (int i = 0; i < 16; i++) {
 			try {
-				nuevoMapa.getCelda(0, i).setImg(
-						ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
+				nuevoMapa.getCelda(0, i).setImg(ImageIO.read(getClass().getResource("/imagenes/MapaTutorial/pared.gif")));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -376,8 +392,7 @@ public class GestorMapas {
 		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		nuevoMapa = Leer_Mapa(obstaculos, 5, 9, 15, 15, inputStream, lineasMapaAux,
-				"/MapaNivel1.txt");
+		nuevoMapa = Leer_Mapa(obstaculos, 5, 9, 15, 15, inputStream, lineasMapaAux,"/MapaNivel1.txt");
 
 		for (int i = 3; i < 7; i++) {
 			Celda auxi = nuevoMapa.getCelda(i, 0);
@@ -412,8 +427,7 @@ public class GestorMapas {
 		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		nuevoMapa = Leer_Mapa(obstaculos, 5, 10, 0, 0, inputStream, lineasMapaAux,
-				"/MapaNivel2.txt");
+		nuevoMapa = Leer_Mapa(obstaculos, 5, 10, 0, 0, inputStream, lineasMapaAux,"/MapaNivel2.txt");
 
 		for (int j = 12; j < 16; j++) {
 			Celda aux2 = nuevoMapa.getCelda(6, j);
@@ -537,20 +551,23 @@ public class GestorMapas {
 	}
 
 	public String realizarMovimientoEspecial(int mov) {
-		Celda celdaAux;
-		boolean esComandoConocido = mov == -1;
-		if (esComandoConocido)return "";
+		Celda celdaActual;
+		boolean noEsComandoConocido = mov == -1;
+		if (noEsComandoConocido)return "";
 		
+		//Verificar si es movimiento de jugador 1 o de jugador 2
 		boolean esMovJ1 = mov < ARRIBAJ2;
-		if (esMovJ1) celdaAux = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
-		else celdaAux = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
+		if (esMovJ1) celdaActual = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
+		else celdaActual = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
 		
-		int especial = celdaAux.getEspecial();
-		int ind = celdaAux.getIndiceEspecial();
-		if (especial == 0) return "";
-		else if (especial == SOLOACTIVADO) { // comando solo
+		//Verificar el tipo de accion y si se encuentra activado
+		int tipoCeldaEsp = celdaActual.getEspecial();
+		int indiceListCeldaEsp = celdaActual.getIndiceListCeldaEsp();
+		if (tipoCeldaEsp == SINACCION) return "";
+		else if (tipoCeldaEsp == SOLOACTIVADO) { // comando solo
+			
 			indMovimientoEspecial = 0;
-			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
+			CeldaEspecial celdaEsp = mapaActual.getCeldaEspEnLista(indiceListCeldaEsp);
 			comandoActual = celdaEsp.getComandoEspecial();
 			List<Integer> liberaX = celdaEsp.getLiberaX();
 			List<Integer> liberaY = celdaEsp.getLiberaY();
@@ -560,38 +577,39 @@ public class GestorMapas {
 				Celda c2 = mapaActual.getCelda(liberaX.get(i), liberaY.get(i));
 				c2.setEspecial(valorLiberacion.get(i));
 			}
+			
 			if (esMovJ1)
 				realizarMovimientoEspecial(4); // se verifica si el otro
 												// personaje ya esta en un dual
 			else
 				realizarMovimientoEspecial(0); // que se activo ahora
 			
-			celdaAux.setEspecial(0);
+			celdaActual.setEspecial(0);
 			if (esMovJ1) celdaOriginal0.setEspecial(0);
 			else celdaOriginal1.setEspecial(0);
 
 			return comandoActual;
-		} else if (especial == DUOACTIVADO) { // comando dual
+		} else if (tipoCeldaEsp == DUOACTIVADO) { // comando dual
 
-			CeldaEspecial celdaEsp = mapaActual.getEspecial(ind);
+			CeldaEspecial celdaEsp = mapaActual.getCeldaEspEnLista(indiceListCeldaEsp);
 			int dualOpuesto = celdaEsp.getDualOpuesto();
 			if (dual == dualOpuesto) {
 				comandoActual = celdaEsp.getComandoEspecial();
 				celdaOriginal0.setEspecial(0);
 				celdaOriginal1.setEspecial(0);
-				celdaAux.setEspecial(0);
+				celdaActual.setEspecial(0);
 				celdaDual.setEspecial(0);
 			} else {
 				indMovimientoEspecial = 0;
-				dual = ind;
-				celdaDual = celdaAux;
+				dual = indiceListCeldaEsp;
+				celdaDual = celdaActual;
 				if (esMovJ1) tipoDual = 0;
 				else tipoDual = 1;
 				return "";
 			}
 			return comandoActual;
 			
-		} else if (especial == FINNIVEL) { // llego a fin de mapa
+		} else if (tipoCeldaEsp == FINNIVEL) { // llego a fin de mapa
 			if (esMovJ1) {
 				if (fin2) return "F";
 				else fin1 = true;
@@ -605,7 +623,6 @@ public class GestorMapas {
 
 	public String ejecutarComando(int mov) {
 		Celda celdaActual;
-		
 		boolean esMovJug1 = mov < ARRIBAJ2;
 		
 		if (esMovJug1) celdaActual = mapas.get(indMapaActual).getCelda(jugador1.getPosX(),jugador1.getPosY());
@@ -613,8 +630,8 @@ public class GestorMapas {
 		
 		CeldaEspecial celdaEsp;
 		if (indMovimientoEspecial == 0) {
-			int ind = celdaActual.getIndiceEspecial();
-			celdaEsp = mapaActual.getEspecial(ind);
+			int ind = celdaActual.getIndiceListCeldaEsp();
+			celdaEsp = mapaActual.getCeldaEspEnLista(ind);
 			espAux = celdaEsp;
 		} else {
 			celdaEsp = espAux;
@@ -662,7 +679,7 @@ public class GestorMapas {
 		}
 		
 		String nombre;
-		if (indMapaActual == 0) nombre = "/MapaTutorial";
+		if (indMapaActual == TUTORIAL) nombre = "/MapaTutorial";
 		else nombre = "/MapaNivel" + indMapaActual;
 
 		celdaOriginal0.setImg(mapas.get(indMapaActual).getCelda(jugador1.getPosX(), jugador1.getPosY()).getImg());
@@ -672,8 +689,7 @@ public class GestorMapas {
 			int j;
 			for (j = 0; j < MAXANCHO; j++) {
 				Celda c = mapas.get(indMapaActual).getCelda(i, j);
-				if (c.getSprite() == 'S' || c.getSprite() == 'A')
-					break;
+				if (c.getSprite() == 'S' || c.getSprite() == 'A') break;
 			}
 			if (j != MAXANCHO) {
 				for (j = 0; j < MAXANCHO; j++) {
@@ -688,8 +704,7 @@ public class GestorMapas {
 
 			for (j = 0; j < MAXANCHO; j++) {
 				Celda c = mapas.get(indMapaActual).getCelda(i, j);
-				if (c.getSprite() == 'N' || c.getSprite() == 'B')
-					break;
+				if (c.getSprite() == 'N' || c.getSprite() == 'B') break;
 			}
 			if (j != MAXANCHO) {
 				for (j = 0; j < MAXANCHO; j++) {
