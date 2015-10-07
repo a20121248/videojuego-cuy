@@ -84,7 +84,7 @@ public class Ventana extends JFrame implements KeyListener {
 	
 	public Ventana() {
 		
-		eventFlag = -5;
+		eventFlag = MENUINICIAL;
 		
 		//Para el canvas
 		setBounds(100, 100, 1324, 806);
@@ -138,10 +138,10 @@ public class Ventana extends JFrame implements KeyListener {
 		dibujar(gestor.getMapaActual());
 		if(nivel==0){
 			pnlTexto.inicializarTexto(nombre);
-			eventFlag = -1;
+			eventFlag = MOSTRARDIALOGOININIVEL;
 		}else{
 			pnlTexto.cambiarNivel(nivel);
-			eventFlag = 0;
+			eventFlag = MOSTRARHISTORIA;
 		}
 		pnlTexto.addTexto(historias[nivel]);
 		pnlTexto.addTexto("Presione enter para continuar");
