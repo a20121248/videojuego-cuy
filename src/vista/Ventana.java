@@ -119,6 +119,7 @@ public class Ventana extends JFrame implements KeyListener {
 		panel2.setBounds(1024,0,200,806);
 		panel2.setFocusable(false);
 		contentPane.add(panel2);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				Object[] options = {"Si","No"};
