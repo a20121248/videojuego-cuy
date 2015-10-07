@@ -23,8 +23,6 @@ import modelo.*;
 import controlador.*;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.thoughtworks.xstream.XStream;
@@ -32,18 +30,18 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import java.awt.*;
 import javax.swing.*;
-public class Ventana extends JFrame {
+public class Ventana extends JFrame implements KeyListener {
 
     private static final long serialVersionUID = -8472914249245291228L;
     
     private JPanel contentPane;
-	private JPanel panel,panel2;
+	private PanelGraficos panel;
+	private PanelTexto panel2;
 	int flag = 0;
 	Mapa m=null;
 	BufferedImage b;
 	InterpreteComandos interp;
 	GestorMapas gestor;
-	Renderizador rend;
 	String comando;
 	String nombre="Kek";
 	int mapaActual = 0;
@@ -52,7 +50,6 @@ public class Ventana extends JFrame {
 	int indiceDialogo = 0;
 	int valor;
 	boolean perdioVida = false;
-	List<String> textos;
 	final String[] historias = { 
 			"Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
 			"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
@@ -76,372 +73,27 @@ public class Ventana extends JFrame {
 		};
 	
 
-	public void addTexto(String texto){
-		textos.add(texto);
-	}
-	public void removeTexto(){
-		textos.remove(textos.size()-1);
-	}
-	public void inicializarTexto(){
-		textos.clear();
-		textos.add("Nombre: ");
-		textos.add(nombre);
-		textos.add("Nivel: Tutorial");
-		textos.add("Vida: 10");
-		textos.add("Comando actual:");
-		textos.add("");
-	}
-	public void cambiarNivel(int index){
-		textos.set(2,"Nivel: "+index);
-	}
-	public void quitarVida(int val){
-		int vidaActual = Integer.parseInt(textos.get(3).substring(6));
-		vidaActual -= val;
-		textos.set(3, "Vida: "+vidaActual);
-	}
-	public void anadirUltimo(char c){
-		String aux = textos.get(textos.size()-1);
-		aux += c;
-		textos.set(textos.size()-1, aux);
-	}
-	public void eliminarUltimo(){
-		String aux = textos.get(textos.size()-1);
-		aux = aux.substring(0, aux.length()-1);
-		textos.set(textos.size()-1, aux);
-	}
-	class PanelGraficos extends JPanel{
-		
-        private static final long serialVersionUID = 1065949227120247586L;
-
-        public void paint(Graphics g){
-			super.paint(g);
-			//System.out.println("topkek");
-			int aux = 10;			
-			for(int i=0;i<textos.size();i++){
-				//System.out.println(textos.get(i));
-				String[] s = textos.get(i).split(" ");
-				String out = "";
-				int l = 0;
-				for(int j=0;j<s.length;j++){
-					if(l + s[j].length() >= 25){
-						g.drawString(out, 10, aux);
-						out = "";
-						aux+= 30;
-						l = 0;
-					}
-					l += s[j].length();
-					out += " ";
-					out += s[j];
-					if(out.charAt(out.length()-1) == '.'){
-						g.drawString(out, 10, aux);
-						out = "";
-						aux+=30;
-						l=0;
-					}
-				}
-				g.drawString(out, 10, aux);
-				aux += 30;
-			}
-		}
-		
-	}
-	class PanelTexto extends JPanel implements KeyListener{
-
-        private static final long serialVersionUID = -4712396594532659965L;
-
-        public void paint(Graphics g){
-			super.paint(g);
-			if(m!=null){
-				for(int i=0;i<m.getAltura();i++){
-					for(int j=0;j<m.getAncho();j++){
-						b = m.getCelda(i, j).getImg();
-						g.drawImage(b,j*64,i*64,null);
-					}
-				}
-				for(int i=0;i<m.cantidadObstaculos();i++){
-					b = m.getObstaculo(i).getImg();
-					g.drawImage(b,m.getObstaculo(i).getPosY()*64,m.getObstaculo(i).getPosX()*64,null);
-				}
-				for(int i=0;i<m.getAltura();i++){
-					for(int j=0;j<m.getAncho();j++){
-						if(m.getCelda(i, j).getSprite() == 'A'){
-							try {
-								b = (ImageIO.read(getClass().getResource("/imagenes/sprite_cuy.png")));
-								g.drawImage(b,j*64,i*64,null);
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}else if(m.getCelda(i, j).getSprite() == 'B'){
-							try {
-								b = (ImageIO.read(getClass().getResource("/imagenes/sprite_perro.png")));
-								g.drawImage(b,j*64,i*64,null);
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		public PanelTexto(){
-			addKeyListener(this);
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-				Object[] options = {"Si","No"};
-				
-				int n = JOptionPane.showOptionDialog(this,
-				    "¿Seguro que desea salir?",
-				    "A Silly Question",
-				    JOptionPane.YES_OPTION,
-				    JOptionPane.NO_OPTION,
-				    null,
-				    options,
-				    options[0]);
-				if(n == JOptionPane.YES_OPTION) {
-				    System.exit(0);
-				}
-				
-			}
-			if(flag == -6){ //ingresar nombre
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-				    nuevoNivel(mapaActual);
-				}
-				else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-					eliminarUltimo();
-					if(!nombre.isEmpty()) {
-					    nombre = nombre.substring(0,nombre.length()-1);
-					}
-					dibujarExtra();
-				}
-				else{
-					char c = e.getKeyChar();
-					if (Character.isAlphabetic(c)) {
-						anadirUltimo(c);
-						nombre += c;
-						dibujarExtra();
-					}
-				}
-			}else if(flag == -5){ //ingresar datos y aceptar juego i.e. bucle lectura
-				if(e.getKeyChar() == 'a' || e.getKeyChar()=='A'){
-					flag = -6;
-					textos.clear();
-					addTexto("Ingrese su nombre");
-					addTexto("");
-					dibujarExtra();
-					gestor.reiniciarVida();
-					nombre = "";
-				}else if(e.getKeyChar() == 'b' || e.getKeyChar()=='B'){
-					textos.clear();
-					addTexto("Saliendo del juego");
-					addTexto("Presione enter para terminar");
-					dibujarExtra();
-					flag = -3;
-				}else if(e.getKeyChar() == 'c' || e.getKeyChar()=='C'){
-					textos.clear();
-					addTexto("Cargando juego, espere un momento");
-					dibujarExtra();
-					try {XStream xs = new XStream(new DomDriver());
-					
-						gestor = (GestorMapas)xs.fromXML(new FileInputStream("Savestate.xml"));
-						nombre=gestor.Get_nombre();
-						gestor.recargarImagenes();
-			           dibujar(gestor.getMapaActual());
-			           mapaActual = gestor.getIndMapaActual();
-						inicializarTexto();
-						if(mapaActual>0) cambiarNivel(mapaActual);
-						int aux = gestor.getVida();
-						while(aux!=10){
-							quitarVida(2);
-							aux+=2;
-						}
-						dibujarExtra();
-						flag = 1;
-			       } catch (IOException i) {
-			          System.out.println(i.toString());}
-			       
-					
-				}
-				
-			}else if(flag == -4 && e.getKeyCode() == KeyEvent.VK_ENTER){ // game over
-				flag = -5;
-				mapaActual = 0;
-				textos.clear();
-				addTexto("Kiru es un cuy mascota");
-				addTexto("a. Iniciar juego");
-				addTexto("b. Salir del juego");
-				addTexto("c. Cargar partida");
-				dibujarExtra();
-			}else if(flag == -3 && e.getKeyCode() == KeyEvent.VK_ENTER){ // juego terminado
-				System.exit(0);
-			}else if(flag == -2 && e.getKeyCode() == KeyEvent.VK_ENTER){ // dialogo despues de fin de nivel
-				removeTexto();
-				removeTexto();
-				mapaActual++;
-				if(mapaActual == cantMapas){
-					addTexto(cadenaJuegoCompletado);
-					dibujarExtra();
-					flag = -3;
-				}else{
-					nuevoNivel(mapaActual);
-				}
-			}else if(flag==-1 && e.getKeyCode() == KeyEvent.VK_ENTER){ // dialogo en inicio de nivel
-				removeTexto();
-				removeTexto();
-				addTexto(dialogo[0]);
-				addTexto("Presione enter para continuar");
-				dibujarExtra();
-				flag = 0;
-			}else if(flag == 0 && e.getKeyCode() == KeyEvent.VK_ENTER){ // historias por nivel
-				removeTexto();
-				removeTexto();
-				dibujarExtra();
-				flag++;
-			}else if(flag == 1){ // movimiento
-				String str = "";
-				str += e.getKeyChar();
-				if(str.charAt(0) == 'G' || str.charAt(0)=='g'){
-					try {XStream xs = new XStream(new DomDriver());
-					xs.omitField(Celda.class, "img");
-					xs.omitField(GestorMapas.class, "mapas");
-					xs.omitField(Objeto.class, "img");
-			           // 1. Escribir el archivoFileWriter 
-			           FileWriter fw = new FileWriter("savestate.xml");
-			           fw.write(xs.toXML(gestor));
-			           fw.close();
-			           //System.exit(0);
-			       } catch (IOException i) {
-			          System.out.println(i.toString());}
-			       }
-				
-				valor = interp.interpretarMovimiento(str);
-				gestor.realizarMovimiento(valor);
-				dibujar(gestor.getMapaActual());
-				String aux = gestor.realizarMovimientoEspecial(valor);
-				
-				if(aux.equals("F")){
-					mapaActual++;
-					if(mapaActual == cantMapas){
-						flag = -3;
-						addTexto(cadenaJuegoCompletado);
-						dibujarExtra();
-					}else{
-						nuevoNivel(mapaActual);
-					}
-				}else if(!aux.equals("")){
-					comando = aux;
-					indiceComando = 0;
-					flag = 2;
-					perdioVida = false;
-					addTexto(comando);
-					addTexto("");
-					dibujarExtra();
-				}
-				
-			}else if(flag==2){ // comando
-				String str = "";
-				str += e.getKeyChar();
-				str = str.toUpperCase();
-				if(perdioVida) removeTexto();
-				if(interp.interpretarEspecial(str,comando.charAt(indiceComando))){
-					perdioVida = false;
-					anadirUltimo(str.charAt(0));
-					indiceComando++;
-					if(indiceComando == comando.length()){
-						flag = 3;
-						addTexto("Presione enter para continuar");
-					}
-					dibujarExtra();
-				}else{
-					quitarVida(2);
-					perdioVida = true;
-					if(gestor.perderVida(2)){
-						
-						addTexto("Kiru y Milo perdieron 2 puntos de vida.");
-						dibujarExtra();
-					}else{
-						addTexto(cadenaGameOver);
-						addTexto("Vuelvalo a intentar");
-						addTexto("Presione enter para continuar");
-						dibujarExtra();
-						flag = -4;
-					}
-				}
-			}else if(flag == 3 && e.getKeyCode() == KeyEvent.VK_ENTER){ // realizar comando especial
-				String aux = gestor.ejecutarComando(valor);
-				dibujar(gestor.getMapaActual());
-				
-				
-				if (aux.equals("F") && mapaActual == 0) {
-					removeTexto();
-					removeTexto();
-					removeTexto();
-					addTexto(dialogo[1]);
-					addTexto("Presione enter para continuar");
-					dibujarExtra();
-					flag = -2;
-				}
-				if (aux.equals("Done")){
-					removeTexto();
-					removeTexto();
-					removeTexto();
-					dibujarExtra();
-					flag = 1;
-				}
-				if(aux.equals("F") && flag != -2){
-					removeTexto();
-					removeTexto();
-					removeTexto();
-					mapaActual++;
-					if(mapaActual == cantMapas){
-						flag = -3;
-						addTexto(cadenaJuegoCompletado);
-						dibujarExtra();
-					}else{
-						nuevoNivel(mapaActual);
-					}
-				}
-			}
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-	}
+	
 	public void nuevoNivel(int nivel){
 		gestor.cargarMapa(nivel,nombre);
 		dibujar(gestor.getMapaActual());
 		if(nivel==0){
-			inicializarTexto();
+			panel2.inicializarTexto(nombre);
 			flag = -1;
 		}else{
-			cambiarNivel(nivel);
+			panel2.cambiarNivel(nivel);
 			flag = 0;
 		}
-		addTexto(historias[nivel]);
-		addTexto("Presione enter para continuar");
+		panel2.addTexto(historias[nivel]);
+		panel2.addTexto("Presione enter para continuar");
 		dibujarExtra();
 		
 	}
 	public void dibujar(Mapa m){
-		this.m = m;
+		panel.m = m;
 		panel.repaint();
 	}
 	public void dibujarExtra(){
-		//System.out.println("kya");
 		panel2.repaint();
 	}
 
@@ -459,19 +111,14 @@ public class Ventana extends JFrame {
 		contentPane.setLayout(null);
 		/*label = new JLabel();
 		label.setForeground(Color.GREEN);*/
-		panel = new PanelTexto();
+		panel = new PanelGraficos();
 		panel.setBounds(0, 0, 1024, 768);
-		panel.setFocusable(true);
+		panel.setFocusable(false);
 		contentPane.add(panel);
-		panel2 = new PanelGraficos();
+		panel2 = new PanelTexto();
 		panel2.setBounds(1024,0,200,768);
+		panel2.setFocusable(false);
 		contentPane.add(panel2);
-		this.addFocusListener(new FocusAdapter() {
-	        @Override
-	        public void focusGained(FocusEvent aE) {
-	            panel.requestFocusInWindow();
-	        }
-	    });
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e){
 				Object[] options = {"Si","No"};
@@ -487,13 +134,244 @@ public class Ventana extends JFrame {
 				if(n==JOptionPane.YES_OPTION) System.exit(0);
 			}
 		});
+		addKeyListener(this);
+		
 		interp = new InterpreteComandos();
 		gestor = new GestorMapas();
-		rend = new Renderizador();
-		textos = new ArrayList<String>();
-		addTexto("Kiru es un cuy mascota");
-		addTexto("a. Iniciar juego");
-		addTexto("b. Salir del juego");
-		addTexto("c. Cargar partida");
+		panel2.addTexto("Kiru es un cuy mascota");
+		panel2.addTexto("a. Iniciar juego");
+		panel2.addTexto("b. Salir del juego");
+		panel2.addTexto("c. Cargar partida");
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("kek");
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			Object[] options = {"Si","No"};
+			
+			int n = JOptionPane.showOptionDialog(this,
+			    "¿Seguro que desea salir?",
+			    "A Silly Question",
+			    JOptionPane.YES_OPTION,
+			    JOptionPane.NO_OPTION,
+			    null,
+			    options,
+			    options[0]);
+			if(n == JOptionPane.YES_OPTION) {
+			    System.exit(0);
+			}
+			
+		}
+		if(flag == -6){ //ingresar nombre
+			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			    nuevoNivel(mapaActual);
+			}
+			else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+				panel2.eliminarUltimo();
+				if(!nombre.isEmpty()) {
+				    nombre = nombre.substring(0,nombre.length()-1);
+				}
+				dibujarExtra();
+			}
+			else{
+				char c = e.getKeyChar();
+				if (Character.isAlphabetic(c)) {
+					panel2.anadirUltimo(c);
+					nombre += c;
+					dibujarExtra();
+				}
+			}
+		}else if(flag == -5){ //ingresar datos y aceptar juego i.e. bucle lectura
+			if(e.getKeyChar() == 'a' || e.getKeyChar()=='A'){
+				flag = -6;
+				panel2.textos.clear();
+				panel2.addTexto("Ingrese su nombre");
+				panel2.addTexto("");
+				dibujarExtra();
+				gestor.reiniciarVida();
+				nombre = "";
+			}else if(e.getKeyChar() == 'b' || e.getKeyChar()=='B'){
+				panel2.textos.clear();
+				panel2.addTexto("Saliendo del juego");
+				panel2.addTexto("Presione enter para terminar");
+				dibujarExtra();
+				flag = -3;
+			}else if(e.getKeyChar() == 'c' || e.getKeyChar()=='C'){
+				panel2.textos.clear();
+				panel2.addTexto("Cargando juego, espere un momento");
+				dibujarExtra();
+				try {XStream xs = new XStream(new DomDriver());
+				
+					gestor = (GestorMapas)xs.fromXML(new FileInputStream("Savestate.xml"));
+					nombre=gestor.Get_nombre();
+					gestor.recargarImagenes();
+		           dibujar(gestor.getMapaActual());
+		           mapaActual = gestor.getIndMapaActual();
+		           panel2.inicializarTexto(nombre);
+					if(mapaActual>0) panel2.cambiarNivel(mapaActual);
+					int aux = gestor.getVida();
+					while(aux!=10){
+						panel2.quitarVida(2);
+						aux+=2;
+					}
+					dibujarExtra();
+					flag = 1;
+		       } catch (IOException i) {
+		          System.out.println(i.toString());}
+		       
+				
+			}
+			
+		}else if(flag == -4 && e.getKeyCode() == KeyEvent.VK_ENTER){ // game over
+			flag = -5;
+			mapaActual = 0;
+			panel2.textos.clear();
+			panel2.addTexto("Kiru es un cuy mascota");
+			panel2.addTexto("a. Iniciar juego");
+			panel2.addTexto("b. Salir del juego");
+			panel2.addTexto("c. Cargar partida");
+			dibujarExtra();
+		}else if(flag == -3 && e.getKeyCode() == KeyEvent.VK_ENTER){ // juego terminado
+			System.exit(0);
+		}else if(flag == -2 && e.getKeyCode() == KeyEvent.VK_ENTER){ // dialogo despues de fin de nivel
+			panel2.removeTexto();
+			panel2.removeTexto();
+			mapaActual++;
+			if(mapaActual == cantMapas){
+				panel2.addTexto(cadenaJuegoCompletado);
+				dibujarExtra();
+				flag = -3;
+			}else{
+				nuevoNivel(mapaActual);
+			}
+		}else if(flag==-1 && e.getKeyCode() == KeyEvent.VK_ENTER){ // dialogo en inicio de nivel
+			panel2.removeTexto();
+			panel2.removeTexto();
+			panel2.addTexto(dialogo[0]);
+			panel2.addTexto("Presione enter para continuar");
+			dibujarExtra();
+			flag = 0;
+		}else if(flag == 0 && e.getKeyCode() == KeyEvent.VK_ENTER){ // historias por nivel
+			panel2.removeTexto();
+			panel2.removeTexto();
+			dibujarExtra();
+			flag++;
+		}else if(flag == 1){ // movimiento
+			String str = "";
+			str += e.getKeyChar();
+			if(str.charAt(0) == 'G' || str.charAt(0)=='g'){
+				try {XStream xs = new XStream(new DomDriver());
+				xs.omitField(Celda.class, "img");
+				xs.omitField(GestorMapas.class, "mapas");
+				xs.omitField(Objeto.class, "img");
+		           // 1. Escribir el archivoFileWriter 
+		           FileWriter fw = new FileWriter("savestate.xml");
+		           fw.write(xs.toXML(gestor));
+		           fw.close();
+		           //System.exit(0);
+		       } catch (IOException i) {
+		          System.out.println(i.toString());}
+		       }
+			
+			valor = interp.interpretarMovimiento(str);
+			gestor.realizarMovimiento(valor);
+			dibujar(gestor.getMapaActual());
+			String aux = gestor.realizarMovimientoEspecial(valor);
+			
+			if(aux.equals("F")){
+				mapaActual++;
+				if(mapaActual == cantMapas){
+					flag = -3;
+					panel2.addTexto(cadenaJuegoCompletado);
+					dibujarExtra();
+				}else{
+					nuevoNivel(mapaActual);
+				}
+			}else if(!aux.equals("")){
+				comando = aux;
+				indiceComando = 0;
+				flag = 2;
+				perdioVida = false;
+				panel2.addTexto(comando);
+				panel2.addTexto("");
+				dibujarExtra();
+			}
+			
+		}else if(flag==2){ // comando
+			String str = "";
+			str += e.getKeyChar();
+			str = str.toUpperCase();
+			if(perdioVida) panel2.removeTexto();
+			if(interp.interpretarEspecial(str,comando.charAt(indiceComando))){
+				perdioVida = false;
+				panel2.anadirUltimo(str.charAt(0));
+				indiceComando++;
+				if(indiceComando == comando.length()){
+					flag = 3;
+					panel2.addTexto("Presione enter para continuar");
+				}
+				dibujarExtra();
+			}else{
+				panel2.quitarVida(2);
+				perdioVida = true;
+				if(gestor.perderVida(2)){
+					
+					panel2.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
+					dibujarExtra();
+				}else{
+					panel2.addTexto(cadenaGameOver);
+					panel2.addTexto("Vuelvalo a intentar");
+					panel2.addTexto("Presione enter para continuar");
+					dibujarExtra();
+					flag = -4;
+				}
+			}
+		}else if(flag == 3 && e.getKeyCode() == KeyEvent.VK_ENTER){ // realizar comando especial
+			String aux = gestor.ejecutarComando(valor);
+			dibujar(gestor.getMapaActual());
+			
+			
+			if (aux.equals("F") && mapaActual == 0) {
+				panel2.removeTexto();
+				panel2.removeTexto();
+				panel2.removeTexto();
+				panel2.addTexto(dialogo[1]);
+				panel2.addTexto("Presione enter para continuar");
+				dibujarExtra();
+				flag = -2;
+			}
+			if (aux.equals("Done")){
+				panel2.removeTexto();
+				panel2.removeTexto();
+				panel2.removeTexto();
+				dibujarExtra();
+				flag = 1;
+			}
+			if(aux.equals("F") && flag != -2){
+				panel2.removeTexto();
+				panel2.removeTexto();
+				panel2.removeTexto();
+				mapaActual++;
+				if(mapaActual == cantMapas){
+					flag = -3;
+					panel2.addTexto(cadenaJuegoCompletado);
+					dibujarExtra();
+				}else{
+					nuevoNivel(mapaActual);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
