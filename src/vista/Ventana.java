@@ -19,24 +19,118 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import javax.swing.*;
 
+class HiloVida extends Thread {
+
+	Object bandera;
+	Ventana v;
+	boolean flag = true;
+	
+	public HiloVida(Object bandera2, Ventana ventana) {
+		bandera = bandera2;
+		this.v = ventana;
+	}
+	public void stop2(){
+		flag = false;
+		interrupt();
+	}
+	public void run() {
+		while(flag){
+			
+			try {
+				sleep(1000);
+				if(!flag) break;
+				synchronized(bandera){
+					
+					if (v.perdioVida)
+						v.pnlTexto.removeTexto();
+				
+					v.pnlTexto.quitarVida(2);
+					v.perdioVida = true;
+					if (v.gestor.perderVida(2)) {
+						v.pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
+						v.dibujarExtra();
+					} else {
+						v.pnlTexto.addTexto(v.cadenaGameOver);
+						v.pnlTexto.addTexto("Vuelvalo a intentar");
+						v.pnlTexto.addTexto("Presione enter para continuar");
+						v.dibujarExtra();
+						v.eventFlag = -4;
+						break;
+					}
+				}
+			} catch (InterruptedException e) {
+				break;
+			}
+		}
+	}
+}
+
+class HiloAcciones extends Thread{
+	Ventana v;
+	Object bandera2;
+	public HiloAcciones(Ventana ventana,Object b){
+		v = ventana;
+		bandera2 = b;
+	}
+	public void run(){
+		v.pnlTexto.removeTexto();
+		v.pnlTexto.removeTexto();
+		while(true){
+			String aux = v.gestor.ejecutarComando(v.valor);
+			v.dibujar(v.gestor.getMapaActual());
+	
+			if (aux.equals("F") && v.mapaActual == 0) {
+				v.pnlTexto.addTexto(v.dialogo[1]);
+				v.dibujarExtra();
+				v.eventFlag = Ventana.MOSTRARDIALOGOFINNIVEL;
+			}
+			if (aux.equals("Done")) {
+				v.dibujarExtra();
+				v.eventFlag = Ventana.REALIZARMOVIMIENTO;
+				break;
+			}
+			if (aux.equals("F") && v.eventFlag != Ventana.MOSTRARDIALOGOFINNIVEL) {
+				v.mapaActual++;
+				if (v.mapaActual == v.cantMapas) {
+					v.eventFlag = Ventana.JUEGOTERMINADO;
+					v.pnlTexto.addTexto(v.cadenaJuegoCompletado);
+					v.dibujarExtra();
+				} else {
+					v.nuevoNivel(v.mapaActual);
+				}
+				break;
+			}
+			try {
+				sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
 public class Ventana extends JFrame implements KeyListener {
+	
+	Object bandera = new Object();
+	Object bandera2 = new Object();
 
 	private static final long serialVersionUID = -8472914249245291228L;
 
-	private static final int INGRESARNOMBRE = -6;
-	private static final int MENUINICIAL = -5;
-	private static final int JUEGOPERDIDO = -4;
-	private static final int JUEGOTERMINADO = -3;
-	private static final int MOSTRARDIALOGOFINNIVEL = -2;
-	private static final int MOSTRARDIALOGOININIVEL = -1;
-	private static final int MOSTRARHISTORIA = 0;
-	private static final int REALIZARMOVIMIENTO = 1;
-	private static final int REALIZARCOMANDO = 2;
-	private static final int COMANDOCOMPLETADO = 3;
+	public static final int INGRESARNOMBRE = -6;
+	public static final int MENUINICIAL = -5;
+	public static final int JUEGOPERDIDO = -4;
+	public static final int JUEGOTERMINADO = -3;
+	public static final int MOSTRARDIALOGOFINNIVEL = -2;
+	public static final int MOSTRARDIALOGOININIVEL = -1;
+	public static final int MOSTRARHISTORIA = 0;
+	public static final int REALIZARMOVIMIENTO = 1;
+	public static final int REALIZARCOMANDO = 2;
+	public static final int COMANDOCOMPLETADO = 3;
 
 	private JPanel contentPane;
 	private PanelGraficos pnlGrafico;
-	private PanelTexto pnlTexto;
+	public PanelTexto pnlTexto;
 	int eventFlag = 0;
 	Mapa m = null;
 	BufferedImage b;
@@ -50,6 +144,7 @@ public class Ventana extends JFrame implements KeyListener {
 	int indiceDialogo = 0;
 	int valor;
 	boolean perdioVida = false;
+	HiloVida h;
 	final String[] historias = { 
 		"Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
 		"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
@@ -319,6 +414,8 @@ public class Ventana extends JFrame implements KeyListener {
 				pnlTexto.addTexto(comando);
 				pnlTexto.addTexto("");
 				dibujarExtra();
+				h = new HiloVida(bandera,this);
+				h.start();
 			}
 
 		}
@@ -328,65 +425,36 @@ public class Ventana extends JFrame implements KeyListener {
 			String str = "";
 			str += e.getKeyChar();
 			str = str.toUpperCase();
-			if (perdioVida)
-				pnlTexto.removeTexto();
-			if (interp.interpretarEspecial(str, comando.charAt(indiceComando))) {
-				perdioVida = false;
-				pnlTexto.anadirUltimo(str.charAt(0));
-				indiceComando++;
-				if (indiceComando == comando.length()) {
-					eventFlag = COMANDOCOMPLETADO;
-					pnlTexto.addTexto("Presione enter para continuar");
-				}
-				dibujarExtra();
-			} else {
-				pnlTexto.quitarVida(2);
-				perdioVida = true;
-				if (gestor.perderVida(2)) {
-					pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
+			synchronized(bandera){
+				if (perdioVida)
+					pnlTexto.removeTexto();
+				if (interp.interpretarEspecial(str, comando.charAt(indiceComando))) {
+					perdioVida = false;
+					pnlTexto.anadirUltimo(str.charAt(0));
+					indiceComando++;
+					if (indiceComando == comando.length()) {
+						h.stop2();
+						eventFlag = COMANDOCOMPLETADO;
+						HiloAcciones hilo = new HiloAcciones(this,bandera2);
+						hilo.start();
+						//pnlTexto.addTexto("Presione enter para continuar");
+					}
 					dibujarExtra();
 				} else {
-					pnlTexto.addTexto(cadenaGameOver);
-					pnlTexto.addTexto("Vuelvalo a intentar");
-					pnlTexto.addTexto("Presione enter para continuar");
-					dibujarExtra();
-					eventFlag = JUEGOPERDIDO;
-				}
-			}
-		}
-
-		// Ejecutar comando completado
-		else if (eventFlag == COMANDOCOMPLETADO && e.getKeyCode() == KeyEvent.VK_ENTER) { // realizar comando especial
-			String aux = gestor.ejecutarComando(valor);
-			dibujar(gestor.getMapaActual());
-
-			if (aux.equals("F") && mapaActual == 0) {
-				pnlTexto.removeTexto();
-				pnlTexto.removeTexto();
-				pnlTexto.removeTexto();
-				pnlTexto.addTexto(dialogo[1]);
-				pnlTexto.addTexto("Presione enter para continuar");
-				dibujarExtra();
-				eventFlag = MOSTRARDIALOGOFINNIVEL;
-			}
-			if (aux.equals("Done")) {
-				pnlTexto.removeTexto();
-				pnlTexto.removeTexto();
-				pnlTexto.removeTexto();
-				dibujarExtra();
-				eventFlag = REALIZARMOVIMIENTO;
-			}
-			if (aux.equals("F") && eventFlag != MOSTRARDIALOGOFINNIVEL) {
-				pnlTexto.removeTexto();
-				pnlTexto.removeTexto();
-				pnlTexto.removeTexto();
-				mapaActual++;
-				if (mapaActual == cantMapas) {
-					eventFlag = JUEGOTERMINADO;
-					pnlTexto.addTexto(cadenaJuegoCompletado);
-					dibujarExtra();
-				} else {
-					nuevoNivel(mapaActual);
+					pnlTexto.quitarVida(2);
+					perdioVida = true;
+					if (gestor.perderVida(2)) {
+						pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
+						dibujarExtra();
+					} else {
+						h.stop2();
+						pnlTexto.addTexto(cadenaGameOver);
+						pnlTexto.addTexto("Vuelvalo a intentar");
+						pnlTexto.addTexto("Presione enter para continuar");
+						dibujarExtra();
+						eventFlag = JUEGOPERDIDO;
+						
+					}
 				}
 			}
 		}
