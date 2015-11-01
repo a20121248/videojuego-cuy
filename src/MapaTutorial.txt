@@ -19,6 +19,7 @@ BNNNNNNNjjNjjNNN
 0
 WDEQ
 3
+3
 2
 2
 2
@@ -39,6 +40,7 @@ WDEQ
 -2
 1
 SDKIQEUO
+5
 3
 6
 6
@@ -55,6 +57,7 @@ SDKIQEUO
 -2
 2
 SDKIQEUO
+5
 3
 7
 7

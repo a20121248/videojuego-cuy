@@ -23,11 +23,13 @@ class HiloVida extends Thread {
 
 	Object bandera;
 	Ventana v;
+	int tiempo;
 	boolean flag = true;
 	
-	public HiloVida(Object bandera2, Ventana ventana) {
+	public HiloVida(Object bandera2, Ventana ventana,int tiempo) {
 		bandera = bandera2;
 		this.v = ventana;
+		this.tiempo = tiempo;
 	}
 	public void stop2(){
 		flag = false;
@@ -37,7 +39,7 @@ class HiloVida extends Thread {
 		while(flag){
 			
 			try {
-				sleep(1000);
+				sleep(1000*tiempo);
 				if(!flag) break;
 				synchronized(bandera){
 					
@@ -414,7 +416,7 @@ public class Ventana extends JFrame implements KeyListener {
 				pnlTexto.addTexto(comando);
 				pnlTexto.addTexto("");
 				dibujarExtra();
-				h = new HiloVida(bandera,this);
+				h = new HiloVida(bandera,this,gestor.getTiempo(valor));
 				h.start();
 			}
 

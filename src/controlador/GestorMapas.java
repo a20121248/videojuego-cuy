@@ -245,6 +245,7 @@ public class GestorMapas {
 				// Acción
 				celdaAux.setIndiceEspecial(Integer.parseInt(inputStream.readLine()));
 				celdaEsp.setComandoEspecial(inputStream.readLine());
+				celdaEsp.setTiempo(Integer.parseInt(inputStream.readLine()));
 				direccion = new ArrayList<Integer>();
 				int cantMov = Integer.parseInt(inputStream.readLine());
 				for (int j = 0; j < cantMov; j++)
@@ -735,6 +736,23 @@ public class GestorMapas {
 			return "Done";
 		}
 		return "";
+	}
+	
+	public int getTiempo(int mov){
+		Celda celdaActual;
+		boolean noEsComandoConocido = mov == -1;
+
+		// Verificar si es movimiento de jugador 1 o de jugador 2
+		boolean esMovJ1 = mov < ARRIBAJ2;
+		if (esMovJ1)
+			celdaActual = mapaActual.getCelda(jugador1.getPosX(), jugador1.getPosY());
+		else
+			celdaActual = mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY());
+		
+		int indiceListCeldaEsp = celdaActual.getIndiceListCeldaEsp();
+		CeldaEspecial celdaEsp = mapaActual.getCeldaEspEnLista(indiceListCeldaEsp);
+		return celdaEsp.getTiempo();
+		
 	}
 
 	public void reiniciarVida() {

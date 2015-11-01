@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class CeldaEspecial {
 	String comandoEspecial;
+	private int tiempo;
 	private List<Integer> direccionX; //solo si es especial
 	private List<Integer> direccionY;
 	private List<Integer> liberaX;
@@ -21,6 +22,8 @@ public abstract class CeldaEspecial {
 		valorLiberacion = new ArrayList<Integer>();
 	}
 	public String getComandoEspecial(){return comandoEspecial;}
+	public void setTiempo(int tiempo){this.tiempo = tiempo;}
+	public int getTiempo(){return tiempo;}
 	public void setComandoEspecial(String comandoEspecial){this.comandoEspecial = comandoEspecial;}
 	public void setDireccionX(List<Integer> direccionX){this.direccionX = direccionX;}
 	public void setDireccionY(List<Integer> direccionY){this.direccionY = direccionY;}
