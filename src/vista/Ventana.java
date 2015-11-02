@@ -1,5 +1,7 @@
 package vista;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
@@ -20,7 +22,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import javax.swing.*;
 
 class HiloVida extends Thread {
-
 	Object bandera;
 	Ventana v;
 	int tiempo;
@@ -41,8 +42,7 @@ class HiloVida extends Thread {
 			try {
 				sleep(1000*tiempo);
 				if(!flag) break;
-				synchronized(bandera){
-					
+				synchronized(bandera){					
 					if (v.perdioVida)
 						v.pnlTexto.removeTexto();
 				
@@ -113,7 +113,7 @@ class HiloAcciones extends Thread{
 }
 
 public class Ventana extends JFrame implements KeyListener {
-	
+        
 	Object bandera = new Object();
 	Object bandera2 = new Object();
 
@@ -129,18 +129,19 @@ public class Ventana extends JFrame implements KeyListener {
 	public static final int REALIZARMOVIMIENTO = 1;
 	public static final int REALIZARCOMANDO = 2;
 	public static final int COMANDOCOMPLETADO = 3;
-
+	
+	public static boolean cargo=true;
 	private JPanel contentPane;
 	private PanelGraficos pnlGrafico;
-	public PanelTexto pnlTexto;
-	int eventFlag = 0;
+	public static PanelTexto pnlTexto;
+	public static int eventFlag = 0;
 	Mapa m = null;
 	BufferedImage b;
 	InterpreteComandos interp;
-	GestorMapas gestor;
+	public static GestorMapas gestor;
 	String comando;
-	String nombre = "";
-	int mapaActual = 0;
+	public static String nombre = "";
+	public static int mapaActual = 0;
 	int cantMapas = 3;
 	int indiceComando;
 	int indiceDialogo = 0;
@@ -300,9 +301,10 @@ public class Ventana extends JFrame implements KeyListener {
 				pnlTexto.textos.clear();
 				pnlTexto.addTexto("Cargando juego, espere un momento");
 				dibujarExtra();
-				try {
-					XStream xs = new XStream(new DomDriver());
-					gestor = (GestorMapas) xs.fromXML(new FileInputStream("Savestate.xml"));
+				VentanaGuardado dialogo= new VentanaGuardado(Ventana.this,true,gestor,'c');				
+				// System.exit(0);
+				dialogo.setVisible(true);								
+				if(Ventana.cargo) {
 					nombre = gestor.Get_nombre();
 					gestor.recargarImagenes();
 					dibujar(gestor.getMapaActual());
@@ -317,9 +319,17 @@ public class Ventana extends JFrame implements KeyListener {
 					}
 					dibujarExtra();
 					eventFlag = REALIZARMOVIMIENTO;
-				} catch (IOException i) {
-					System.out.println(i.toString());
+				}else{
+					pnlTexto.textos.clear();
+					pnlTexto.addTexto("Kiru es un cuy mascota");
+					pnlTexto.addTexto("a. Iniciar juego");
+					pnlTexto.addTexto("b. Salir del juego");
+					pnlTexto.addTexto("c. Cargar partida");
+					dibujarExtra();
+					Ventana.cargo=true;
 				}
+				
+				
 			}
 		}
 
@@ -379,19 +389,23 @@ public class Ventana extends JFrame implements KeyListener {
 
 			// Guardar Juego
 			if (str.charAt(0) == 'G' || str.charAt(0) == 'g') {
-				try {
-					XStream xs = new XStream(new DomDriver());
-					xs.omitField(Celda.class, "img");
-					xs.omitField(GestorMapas.class, "mapas");
-					xs.omitField(Objeto.class, "img");
-					// 1. Escribir el archivoFileWriter
-					FileWriter fw = new FileWriter("savestate.xml");
-					fw.write(xs.toXML(gestor));
-					fw.close();
+				VentanaGuardado dialogo= new VentanaGuardado(Ventana.this,true,gestor,'G');				
 					// System.exit(0);
-				} catch (IOException i) {
-					System.out.println(i.toString());
+				dialogo.setVisible(true);
+				nombre = gestor.Get_nombre();
+				gestor.recargarImagenes();
+				dibujar(gestor.getMapaActual());
+				mapaActual = gestor.getIndMapaActual();
+				pnlTexto.inicializarTexto(nombre);
+				if (mapaActual > 0)
+					pnlTexto.cambiarNivel(mapaActual);
+				int aux = gestor.getVida();
+				while (aux != 10) {
+					pnlTexto.quitarVida(2);
+					aux += 2;
 				}
+				dibujarExtra();
+				eventFlag = REALIZARMOVIMIENTO;
 			}
 
 			valor = interp.interpretarMovimiento(str);
@@ -470,3 +484,4 @@ public class Ventana extends JFrame implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 	}
 }
+

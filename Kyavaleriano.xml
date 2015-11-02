@@ -233,9 +233,9 @@
       </list>
       <list>
         <modelo.Celda>
-          <sprite>A</sprite>
+          <sprite>S</sprite>
           <tipo>TERRENO_A</tipo>
-          <jugador>0</jugador>
+          <jugador>-1</jugador>
           <especial>0</especial>
           <indiceDeListCeldaEsp>0</indiceDeListCeldaEsp>
         </modelo.Celda>
@@ -292,7 +292,7 @@
           <sprite>C</sprite>
           <tipo>TERRENO_AMBOS</tipo>
           <jugador>-1</jugador>
-          <especial>1</especial>
+          <especial>0</especial>
           <indiceDeListCeldaEsp>0</indiceDeListCeldaEsp>
         </modelo.Celda>
         <modelo.Celda>
@@ -438,9 +438,9 @@
           <indiceDeListCeldaEsp>0</indiceDeListCeldaEsp>
         </modelo.Celda>
         <modelo.Celda>
-          <sprite>S</sprite>
+          <sprite>A</sprite>
           <tipo>TERRENO_A</tipo>
-          <jugador>-1</jugador>
+          <jugador>0</jugador>
           <especial>0</especial>
           <indiceDeListCeldaEsp>0</indiceDeListCeldaEsp>
         </modelo.Celda>
@@ -669,7 +669,7 @@
           <sprite>D</sprite>
           <tipo>TERRENO_AMBOS</tipo>
           <jugador>-1</jugador>
-          <especial>-2</especial>
+          <especial>2</especial>
           <indiceDeListCeldaEsp>1</indiceDeListCeldaEsp>
         </modelo.Celda>
         <modelo.Celda>
@@ -1011,7 +1011,7 @@
           <sprite>D</sprite>
           <tipo>TERRENO_AMBOS</tipo>
           <jugador>-1</jugador>
-          <especial>-2</especial>
+          <especial>2</especial>
           <indiceDeListCeldaEsp>2</indiceDeListCeldaEsp>
         </modelo.Celda>
         <modelo.Celda>
@@ -1509,8 +1509,8 @@
   </mapaActual>
   <jugador1>
     <sprite></sprite>
-    <posX>2</posX>
-    <posY>0</posY>
+    <posX>3</posX>
+    <posY>13</posY>
     <ancho>0</ancho>
     <altura>0</altura>
   </jugador1>
@@ -1525,7 +1525,8 @@
   <fin2>false</fin2>
   <indMapaActual>0</indMapaActual>
   <cantidadMapas>3</cantidadMapas>
-  <nombreJugador>dsadas</nombreJugador>
+  <nombreJugador>Kyavaleriano</nombreJugador>
+  <comandoActual>WDEQ</comandoActual>
   <celdaOriginal0>
     <sprite>S</sprite>
     <tipo>TERRENO_A</tipo>
@@ -1540,8 +1541,9 @@
     <especial>0</especial>
     <indiceDeListCeldaEsp>0</indiceDeListCeldaEsp>
   </celdaOriginal1>
-  <dual>0</dual>
+  <dual>-1</dual>
   <tipoDual>0</tipoDual>
-  <indMovimientoEspecial>0</indMovimientoEspecial>
+  <indMovimientoEspecial>3</indMovimientoEspecial>
   <vida>10</vida>
+  <espAux class="modelo.AccionSimple" reference="../mapaActual/celdasEspeciales/modelo.AccionSimple"/>
 </controlador.GestorMapas>
