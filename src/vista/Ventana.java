@@ -23,13 +23,13 @@ import javax.swing.*;
 
 class HiloVida extends Thread {
 	Object bandera;
-	Ventana v;
+	Ventana ventana;
 	int tiempo;
 	boolean flag = true;
 
-	public HiloVida(Object bandera2, Ventana ventana, int tiempo) {
-		bandera = bandera2;
-		this.v = ventana;
+	public HiloVida(Object bandera, Ventana ventana, int tiempo) {
+		this.bandera = bandera;
+		this.ventana = ventana;
 		this.tiempo = tiempo;
 	}
 
@@ -40,26 +40,24 @@ class HiloVida extends Thread {
 
 	public void run() {
 		while (flag) {
-
 			try {
 				sleep(1000 * tiempo);
 				if (!flag)
 					break;
 				synchronized (bandera) {
-					if (v.perdioVida)
-						v.pnlTexto.removeTexto();
-
-					v.pnlTexto.quitarVida(2);
-					v.perdioVida = true;
-					if (v.gestor.perderVida(2)) {
-						v.pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
-						v.dibujarExtra();
+					if (ventana.perdioVida)
+						ventana.pnlTexto.removeTexto();
+					ventana.pnlTexto.quitarVida(2);
+					ventana.perdioVida = true;
+					if (ventana.gestor.perderVida(2)) {
+						ventana.pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
+						ventana.dibujarExtra();
 					} else {
-						v.pnlTexto.addTexto(v.cadenaGameOver);
-						v.pnlTexto.addTexto("Vuelvalo a intentar");
-						v.pnlTexto.addTexto("Presione enter para continuar");
-						v.dibujarExtra();
-						v.eventFlag = -4;
+						ventana.pnlTexto.addTexto(ventana.cadenaGameOver);
+						ventana.pnlTexto.addTexto("Vuelvalo a intentar");
+						ventana.pnlTexto.addTexto("Presione enter para continuar");
+						ventana.dibujarExtra();
+						ventana.eventFlag = -4;
 						break;
 					}
 				}
@@ -152,7 +150,7 @@ public class Ventana extends JFrame implements KeyListener {
 	int indiceDialogo = 0;
 	int valor;
 	boolean perdioVida = false;
-	HiloVida h;
+	HiloVida hiloVida;
 	final String[] historias = { "Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
 			"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
 			"Kiru y Milo se encuentran con Peli el Pelicano. Peli el pelicano no sabe de donde viene Kiru. Kiru y Milo deciden viajar a la sierra.",
@@ -241,45 +239,8 @@ public class Ventana extends JFrame implements KeyListener {
 			eventoMostrarHistoria();
 		} else if (eventFlag == REALIZARMOVIMIENTO) {
 			eventoRealizarMovimiento(e);
-		}
-
-		// Manejo de los comandos especiales
-		else if (eventFlag == REALIZARCOMANDO) { // comando
-			String str = "";
-			str += e.getKeyChar();
-			str = str.toUpperCase();
-			synchronized (bandera) {
-				if (perdioVida)
-					pnlTexto.removeTexto();
-				if (interp.interpretarEspecial(str, comando.charAt(indiceComando))) {
-					perdioVida = false;
-					pnlTexto.anadirUltimo(str.charAt(0));
-					indiceComando++;
-					if (indiceComando == comando.length()) {
-						h.stop2();
-						eventFlag = COMANDOCOMPLETADO;
-						HiloAcciones hilo = new HiloAcciones(this, bandera2);
-						hilo.start();
-						// pnlTexto.addTexto("Presione enter para continuar");
-					}
-					dibujarExtra();
-				} else {
-					pnlTexto.quitarVida(2);
-					perdioVida = true;
-					if (gestor.perderVida(2)) {
-						pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
-						dibujarExtra();
-					} else {
-						h.stop2();
-						pnlTexto.addTexto(cadenaGameOver);
-						pnlTexto.addTexto("Vuelvalo a intentar");
-						pnlTexto.addTexto("Presione enter para continuar");
-						dibujarExtra();
-						eventFlag = JUEGOPERDIDO;
-
-					}
-				}
-			}
+		} else if (eventFlag == REALIZARCOMANDO) {
+			eventoRealizarComandoEspecial(e);
 		}
 	}
 
@@ -292,7 +253,7 @@ public class Ventana extends JFrame implements KeyListener {
 			System.exit(0);
 	}
 
-	private void eventoIngresarNombre(KeyEvent e){
+	private void eventoIngresarNombre(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			nuevoNivel(mapaActual);
 		} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -310,8 +271,8 @@ public class Ventana extends JFrame implements KeyListener {
 			}
 		}
 	}
-	
-	private void eventoMenuIncial(KeyEvent e){
+
+	private void eventoMenuIncial(KeyEvent e) {
 		if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
 			opcionComenzarPartida();
 		} else if (e.getKeyChar() == 'b' || e.getKeyChar() == 'B') {
@@ -320,8 +281,8 @@ public class Ventana extends JFrame implements KeyListener {
 			opcionCargarJuego();
 		}
 	}
-	
-	private void opcionComenzarPartida(){
+
+	private void opcionComenzarPartida() {
 		eventFlag = INGRESARNOMBRE;
 		pnlTexto.textos.clear();
 		pnlTexto.addTexto("Ingrese su nombre");
@@ -330,16 +291,16 @@ public class Ventana extends JFrame implements KeyListener {
 		gestor.reiniciarVida();
 		nombre = "";
 	}
-	
-	private void opcionSalirDelJuego(){
+
+	private void opcionSalirDelJuego() {
 		pnlTexto.textos.clear();
 		pnlTexto.addTexto("Saliendo del juego");
 		pnlTexto.addTexto("Presione enter para terminar");
 		dibujarExtra();
 		eventFlag = JUEGOTERMINADO;
 	}
-	
-	private void opcionCargarJuego(){
+
+	private void opcionCargarJuego() {
 		pnlTexto.textos.clear();
 		pnlTexto.addTexto("Cargando juego, espere un momento");
 		dibujarExtra();
@@ -371,7 +332,7 @@ public class Ventana extends JFrame implements KeyListener {
 		}
 	}
 
-	private void eventoJuegoPerdido(){
+	private void eventoJuegoPerdido() {
 		eventFlag = MENUINICIAL;
 		mapaActual = 0;
 		pnlTexto.textos.clear();
@@ -381,8 +342,8 @@ public class Ventana extends JFrame implements KeyListener {
 		pnlTexto.addTexto("c. Cargar partida");
 		dibujarExtra();
 	}
-	
-	private void eventoDialogoFinNivel(){
+
+	private void eventoDialogoFinNivel() {
 		pnlTexto.removeTexto();
 		pnlTexto.removeTexto();
 		mapaActual++;
@@ -394,8 +355,8 @@ public class Ventana extends JFrame implements KeyListener {
 			nuevoNivel(mapaActual);
 		}
 	}
-	
-	private void eventoDialogoInicioNivel(){
+
+	private void eventoDialogoInicioNivel() {
 		pnlTexto.removeTexto();
 		pnlTexto.removeTexto();
 		pnlTexto.addTexto(dialogo[0]);
@@ -403,15 +364,15 @@ public class Ventana extends JFrame implements KeyListener {
 		dibujarExtra();
 		eventFlag = MOSTRARHISTORIA;
 	}
-	
-	private void eventoMostrarHistoria(){
+
+	private void eventoMostrarHistoria() {
 		pnlTexto.removeTexto();
 		pnlTexto.removeTexto();
 		dibujarExtra();
 		eventFlag++;
 	}
-	
-	private void eventoRealizarMovimiento(KeyEvent e){
+
+	private void eventoRealizarMovimiento(KeyEvent e) {
 		String str = "";
 		str += e.getKeyChar();
 
@@ -425,29 +386,14 @@ public class Ventana extends JFrame implements KeyListener {
 		String aux = gestor.realizarMovimientoEspecial(valor);
 
 		if (aux.equals("F")) {
-			mapaActual++;
-			if (mapaActual == cantMapas) {
-				eventFlag = JUEGOTERMINADO;
-				pnlTexto.addTexto(cadenaJuegoCompletado);
-				dibujarExtra();
-			} else {
-				nuevoNivel(mapaActual);
-			}
+			opcionFinNivel();
 		} else if (!aux.equals("")) {
-			comando = aux;
-			indiceComando = 0;
-			eventFlag = REALIZARCOMANDO;
-			perdioVida = false;
-			pnlTexto.addTexto(comando);
-			pnlTexto.addTexto("");
-			dibujarExtra();
-			h = new HiloVida(bandera, this, gestor.getTiempo(valor));
-			h.start();
+			opcionRealizarComando(aux);
 		}
 
 	}
-	
-	private void guardarJuego(){
+
+	private void guardarJuego() {
 		VentanaGuardado dialogo = new VentanaGuardado(Ventana.this, true, gestor, 'G');
 		dialogo.setVisible(true);
 		nombre = gestor.Get_nombre();
@@ -465,7 +411,67 @@ public class Ventana extends JFrame implements KeyListener {
 		dibujarExtra();
 		eventFlag = REALIZARMOVIMIENTO;
 	}
-	
+
+	private void opcionFinNivel() {
+		mapaActual++;
+		if (mapaActual == cantMapas) {
+			eventFlag = JUEGOTERMINADO;
+			pnlTexto.addTexto(cadenaJuegoCompletado);
+			dibujarExtra();
+		} else {
+			nuevoNivel(mapaActual);
+		}
+	}
+
+	private void opcionRealizarComando(String aux) {
+		comando = aux;
+		indiceComando = 0;
+		eventFlag = REALIZARCOMANDO;
+		perdioVida = false;
+		pnlTexto.addTexto(comando);
+		pnlTexto.addTexto("");
+		dibujarExtra();
+		hiloVida = new HiloVida(bandera, this, gestor.getTiempo(valor));
+		hiloVida.start();
+	}
+
+	private void eventoRealizarComandoEspecial(KeyEvent e) {
+		String str = "";
+		str += e.getKeyChar();
+		str = str.toUpperCase();
+		synchronized (bandera) {
+			if (perdioVida)
+				pnlTexto.removeTexto();
+			if (interp.interpretarEspecial(str, comando.charAt(indiceComando))) {
+				perdioVida = false;
+				pnlTexto.anadirUltimo(str.charAt(0));
+				indiceComando++;
+				if (indiceComando == comando.length()) {
+					hiloVida.stop2();
+					eventFlag = COMANDOCOMPLETADO;
+					HiloAcciones hilo = new HiloAcciones(this, bandera2);
+					hilo.start();
+				}
+				dibujarExtra();
+			} else {
+				pnlTexto.quitarVida(2);
+				perdioVida = true;
+				if (gestor.perderVida(2)) {
+					pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
+					dibujarExtra();
+				} else {
+					hiloVida.stop2();
+					pnlTexto.addTexto(cadenaGameOver);
+					pnlTexto.addTexto("Vuelvalo a intentar");
+					pnlTexto.addTexto("Presione enter para continuar");
+					dibujarExtra();
+					eventFlag = JUEGOPERDIDO;
+
+				}
+			}
+		}
+	}
+
 	public void nuevoNivel(int nivel) {
 		gestor.cargarMapa(nivel, nombre);
 		dibujar(gestor.getMapaActual());
@@ -490,7 +496,7 @@ public class Ventana extends JFrame implements KeyListener {
 	public void dibujarExtra() {
 		pnlTexto.repaint();
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 	}
