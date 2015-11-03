@@ -61,7 +61,7 @@ public class VentanaGuardado extends JDialog{
 						} catch (IOException i) {
 							JOptionPane.showMessageDialog(null, "No se encontró el archivo", 
 									"Título del Mensaje", JOptionPane.INFORMATION_MESSAGE);
-							Ventana.cargo=false;
+							Ventana.cargoCorrectamente=false;
 							
 						}
 					}
