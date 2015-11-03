@@ -15,11 +15,12 @@ public class HiloAcciones extends Thread {
 		while (true) {
 			String aux = v.gestor.ejecutarComando(v.valor);
 			v.dibujar();
-
+			
 			if (aux.equals("F") && v.mapaActual == 0) {
 				v.pnlTexto.addTexto(v.dialogo[1]);
 				v.dibujarExtra();
 				v.eventFlag = Ventana.MOSTRARDIALOGOFINNIVEL;
+				break;
 			}
 			if (aux.equals("Done")) {
 				v.dibujarExtra();
