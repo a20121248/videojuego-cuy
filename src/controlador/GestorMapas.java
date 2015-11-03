@@ -78,7 +78,7 @@ public class GestorMapas {
 		BufferedReader inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
 
-		nuevoMapa = Leer_Mapa(obstaculos, inputStream, lineasMapaAux, "/MapaTutorial.txt");
+		nuevoMapa = leerMapa(obstaculos, inputStream, lineasMapaAux, "/MapaTutorial.txt");
 		for (int i = 5; i < 9; i++) {
 			Celda aux = nuevoMapa.getCelda(i, 15);
 			aux.setTipo(TipoCelda.TERRENO_A);
@@ -108,7 +108,7 @@ public class GestorMapas {
 		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		nuevoMapa = Leer_Mapa(obstaculos, inputStream, lineasMapaAux, "/MapaNivel1.txt");
+		nuevoMapa = leerMapa(obstaculos, inputStream, lineasMapaAux, "/MapaNivel1.txt");
 
 		for (int i = 3; i < 7; i++) {
 			Celda auxi = nuevoMapa.getCelda(i, 0);
@@ -139,7 +139,7 @@ public class GestorMapas {
 		lineasMapaAux = new ArrayList<String>();
 		inputStream = null;
 		obstaculos = new ArrayList<Objeto>();
-		nuevoMapa = Leer_Mapa(obstaculos, inputStream, lineasMapaAux, "/MapaNivel2.txt");
+		nuevoMapa = leerMapa(obstaculos, inputStream, lineasMapaAux, "/MapaNivel2.txt");
 
 		for (int j = 12; j < 16; j++) {
 			Celda aux2 = nuevoMapa.getCelda(6, j);
@@ -187,7 +187,7 @@ public class GestorMapas {
 		mapas.add(nuevoMapa);
 	}
 
-	private Mapa Leer_Mapa(List<Objeto> obstaculos, BufferedReader inputStream, ArrayList<String> lineasMapaAux,
+	private Mapa leerMapa(List<Objeto> obstaculos, BufferedReader inputStream, ArrayList<String> lineasMapaAux,
 			String nombre) {
 
 		InputStream in = getClass().getResourceAsStream(nombre);
@@ -740,7 +740,7 @@ public class GestorMapas {
 	
 	public int getTiempo(int mov){
 		Celda celdaActual;
-		boolean noEsComandoConocido = mov == -1;
+		//boolean noEsComandoConocido = mov == -1;
 
 		// Verificar si es movimiento de jugador 1 o de jugador 2
 		boolean esMovJ1 = mov < ARRIBAJ2;
@@ -960,7 +960,7 @@ public class GestorMapas {
 		mapaActual.getCelda(jugador2.getPosX(), jugador2.getPosY()).setSprite('B');
 	}
 
-	public String Get_nombre() {
+	public String getNombre() {
 		return nombreJugador;
 	}
 }

@@ -21,100 +21,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import javax.swing.*;
 
-class HiloVida extends Thread {
-	Object bandera;
-	Ventana ventana;
-	int tiempo;
-	boolean flag = true;
-
-	public HiloVida(Object bandera, Ventana ventana, int tiempo) {
-		this.bandera = bandera;
-		this.ventana = ventana;
-		this.tiempo = tiempo;
-	}
-
-	public void stop2() {
-		flag = false;
-		interrupt();
-	}
-
-	public void run() {
-		while (flag) {
-			try {
-				sleep(1000 * tiempo);
-				if (!flag)
-					break;
-				synchronized (bandera) {
-					if (ventana.perdioVida)
-						ventana.pnlTexto.removeTexto();
-					ventana.pnlTexto.quitarVida(2);
-					ventana.perdioVida = true;
-					if (ventana.gestor.perderVida(2)) {
-						ventana.pnlTexto.addTexto("Kiru y Milo perdieron 2 puntos de vida.");
-						ventana.dibujarExtra();
-					} else {
-						ventana.pnlTexto.addTexto(ventana.cadenaGameOver);
-						ventana.pnlTexto.addTexto("Vuelvalo a intentar");
-						ventana.pnlTexto.addTexto("Presione enter para continuar");
-						ventana.dibujarExtra();
-						ventana.eventFlag = -4;
-						break;
-					}
-				}
-			} catch (InterruptedException e) {
-				break;
-			}
-		}
-	}
-}
-
-class HiloAcciones extends Thread {
-	Ventana v;
-	Object bandera2;
-
-	public HiloAcciones(Ventana ventana, Object b) {
-		v = ventana;
-		bandera2 = b;
-	}
-
-	public void run() {
-		v.pnlTexto.removeTexto();
-		v.pnlTexto.removeTexto();
-		while (true) {
-			String aux = v.gestor.ejecutarComando(v.valor);
-			v.dibujar(v.gestor.getMapaActual());
-
-			if (aux.equals("F") && v.mapaActual == 0) {
-				v.pnlTexto.addTexto(v.dialogo[1]);
-				v.dibujarExtra();
-				v.eventFlag = Ventana.MOSTRARDIALOGOFINNIVEL;
-			}
-			if (aux.equals("Done")) {
-				v.dibujarExtra();
-				v.eventFlag = Ventana.REALIZARMOVIMIENTO;
-				break;
-			}
-			if (aux.equals("F") && v.eventFlag != Ventana.MOSTRARDIALOGOFINNIVEL) {
-				v.mapaActual++;
-				if (v.mapaActual == v.cantMapas) {
-					v.eventFlag = Ventana.JUEGOTERMINADO;
-					v.pnlTexto.addTexto(v.cadenaJuegoCompletado);
-					v.dibujarExtra();
-				} else {
-					v.nuevoNivel(v.mapaActual);
-				}
-				break;
-			}
-			try {
-				sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-}
-
 public class Ventana extends JFrame implements KeyListener {
 
 	Object bandera = new Object();
@@ -226,7 +132,7 @@ public class Ventana extends JFrame implements KeyListener {
 		if (eventFlag == INGRESARNOMBRE) {
 			eventoIngresarNombre(e);
 		} else if (eventFlag == MENUINICIAL) {
-			eventoMenuIncial(e);
+			eventoMenuInicial(e);
 		} else if (eventFlag == JUEGOPERDIDO && e.getKeyCode() == KeyEvent.VK_ENTER) {
 			eventoJuegoPerdido();
 		} else if (eventFlag == JUEGOTERMINADO && e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -272,7 +178,7 @@ public class Ventana extends JFrame implements KeyListener {
 		}
 	}
 
-	private void eventoMenuIncial(KeyEvent e) {
+	private void eventoMenuInicial(KeyEvent e) {
 		if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
 			opcionComenzarPartida();
 		} else if (e.getKeyChar() == 'b' || e.getKeyChar() == 'B') {
@@ -307,7 +213,7 @@ public class Ventana extends JFrame implements KeyListener {
 		VentanaGuardado dialogo = new VentanaGuardado(Ventana.this, true, gestor, 'c');
 		dialogo.setVisible(true);
 		if (Ventana.cargoCorrectamente) {
-			nombre = gestor.Get_nombre();
+			nombre = gestor.getNombre();
 			gestor.recargarImagenes();
 			dibujar(gestor.getMapaActual());
 			mapaActual = gestor.getIndMapaActual();
@@ -396,7 +302,7 @@ public class Ventana extends JFrame implements KeyListener {
 	private void guardarJuego() {
 		VentanaGuardado dialogo = new VentanaGuardado(Ventana.this, true, gestor, 'G');
 		dialogo.setVisible(true);
-		nombre = gestor.Get_nombre();
+		nombre = gestor.getNombre();
 		gestor.recargarImagenes();
 		dibujar(gestor.getMapaActual());
 		mapaActual = gestor.getIndMapaActual();
