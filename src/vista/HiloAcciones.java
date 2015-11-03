@@ -14,7 +14,7 @@ public class HiloAcciones extends Thread {
 		v.pnlTexto.removeTexto();
 		while (true) {
 			String aux = v.gestor.ejecutarComando(v.valor);
-			v.dibujar(v.gestor.getMapaActual());
+			v.dibujar();
 
 			if (aux.equals("F") && v.mapaActual == 0) {
 				v.pnlTexto.addTexto(v.dialogo[1]);

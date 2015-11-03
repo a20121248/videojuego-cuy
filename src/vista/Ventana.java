@@ -25,6 +25,8 @@ public class Ventana extends JFrame implements KeyListener {
 
 	Object bandera = new Object();
 	Object bandera2 = new Object();
+	Object bandera3 = new Object();
+	boolean flagDibujo=true;
 
 	private static final long serialVersionUID = -8472914249245291228L;
 
@@ -57,6 +59,7 @@ public class Ventana extends JFrame implements KeyListener {
 	int valor;
 	boolean perdioVida = false;
 	HiloVida hiloVida;
+	HiloMovimiento hiloMovimiento;
 	final String[] historias = { "Kiru y Milo conversan. Le nace la pregunta a Kiru y deciden viajar.",
 			"Kiru y Milo viajan a Paracas en un auto. Llegan a la playa y empiezan a jugar.",
 			"Kiru y Milo se encuentran con Peli el Pelicano. Peli el pelicano no sabe de donde viene Kiru. Kiru y Milo deciden viajar a la sierra.",
@@ -110,7 +113,7 @@ public class Ventana extends JFrame implements KeyListener {
 	}
 
 	private void inicializarPaneles() {
-		pnlGrafico = new PanelGraficos();
+		pnlGrafico = new PanelGraficos(bandera3,this);
 		pnlGrafico.setBounds(0, 0, 1024, 806);
 		pnlGrafico.setFocusable(false);
 		contentPane.add(pnlGrafico);
@@ -215,7 +218,7 @@ public class Ventana extends JFrame implements KeyListener {
 		if (Ventana.cargoCorrectamente) {
 			nombre = gestor.getNombre();
 			gestor.recargarImagenes();
-			dibujar(gestor.getMapaActual());
+			dibujar();
 			mapaActual = gestor.getIndMapaActual();
 			pnlTexto.inicializarTexto(nombre);
 			if (mapaActual > 0)
@@ -226,7 +229,7 @@ public class Ventana extends JFrame implements KeyListener {
 				aux += 2;
 			}
 			dibujarExtra();
-			eventFlag = REALIZARMOVIMIENTO;
+			
 		} else {
 			pnlTexto.textos.clear();
 			pnlTexto.addTexto("Kiru es un cuy mascota");
@@ -288,7 +291,7 @@ public class Ventana extends JFrame implements KeyListener {
 
 		valor = interp.interpretarMovimiento(str);
 		gestor.realizarMovimiento(valor);
-		dibujar(gestor.getMapaActual());
+		dibujar();
 		String aux = gestor.realizarMovimientoEspecial(valor);
 
 		if (aux.equals("F")) {
@@ -304,7 +307,7 @@ public class Ventana extends JFrame implements KeyListener {
 		dialogo.setVisible(true);
 		nombre = gestor.getNombre();
 		gestor.recargarImagenes();
-		dibujar(gestor.getMapaActual());
+		dibujar();
 		mapaActual = gestor.getIndMapaActual();
 		pnlTexto.inicializarTexto(nombre);
 		if (mapaActual > 0)
@@ -380,7 +383,7 @@ public class Ventana extends JFrame implements KeyListener {
 
 	public void nuevoNivel(int nivel) {
 		gestor.cargarMapa(nivel, nombre);
-		dibujar(gestor.getMapaActual());
+		dibujar();
 		if (nivel == 0) {
 			pnlTexto.inicializarTexto(nombre);
 			eventFlag = MOSTRARDIALOGOININIVEL;
@@ -391,11 +394,24 @@ public class Ventana extends JFrame implements KeyListener {
 		pnlTexto.addTexto(historias[nivel]);
 		pnlTexto.addTexto("Presione enter para continuar");
 		dibujarExtra();
+		if(hiloMovimiento != null){
+			hiloMovimiento.stop2();
+			
+			try {
+				hiloMovimiento.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		flagDibujo = true;
+		hiloMovimiento = new HiloMovimiento(bandera3,this);
+		hiloMovimiento.start();
 
 	}
 
-	public void dibujar(Mapa m) {
-		pnlGrafico.m = m;
+	public void dibujar() {
+		pnlGrafico.m = gestor.getMapaActual();
 		pnlGrafico.repaint();
 	}
 

@@ -97,7 +97,9 @@ class PanelGraficos extends JPanel {
 	private static final long serialVersionUID = -4712396594532659965L;
 
 	Mapa m;
-	BufferedImage imgCuy, imgPerro;
+	Ventana v;
+	BufferedImage imgCuy, imgPerro,imgCuy2,imgPerro2;
+	Object flagDibujo;
 
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -115,11 +117,18 @@ class PanelGraficos extends JPanel {
 			}
 			for (int i = 0; i < m.getAltura(); i++) {
 				for (int j = 0; j < m.getAncho(); j++) {
+					
 					if (m.getCelda(i, j).getSprite() == 'A') {
-						b = imgCuy;
+						synchronized(flagDibujo){
+							if(v.flagDibujo) b = imgCuy;
+							else b = imgCuy2;
+						}
 						g.drawImage(b, j * 64, i * 64, null);
 					} else if (m.getCelda(i, j).getSprite() == 'B') {
-						b = imgPerro;
+						synchronized(flagDibujo){
+							if(v.flagDibujo) b = imgPerro;
+							else b = imgPerro2;
+						}
 						g.drawImage(b, j * 64, i * 64, null);
 					}
 				}
@@ -127,11 +136,15 @@ class PanelGraficos extends JPanel {
 		}
 	}
 
-	public PanelGraficos() {
+	public PanelGraficos(Object flagMovimiento,Ventana v) {
 		m = null;
+		this.v = v;
+		this.flagDibujo = flagMovimiento;
 		try {
 			imgCuy = (ImageIO.read(getClass().getResource("/imagenes/sprite_cuy.gif")));
 			imgPerro = (ImageIO.read(getClass().getResource("/imagenes/sprite_perro.gif")));
+			imgCuy2 = (ImageIO.read(getClass().getResource("/imagenes/sprite_cuy2.png")));
+			imgPerro2 = (ImageIO.read(getClass().getResource("/imagenes/sprite_perro2.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
