@@ -301,6 +301,7 @@ public class Ventana extends JFrame implements KeyListener {
 
 		if (str.charAt(0) == 'G' || str.charAt(0) == 'g') {
 			guardarJuego();
+			return;
 		}
 
 		valor = interp.interpretarMovimiento(str);
@@ -319,19 +320,6 @@ public class Ventana extends JFrame implements KeyListener {
 	private void guardarJuego() {
 		VentanaGuardado dialogo = new VentanaGuardado(Ventana.this, true, gestor, 'G');
 		dialogo.setVisible(true);
-		nombre = gestor.getNombre();
-		gestor.recargarImagenes();
-		dibujar();
-		mapaActual = gestor.getIndMapaActual();
-		pnlTexto.inicializarTexto(nombre);
-		if (mapaActual > 0)
-			pnlTexto.cambiarNivel(mapaActual);
-		int aux = gestor.getVida();
-		while (aux != 10) {
-			pnlTexto.quitarVida(2);
-			aux += 2;
-		}
-		dibujarExtra();
 		eventFlag = REALIZARMOVIMIENTO;
 	}
 
