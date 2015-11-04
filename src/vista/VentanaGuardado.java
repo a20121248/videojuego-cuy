@@ -81,9 +81,14 @@ public class VentanaGuardado extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				Ventana.cargoCorrectamente=false;
+			}
+		});
+		
 		btnGuardarArchivo.setBounds(247, 171, 134, 23);
 		cp.add(btnGuardarArchivo);
-
 	}
 
 }

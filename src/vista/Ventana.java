@@ -229,6 +229,7 @@ public class Ventana extends JFrame implements KeyListener {
 				aux += 2;
 			}
 			dibujarExtra();
+			eventFlag = REALIZARMOVIMIENTO;
 			
 		} else {
 			pnlTexto.textos.clear();
