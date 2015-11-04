@@ -86,6 +86,7 @@ public class Ventana extends JFrame implements KeyListener {
 
 		// Cuando se trate de cerrar el juego se va a preguntar si en verdad se
 		// quiere salir
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				ventanaConfirmacionSalir();
