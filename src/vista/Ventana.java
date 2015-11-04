@@ -230,6 +230,19 @@ public class Ventana extends JFrame implements KeyListener {
 			}
 			dibujarExtra();
 			eventFlag = REALIZARMOVIMIENTO;
+			if(hiloMovimiento != null){
+				hiloMovimiento.stop2();
+				
+				try {
+					hiloMovimiento.join();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			flagDibujo = true;
+			hiloMovimiento = new HiloMovimiento(bandera3,this);
+			hiloMovimiento.start();
 			
 		} else {
 			pnlTexto.textos.clear();
