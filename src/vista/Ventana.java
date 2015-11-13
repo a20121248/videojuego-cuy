@@ -7,9 +7,13 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.*;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import modelo.*;
 import controlador.*;
@@ -26,10 +30,13 @@ public class Ventana extends JFrame implements KeyListener {
 	Object bandera = new Object();
 	Object bandera2 = new Object();
 	Object bandera3 = new Object();
+	Object procesandoTecla = new Object();
 	boolean flagDibujo=true;
 
 	private static final long serialVersionUID = -8472914249245291228L;
 
+	public static final int NOHACERNADA = -8;
+	public static final int SELECCIONARTIPO = -7;
 	public static final int INGRESARNOMBRE = -6;
 	public static final int MENUINICIAL = -5;
 	public static final int JUEGOPERDIDO = -4;
@@ -40,6 +47,10 @@ public class Ventana extends JFrame implements KeyListener {
 	public static final int REALIZARMOVIMIENTO = 1;
 	public static final int REALIZARCOMANDO = 2;
 	public static final int COMANDOCOMPLETADO = 3;
+	
+	HiloConexion conexion;
+	public int portOpuesto;
+	boolean isMultiplayer;
 
 	public static boolean cargoCorrectamente = true;
 	private JPanel contentPane;
@@ -79,7 +90,7 @@ public class Ventana extends JFrame implements KeyListener {
 
 	public Ventana() {
 
-		eventFlag = MENUINICIAL;
+		eventFlag = SELECCIONARTIPO;
 
 		inicializarCanvas();
 		inicializarPaneles();
@@ -97,12 +108,12 @@ public class Ventana extends JFrame implements KeyListener {
 		addKeyListener(this);
 		interp = new InterpreteComandos();
 		gestor = new GestorMapas();
+		pnlTexto.addTexto("a.Un solo jugador");
+		pnlTexto.addTexto("b.Multiplayer");
 
 		// Se da las opciones por default
-		pnlTexto.addTexto("Kiru es un cuy mascota");
-		pnlTexto.addTexto("a. Iniciar juego");
-		pnlTexto.addTexto("b. Salir del juego");
-		pnlTexto.addTexto("c. Cargar partida");
+		
+		
 	}
 
 	private void inicializarCanvas() {
@@ -123,6 +134,33 @@ public class Ventana extends JFrame implements KeyListener {
 		pnlTexto.setFocusable(false);
 		contentPane.add(pnlTexto);
 	}
+	
+	public void doRobot(char c){
+		int keyevent;
+		if(c == '+') keyevent = KeyEvent.VK_ENTER;
+		else keyevent = KeyEvent.getExtendedKeyCodeForChar(c);
+		
+		
+		synchronized(procesandoTecla){
+			if(eventFlag == NOHACERNADA){
+				
+			}else if (eventFlag == JUEGOPERDIDO && KeyEvent.VK_ENTER == keyevent) {
+				eventoJuegoPerdido();
+			} else if (eventFlag == JUEGOTERMINADO && KeyEvent.VK_ENTER == keyevent) {
+				System.exit(0);
+			} else if (eventFlag == MOSTRARDIALOGOFINNIVEL && KeyEvent.VK_ENTER == keyevent) {
+				eventoDialogoFinNivel();
+			} else if (eventFlag == MOSTRARDIALOGOININIVEL && KeyEvent.VK_ENTER == keyevent) {
+				eventoDialogoInicioNivel();
+			} else if (eventFlag == MOSTRARHISTORIA && KeyEvent.VK_ENTER == keyevent) {
+				eventoMostrarHistoria();
+			} else if (eventFlag == REALIZARMOVIMIENTO) {
+				eventoRealizarMovimiento(c);
+			} else if (eventFlag == REALIZARCOMANDO) {
+				eventoRealizarComandoEspecial(c);
+			}
+		}
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -130,10 +168,26 @@ public class Ventana extends JFrame implements KeyListener {
 		// Permite salir en Todo Momento
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			this.ventanaConfirmacionSalir();
+			return;
 		}
 
 		// Manejo de los diferentes tipos de eventos
-		if (eventFlag == INGRESARNOMBRE) {
+		String s = "";
+		char carAux='c';
+		
+		if(e.getKeyChar() >= 'a' && e.getKeyChar() <= 'z') carAux = e.getKeyChar();
+		else if(e.getKeyChar() >= 'A' && e.getKeyChar() <= 'Z') carAux = e.getKeyChar();
+		else if(e.getKeyCode() == KeyEvent.VK_ENTER) carAux = '+';
+		else carAux = '-';
+		s += carAux;
+		
+		if(isMultiplayer && portOpuesto != 0) sendMessage("127.0.0.1",portOpuesto,s);
+			
+		if(eventFlag == NOHACERNADA){
+			
+		}else if(eventFlag == SELECCIONARTIPO){
+			eventoSeleccionarTipo(e);
+		}else if (eventFlag == INGRESARNOMBRE) {
 			eventoIngresarNombre(e);
 		} else if (eventFlag == MENUINICIAL) {
 			eventoMenuInicial(e);
@@ -148,9 +202,9 @@ public class Ventana extends JFrame implements KeyListener {
 		} else if (eventFlag == MOSTRARHISTORIA && e.getKeyCode() == KeyEvent.VK_ENTER) {
 			eventoMostrarHistoria();
 		} else if (eventFlag == REALIZARMOVIMIENTO) {
-			eventoRealizarMovimiento(e);
+			eventoRealizarMovimiento(e.getKeyChar());
 		} else if (eventFlag == REALIZARCOMANDO) {
-			eventoRealizarComandoEspecial(e);
+			eventoRealizarComandoEspecial(e.getKeyChar());
 		}
 	}
 
@@ -162,6 +216,26 @@ public class Ventana extends JFrame implements KeyListener {
 		if (n == JOptionPane.YES_OPTION)
 			System.exit(0);
 	}
+	
+	private void eventoSeleccionarTipo(KeyEvent e) {
+		if(e.getKeyChar() == 'a'){
+			isMultiplayer = false;
+			eventFlag = MENUINICIAL;
+			pnlTexto.textos.clear();
+			pnlTexto.addTexto("Kiru es un cuy mascota");
+			pnlTexto.addTexto("a. Iniciar juego");
+			pnlTexto.addTexto("b. Salir del juego");
+			pnlTexto.addTexto("c. Cargar partida");
+			dibujarExtra();
+		}else if(e.getKeyChar() == 'b'){
+			eventFlag = NOHACERNADA;
+			isMultiplayer = true;
+			portOpuesto = 0;
+			conexion = new HiloConexion(this);
+			conexion.start();
+		}
+	}
+		
 
 	private void eventoIngresarNombre(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -247,23 +321,19 @@ public class Ventana extends JFrame implements KeyListener {
 			
 		} else {
 			pnlTexto.textos.clear();
-			pnlTexto.addTexto("Kiru es un cuy mascota");
-			pnlTexto.addTexto("a. Iniciar juego");
-			pnlTexto.addTexto("b. Salir del juego");
-			pnlTexto.addTexto("c. Cargar partida");
+			pnlTexto.addTexto("a.Un solo jugador");
+			pnlTexto.addTexto("b.Multiplayer");
 			dibujarExtra();
 			Ventana.cargoCorrectamente = true;
 		}
 	}
 
 	private void eventoJuegoPerdido() {
-		eventFlag = MENUINICIAL;
+		eventFlag = SELECCIONARTIPO;
 		mapaActual = 0;
 		pnlTexto.textos.clear();
-		pnlTexto.addTexto("Kiru es un cuy mascota");
-		pnlTexto.addTexto("a. Iniciar juego");
-		pnlTexto.addTexto("b. Salir del juego");
-		pnlTexto.addTexto("c. Cargar partida");
+		pnlTexto.addTexto("a.Un solo jugador");
+		pnlTexto.addTexto("b.Multiplayer");
 		dibujarExtra();
 	}
 
@@ -296,9 +366,9 @@ public class Ventana extends JFrame implements KeyListener {
 		eventFlag++;
 	}
 
-	private void eventoRealizarMovimiento(KeyEvent e) {
+	private void eventoRealizarMovimiento(char e) {
 		String str = "";
-		str += e.getKeyChar();
+		str += e;
 
 		if (str.charAt(0) == 'G' || str.charAt(0) == 'g') {
 			guardarJuego();
@@ -347,9 +417,9 @@ public class Ventana extends JFrame implements KeyListener {
 		hiloVida.start();
 	}
 
-	private void eventoRealizarComandoEspecial(KeyEvent e) {
+	private void eventoRealizarComandoEspecial(char e) {
 		String str = "";
-		str += e.getKeyChar();
+		str += e;
 		str = str.toUpperCase();
 		synchronized (bandera) {
 			if (perdioVida)
@@ -428,5 +498,25 @@ public class Ventana extends JFrame implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+	public void sendMessage(String ip, int port, String newMessage){
+		Socket socket = null;
+		BufferedWriter bWriter= null;
+		try {
+			socket = new Socket(ip, port);
+			bWriter = new BufferedWriter(
+					new OutputStreamWriter(socket.getOutputStream()));
+			bWriter.write(newMessage);
+			bWriter.flush();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try{ if (bWriter != null){bWriter.close();} }  catch(Exception e1){e1.printStackTrace();}
+			try{ if (socket != null){socket.close();} }  catch(Exception e1){e1.printStackTrace();}			
+		}
 	}
 }
