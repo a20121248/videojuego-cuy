@@ -152,31 +152,49 @@ public class Ventana extends JFrame implements KeyListener {
 		else carAux = '-';
 		s += carAux;
 		
-		if(isMultiplayer && portOpuesto != 0) sendMessage("127.0.0.1",portOpuesto,s);
-			
-		if(eventFlag == NOHACERNADA){
-			
-		}else if(eventFlag == SELECCIONARTIPO){
-			eventoSeleccionarTipo(e);
-		}else if (eventFlag == INGRESARNOMBRE) {
-			eventoIngresarNombre(e);
-		} else if (eventFlag == MENUINICIAL) {
-			eventoMenuInicial(e);
-		} else if (eventFlag == JUEGOPERDIDO && e.getKeyCode() == KeyEvent.VK_ENTER) {
-			eventoJuegoPerdido();
-		} else if (eventFlag == JUEGOTERMINADO && e.getKeyCode() == KeyEvent.VK_ENTER) {
-			System.exit(0);
-		} else if (eventFlag == MOSTRARDIALOGOFINNIVEL && e.getKeyCode() == KeyEvent.VK_ENTER) {
-			eventoDialogoFinNivel();
-		} else if (eventFlag == MOSTRARDIALOGOININIVEL && e.getKeyCode() == KeyEvent.VK_ENTER) {
-			eventoDialogoInicioNivel();
-		} else if (eventFlag == MOSTRARHISTORIA && e.getKeyCode() == KeyEvent.VK_ENTER) {
-			eventoMostrarHistoria();
-		} else if (eventFlag == REALIZARMOVIMIENTO) {
-			eventoRealizarMovimiento(e.getKeyChar());
-		} else if (eventFlag == REALIZARCOMANDO) {
-			eventoRealizarComandoEspecial(e.getKeyChar());
+		boolean procesarTecla = true;
+		
+		if(isMultiplayer && portOpuesto != 0){
+			char cAux = e.getKeyChar();
+			if(portOpuesto == 9010){
+				if(cAux == 'a' || cAux=='s' || cAux=='d'|| cAux=='q'|| cAux=='w'|| cAux=='e' 
+						|| e.getKeyCode() == KeyEvent.VK_ENTER)
+					sendMessage("127.0.0.1",portOpuesto,s);
+				else
+					procesarTecla = false;
+			}else{
+				if(cAux == 'u' || cAux=='i' || cAux=='o'|| cAux=='j'|| cAux=='k'|| cAux=='l' 
+						|| e.getKeyCode() == KeyEvent.VK_ENTER)
+					sendMessage("127.0.0.1",portOpuesto,s);
+				else
+					procesarTecla = false;
+			}
 		}
+		
+		if(procesarTecla)
+			if(eventFlag == NOHACERNADA){
+				
+			}else if(eventFlag == SELECCIONARTIPO){
+				eventoSeleccionarTipo(e);
+			}else if (eventFlag == INGRESARNOMBRE) {
+				eventoIngresarNombre(e);
+			} else if (eventFlag == MENUINICIAL) {
+				eventoMenuInicial(e);
+			} else if (eventFlag == JUEGOPERDIDO && e.getKeyCode() == KeyEvent.VK_ENTER) {
+				eventoJuegoPerdido();
+			} else if (eventFlag == JUEGOTERMINADO && e.getKeyCode() == KeyEvent.VK_ENTER) {
+				System.exit(0);
+			} else if (eventFlag == MOSTRARDIALOGOFINNIVEL && e.getKeyCode() == KeyEvent.VK_ENTER) {
+				eventoDialogoFinNivel();
+			} else if (eventFlag == MOSTRARDIALOGOININIVEL && e.getKeyCode() == KeyEvent.VK_ENTER) {
+				eventoDialogoInicioNivel();
+			} else if (eventFlag == MOSTRARHISTORIA && e.getKeyCode() == KeyEvent.VK_ENTER) {
+				eventoMostrarHistoria();
+			} else if (eventFlag == REALIZARMOVIMIENTO) {
+				eventoRealizarMovimiento(e.getKeyChar());
+			} else if (eventFlag == REALIZARCOMANDO) {
+				eventoRealizarComandoEspecial(e.getKeyChar());
+			}
 	}
 
 	private void ventanaConfirmacionSalir() {
@@ -184,8 +202,10 @@ public class Ventana extends JFrame implements KeyListener {
 
 		int n = JOptionPane.showOptionDialog(Ventana.this, "¿Seguro que desea salir?", "Mensaje de confirmacion",
 				JOptionPane.YES_OPTION, JOptionPane.NO_OPTION, null, options, options[0]);
-		if (n == JOptionPane.YES_OPTION)
+		if (n == JOptionPane.YES_OPTION){
+			if(isMultiplayer && portOpuesto != 0) sendMessage("127.0.0.1",portOpuesto,"Finn");
 			System.exit(0);
+		}
 	}
 	
 	private void eventoSeleccionarTipo(KeyEvent e) {
@@ -248,6 +268,7 @@ public class Ventana extends JFrame implements KeyListener {
 	}
 
 	private void opcionSalirDelJuego() {
+		isMultiplayer = false;
 		pnlTexto.textos.clear();
 		pnlTexto.addTexto("Saliendo del juego");
 		pnlTexto.addTexto("Presione enter para terminar");
@@ -301,6 +322,7 @@ public class Ventana extends JFrame implements KeyListener {
 
 	private void eventoJuegoPerdido() {
 		eventFlag = SELECCIONARTIPO;
+		isMultiplayer = false;
 		mapaActual = 0;
 		pnlTexto.textos.clear();
 		pnlTexto.addTexto("a.Un solo jugador");
@@ -496,7 +518,9 @@ public class Ventana extends JFrame implements KeyListener {
 		else keyevent = KeyEvent.getExtendedKeyCodeForChar(c);
 		
 		synchronized(procesandoTecla){
-			if(eventFlag == NOHACERNADA){
+			if(c=='.'){
+				eventoJuegoPerdido();
+			}else if(eventFlag == NOHACERNADA){
 				
 			}else if (eventFlag == JUEGOPERDIDO && KeyEvent.VK_ENTER == keyevent) {
 				eventoJuegoPerdido();

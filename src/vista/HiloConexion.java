@@ -10,6 +10,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 
 public class HiloConexion extends Thread{
 	
@@ -55,12 +57,18 @@ public class HiloConexion extends Thread{
 							System.out.print(v.portOpuesto);
 							System.out.print(":");
 							System.out.println(txtLine);
-							if(!txtLine.contains("Done")){
-								v.keyPressedMultiplayer(txtLine.charAt(0));
-							}else{
+							String strComp = txtLine.substring(0, 4);
+							//System.out.println(strComp);
+							if(strComp.equals("Done")){
 								v.portOpuesto = 9011;
 								v.nuevoNivel(v.mapaActual);
 								v.dibujar();
+							}else if(strComp.equals("Finn")){
+								v.keyPressedMultiplayer('.');
+								JOptionPane.showMessageDialog(v, "Se perdio la conexion");
+								break;
+							}else{
+								v.keyPressedMultiplayer(txtLine.charAt(0));
 							}
 						}
 					} catch (Exception e) {
