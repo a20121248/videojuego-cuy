@@ -219,18 +219,27 @@ public class Ventana extends JFrame implements KeyListener {
 			pnlTexto.addTexto("c. Cargar partida");
 			dibujarExtra();
 		}else if(e.getKeyChar() == 'b'){
-			eventFlag = NOHACERNADA;
 			isMultiplayer = true;
-			portOpuesto = 0;
-			conexion = new HiloConexion(this);
-			conexion.start();
+			eventFlag = INGRESARNOMBRE;
+			pnlTexto.textos.clear();
+			pnlTexto.addTexto("Ingrese su nombre");
+			pnlTexto.addTexto("");
+			dibujarExtra();
+			gestor.reiniciarVida();
+			nombre = "";
 		}
 	}
 		
 
 	private void eventoIngresarNombre(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			nuevoNivel(mapaActual);
+			if(isMultiplayer){
+				eventFlag = NOHACERNADA;
+				portOpuesto = 0;
+				conexion = new HiloConexion(this);
+				conexion.start();
+			}else
+				nuevoNivel(mapaActual);
 		} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 			pnlTexto.eliminarUltimo();
 			if (!nombre.isEmpty()) {
