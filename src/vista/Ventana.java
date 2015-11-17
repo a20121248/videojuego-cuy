@@ -108,11 +108,9 @@ public class Ventana extends JFrame implements KeyListener {
 		addKeyListener(this);
 		interp = new InterpreteComandos();
 		gestor = new GestorMapas();
+
 		pnlTexto.addTexto("a.Un solo jugador");
 		pnlTexto.addTexto("b.Multiplayer");
-
-		// Se da las opciones por default
-		
 		
 	}
 
@@ -133,33 +131,6 @@ public class Ventana extends JFrame implements KeyListener {
 		pnlTexto.setBounds(1024, 0, 200, 806);
 		pnlTexto.setFocusable(false);
 		contentPane.add(pnlTexto);
-	}
-	
-	public void doRobot(char c){
-		int keyevent;
-		if(c == '+') keyevent = KeyEvent.VK_ENTER;
-		else keyevent = KeyEvent.getExtendedKeyCodeForChar(c);
-		
-		
-		synchronized(procesandoTecla){
-			if(eventFlag == NOHACERNADA){
-				
-			}else if (eventFlag == JUEGOPERDIDO && KeyEvent.VK_ENTER == keyevent) {
-				eventoJuegoPerdido();
-			} else if (eventFlag == JUEGOTERMINADO && KeyEvent.VK_ENTER == keyevent) {
-				System.exit(0);
-			} else if (eventFlag == MOSTRARDIALOGOFINNIVEL && KeyEvent.VK_ENTER == keyevent) {
-				eventoDialogoFinNivel();
-			} else if (eventFlag == MOSTRARDIALOGOININIVEL && KeyEvent.VK_ENTER == keyevent) {
-				eventoDialogoInicioNivel();
-			} else if (eventFlag == MOSTRARHISTORIA && KeyEvent.VK_ENTER == keyevent) {
-				eventoMostrarHistoria();
-			} else if (eventFlag == REALIZARMOVIMIENTO) {
-				eventoRealizarMovimiento(c);
-			} else if (eventFlag == REALIZARCOMANDO) {
-				eventoRealizarComandoEspecial(c);
-			}
-		}
 	}
 
 	@Override
@@ -499,6 +470,7 @@ public class Ventana extends JFrame implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
+	
 	public void sendMessage(String ip, int port, String newMessage){
 		Socket socket = null;
 		BufferedWriter bWriter= null;
@@ -509,14 +481,39 @@ public class Ventana extends JFrame implements KeyListener {
 			bWriter.write(newMessage);
 			bWriter.flush();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try{ if (bWriter != null){bWriter.close();} }  catch(Exception e1){e1.printStackTrace();}
 			try{ if (socket != null){socket.close();} }  catch(Exception e1){e1.printStackTrace();}			
 		}
 	}
+	
+	public void keyPressedMultiplayer(char c){
+		int keyevent;
+		if(c == '+') keyevent = KeyEvent.VK_ENTER;
+		else keyevent = KeyEvent.getExtendedKeyCodeForChar(c);
+		
+		synchronized(procesandoTecla){
+			if(eventFlag == NOHACERNADA){
+				
+			}else if (eventFlag == JUEGOPERDIDO && KeyEvent.VK_ENTER == keyevent) {
+				eventoJuegoPerdido();
+			} else if (eventFlag == JUEGOTERMINADO && KeyEvent.VK_ENTER == keyevent) {
+				System.exit(0);
+			} else if (eventFlag == MOSTRARDIALOGOFINNIVEL && KeyEvent.VK_ENTER == keyevent) {
+				eventoDialogoFinNivel();
+			} else if (eventFlag == MOSTRARDIALOGOININIVEL && KeyEvent.VK_ENTER == keyevent) {
+				eventoDialogoInicioNivel();
+			} else if (eventFlag == MOSTRARHISTORIA && KeyEvent.VK_ENTER == keyevent) {
+				eventoMostrarHistoria();
+			} else if (eventFlag == REALIZARMOVIMIENTO) {
+				eventoRealizarMovimiento(c);
+			} else if (eventFlag == REALIZARCOMANDO) {
+				eventoRealizarComandoEspecial(c);
+			}
+		}
+	}
+
 }
