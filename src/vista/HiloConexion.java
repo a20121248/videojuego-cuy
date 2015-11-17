@@ -21,12 +21,12 @@ public class HiloConexion extends Thread{
 		super();
 		try {
 			this.v = v;
-			fServerSocket = new ServerSocket(9000);
+			fServerSocket = new ServerSocket(9010);
 		} catch (IOException e) {
 			try {
-				fServerSocket = new ServerSocket(9001);
-				v.sendMessage("127.0.0.1", 9000, "Done");
-				v.portOpuesto = 9000;
+				fServerSocket = new ServerSocket(9011);
+				v.sendMessage("127.0.0.1", 9010, "Done");
+				v.portOpuesto = 9010;
 				v.nuevoNivel(v.mapaActual);
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -58,7 +58,7 @@ public class HiloConexion extends Thread{
 							if(!txtLine.contains("Done")){
 								v.keyPressedMultiplayer(txtLine.charAt(0));
 							}else{
-								v.portOpuesto = 9001;
+								v.portOpuesto = 9011;
 								v.nuevoNivel(v.mapaActual);
 								v.dibujar();
 							}
